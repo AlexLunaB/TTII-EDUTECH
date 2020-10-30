@@ -13,7 +13,7 @@
                     <v-col cols="12" md="8">
                       <v-card-text class="mt-12">
                         <h1 class="text-center display-2 teal--text text--accent-2">
-                          Sistema de servicio
+                          EdutechMap
 
                         </h1>
 
@@ -81,7 +81,7 @@
                     <v-col cols="12" md="4" class="teal accent-3">
                       <v-card-text class="white--text mt-12">
                         <h1 class="text-center display-1">Regresa</h1>
-                        <h5 class="text-center"> Unete a la mayor red de mesa de servicio</h5>
+                        <h5 class="text-center"> Unete a la mayor red de recursos tecnoeducativos</h5>
                       </v-card-text>
 
                       <div class="text-center">

@@ -1,7 +1,7 @@
 {
-  "name": "servicios",
+  "name": "TTII",
   "version": "1.0.0",
-  "description": "Proyecto de servicios",
+  "description": "Proyecto de Titulacion",
   "author": "Sergio Luna <alexlb642@gmail.com>",
   "private": true,
   "scripts": {
