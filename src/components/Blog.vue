@@ -1,12 +1,20 @@
 <template>
-    <section id="content">
-    <h2 class="subheader">Blog</h2>
-
-    </section>
+<v-container>
+    <h1>BLOG</h1>
+</v-container>
 </template>
 
 <script>
+import NavBar from './NavBar';
+
 export default {
-    name: "Blog"
-}
+    name: "Blog",
+    components: {
+        NavBar
+    }
+};
 </script>
+
+<style scoped>
+
+</style>

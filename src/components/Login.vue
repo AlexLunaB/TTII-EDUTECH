@@ -97,7 +97,7 @@
                           <v-icon>fab fa-facebook</v-icon>
                         </v-btn>
                       </div>
-                        </br>
+                   
                         <div>
                           <h4 class="text-center ">Verifica tu correo</h4>
                           <v-form>
