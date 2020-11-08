@@ -1,10 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from "../components/Login";
+import Login from "../Layout/Login";
 import DashBoard from "../Layout/DashBoard";
-import Home from "../Layout/Home";
 import CatalogoServicios from "../Layout/CatalogoServicios";
-import Inicio from "../components/Inicio";
 import ErrorComponent from "../components/ErrorComponent";
 import MapaComponent from "../components/MapaComponent";
 import Blog from "../components/Blog";
@@ -26,8 +24,8 @@ export default new Router({
       component: DashBoard,
       children: [
         {
-          path: "dashboard",
-          name: "Dashboard",
+          path: "Inicio",
+          name: "Mapa",
           component: MapaComponent
         },
         {
@@ -43,7 +41,6 @@ export default new Router({
         }
       ]
     },
-
 
     {
       path: '*',

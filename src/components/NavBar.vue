@@ -1,6 +1,5 @@
 <template>
 <nav>
-
   <v-navigation-drawer 
     permanent v-model="drawer" 
     app mini-variant mini-variant-width="100" 
@@ -11,7 +10,7 @@
 
     <v-list>
       <v-list-item>
-        <v-list-item-avatar horizontal="true">
+        <v-list-item-avatar>
           <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
         </v-list-item-avatar>
       </v-list-item>
@@ -27,7 +26,7 @@
     </v-list>
 
     <v-list>
-      <v-list-item  router to="/dashboard">
+      <v-list-item  router to="/Inicio">
         <v-list-item-content>
           <v-icon class="mb-2">fas fa-globe-americas</v-icon>
           <v-list-item-subtitle class="text-center">Inicio</v-list-item-subtitle>
@@ -77,6 +76,12 @@
 .barra  {
   padding: 0;
   background-color: #222831;
+}
+
+.slide-enter,
+.slide-leave-to{
+  opacity: 0;
+  transform: translateX(-30%);
 }
 
 </style>

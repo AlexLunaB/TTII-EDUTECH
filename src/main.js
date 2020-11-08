@@ -27,12 +27,12 @@ Vue.use(VueNativeSock, 'ws://'+process.env.VUE_APP_BASE_URL+'/ws/servicio/' + '?
 
 });
 Vue.use(VueToast);
-Vue.$toast.open({
-        message: "Test message from Vue",
-        type: "success",
-        duration: 5000,
-        dismissible: true
-      })
+// Vue.$toast.open({
+//         message: "Test message from Vue",
+//         type: "success",
+//         duration: 5000,
+//         dismissible: true
+//       })
 
 Vue.use(BlockUI)
 Vue.use(Vuex)
