@@ -9,23 +9,32 @@
   >
 
     <v-list>
-      <v-list-item>
-        <v-list-item-avatar>
-          <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
-        </v-list-item-avatar>
+      <v-list-item router to="/Perfil">
+        <v-layout justify-center>
+          <v-list-item-avatar>
+            <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+          </v-list-item-avatar>
+        </v-layout>        
       </v-list-item>
 
-      <v-list-item link>
-            <v-list-item-content>
-              <v-list-item-title class="title">
-                {{nombre}}
-              </v-list-item-title>
-              <v-list-item-subtitle>{{correo}}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
+      <v-list-item router to="/Perfil">
+        <v-list-item-content>
+          <v-list-item-title class="title">
+            {{nombre}}
+          </v-list-item-title>
+          <v-list-item-subtitle>{{correo}}</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
 
     <v-list>
+      <v-list-item  router to="/Perfil">
+        <v-list-item-content>
+          <v-icon class="mb-2">fas fa-user</v-icon>
+          <v-list-item-subtitle class="text-center">Perfil</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
       <v-list-item  router to="/Inicio">
         <v-list-item-content>
           <v-icon class="mb-2">fas fa-globe-americas</v-icon>

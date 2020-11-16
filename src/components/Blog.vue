@@ -1,20 +1,22 @@
 <template>
-<v-container>
-    <h1>BLOG</h1>
-    <LastArticles></LastArticles>
+<v-container fluid>
+    <HeaderBlog></HeaderBlog>
+    <SingleComponent></SingleComponent>
+    <SingleComponent></SingleComponent>
 </v-container>
 </template>
 
 <script>
 import NavBar from './NavBar';
-import LastArticles from './LastArticles';
-
+import HeaderBlog from './BlogComponents/HeaderBlog';
+import SingleComponent from './BlogComponents/SingleComponent';
 
 export default {
     name: "Blog",
     components: {
         NavBar,
-        LastArticles,
+        HeaderBlog,
+        SingleComponent
     }
 };
 </script>

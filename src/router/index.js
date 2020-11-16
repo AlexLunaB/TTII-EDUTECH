@@ -6,6 +6,7 @@ import CatalogoServicios from "../Layout/CatalogoServicios";
 import ErrorComponent from "../components/ErrorComponent";
 import MapaComponent from "../components/MapaComponent";
 import Blog from "../components/Blog";
+import Perfil from "../components/PerfilComponents/Perfil";
 
 Vue.use(Router)
 export default new Router({
@@ -18,7 +19,6 @@ export default new Router({
       children: []
     },
     {
-
       path: '/',
       name: "DashBoard",
       component: DashBoard,
@@ -38,6 +38,11 @@ export default new Router({
           path: "Blog",
           name: "Blog",
           component: Blog
+        },
+        {
+          path: "Perfil",
+          name: "Peril",
+          component: Perfil
         }
       ]
     },
