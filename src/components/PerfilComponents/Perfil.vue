@@ -114,20 +114,14 @@ export default {
       apellidoP: "Varela",
       apellidoM: "Aguilar",
       tipoUsuario: "Tipo de usuario",
-
       values: [],
       value: null,
       categorias:[
-
       ],
     };
   },
 
   methods:{
-
-
-
-
     obtiene_clasificacion: function(){
 
       const self= this
