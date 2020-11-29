@@ -1,5 +1,5 @@
 <template>
-  <v-containter id="contenedorHeader" fluid>
+  <v-container id="contenedorHeader" fluid>
         <v-card color="basil">
           <v-card-title class="text-center justify-center py-6">
             <h1 class="font-weight-bold display-3 basil--text">BAhgxgxiL</h1>
@@ -24,7 +24,7 @@
             </v-tab-item>
           </v-tabs-items>
         </v-card>
-  </v-containter>
+  </v-container>
 </template>
 
 <script>

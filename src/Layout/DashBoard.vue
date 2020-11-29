@@ -26,7 +26,7 @@
 
       //inicializa Socket
       const vm = new Vue()
-      vm.$connect()
+
 
 
 

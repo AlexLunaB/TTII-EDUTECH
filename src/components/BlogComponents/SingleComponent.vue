@@ -13,7 +13,7 @@
 
           <v-img
             height="250"
-            src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+            src="https://cdn.pixabay.com/photo/2017/08/06/22/01/books-2596809_960_720.jpg"
           ></v-img>
 
           <v-card-title>{{tituloArticulo}} </v-card-title>
