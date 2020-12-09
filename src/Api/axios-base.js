@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '../store'
 
-const APIUrl = 'http://192.168.0.113:8000/'
+const APIUrl = 'http://hitecmx.ddns.net:8081/'
 // Make Axios play nice with Django CSRF
 
 const axiosBase = axios.create({
@@ -9,11 +9,15 @@ const axiosBase = axios.create({
   headers: {contentType: 'application/json'}
 })
 
-axiosBase.defaults.xsrfCookieName = 'csrftoken'
-axiosBase.defaults.xsrfHeaderName = 'X-CSRFToken'
+
 const getAPI = axios.create({
-  baseURL: APIUrl
+  baseURL: APIUrl,
+ 
+
 })
+
+getAPI.defaults.xsrfCookieName = 'csrftoken'
+getAPI.defaults.xsrfHeaderName = 'X-CSRFToken'
 getAPI.interceptors.response.use(undefined,
 
   function (err) {

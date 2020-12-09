@@ -49,73 +49,73 @@ export default new Vuex.Store({
     },
 
 
-    // SOCKETS
-    SOCKET_ONOPEN(state, event) {
-      console.log("conectado")
+    // // SOCKETS
+    // SOCKET_ONOPEN(state, event) {
+    //   console.log("conectado")
 
-      Vue.prototype.$socket = event.currentTarget;
-      state.socket.isConnected = true;
+    //   Vue.prototype.$socket = event.currentTarget;
+    //   state.socket.isConnected = true;
 
-    },
+    // },
 
-    SOCKET_ONCLOSE(state, event) {
-      console.log('SOCKET_ONCLOSE');
-      state.socket.isConnected = false;
-    },
+    // SOCKET_ONCLOSE(state, event) {
+    //   console.log('SOCKET_ONCLOSE');
+    //   state.socket.isConnected = false;
+    // },
 
-    SOCKET_ONERROR(state, event) {
-      console.log('SOCKET_ONERROR');
-      //cerramos conexion
-      Vue.prototype.$disconnect()
-
-
-
-      Vue.prototype.$connect()
+    // SOCKET_ONERROR(state, event) {
+    //   console.log('SOCKET_ONERROR');
+    //   //cerramos conexion
+    //   Vue.prototype.$disconnect()
 
 
 
-    },
-
-    // default handler called for all methods
-    SOCKET_ONMESSAGE(state, message) {
-      console.log('SOCKET_ONMESSAGE');
-
-      const data = message.data
+    //   Vue.prototype.$connect()
 
 
-      state.socket.message = message;
-      switch (message.event) {
-        case 'Notificacion':
-          Vue.$toast.open({
-            message: message.message,
-            type: "success",
-            duration: 5000,
-            dismissible: true
-          })
-          break;
-        case 'Alerta':
-          Swal.fire({
-            icon: "success",
-            text: "Servicio En Proceso" + message.message,
-          })
-          break;
-        default:
-        //console.log('NO SE HA LOCALIZADO EVENTO');
 
-      }
+    // },
 
-    },
+    // // default handler called for all methods
+    // SOCKET_ONMESSAGE(state, message) {
+    //   console.log('SOCKET_ONMESSAGE');
 
-    // mutations for reconnect methods
-    SOCKET_RECONNECT(state, count) {
-      console.log('SOCKET_RECONNECT');
-    },
+    //   const data = message.data
 
-    SOCKET_RECONNECT_ERROR(state) {
 
-      console.log('SOCKET_RECONNECT_ERROR');
-      state.socket.reconnectError = true;
-    },
+    //   state.socket.message = message;
+    //   switch (message.event) {
+    //     case 'Notificacion':
+    //       Vue.$toast.open({
+    //         message: message.message,
+    //         type: "success",
+    //         duration: 5000,
+    //         dismissible: true
+    //       })
+    //       break;
+    //     case 'Alerta':
+    //       Swal.fire({
+    //         icon: "success",
+    //         text: "Servicio En Proceso" + message.message,
+    //       })
+    //       break;
+    //     default:
+    //     //console.log('NO SE HA LOCALIZADO EVENTO');
+
+    //   }
+
+    // },
+
+    // // mutations for reconnect methods
+    // SOCKET_RECONNECT(state, count) {
+    //   console.log('SOCKET_RECONNECT');
+    // },
+
+    // SOCKET_RECONNECT_ERROR(state) {
+
+    //   console.log('SOCKET_RECONNECT_ERROR');
+    //   state.socket.reconnectError = true;
+    // },
 
 
   },
