@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="headline">Nuevo Artículo</span>
+          <span class="headline">Agregar Nuevo Artículo</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
@@ -12,24 +12,24 @@
 
               <v-flex xs12>
                 <v-text-field
-                  v-model="titulo"
+                  v-model="articulo.nombre"
                   label="Título del artículo*"
                 ></v-text-field>
-                <p> {{titulo}} </p>
+                
               </v-flex>
 
               <v-flex xs12>
                 <v-text-field
-                  v-model="descripcionA"
+                  v-model="articulo.descripcion"
                   label="Descripción del artículo*"
                 ></v-text-field>
-                <p>{{ descripcionA }}</p>
+   
               </v-flex>
               
 
               <v-flex xs12 sm6>
                 <v-autocomplete
-                  v-model="estado"
+                  v-model="articulo.estado"
                   :items="estados"
                   item-text="nombre"
                   return-object
@@ -41,7 +41,7 @@
 
               <v-flex xs12>
                 <v-autocomplete
-                  v-model="municipio"
+                  v-model="articulo.municipio"
                   :items="municipios"
                   item-text="nombre"
                   return-object
@@ -53,25 +53,26 @@
 
               <v-flex xs12>
                 <v-autocomplete
-                  v-model="categoria"
+                  v-model="articulo.categoria"
                   :items="categorias"
                   item-text="descripcion"
                   label="Categorias"
-                  return-object
+                  item-value = 'id'
+                  multiple
                 ></v-autocomplete>
                 {{categoria.id}}
               </v-flex>
 
             </v-layout>
           </v-container>
-          <small>*indicates required field</small>
+          <small>*Campos necesarios</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click="dialog = false"
-            >Close</v-btn
+          <v-btn color="red " flat @click="dialog = false"
+            >Cancelar</v-btn
           >
-          <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
+          <v-btn color="green darken-1" flat @click="dialog = false; postArticulos()">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -91,6 +92,7 @@ export default {
         descripcion:null,
         estado:null,
         municipio:null,
+        categoria:null,
         usuario:1
       },
       estado:{
@@ -119,7 +121,7 @@ export default {
     },
     obtiene_municipios: function () {
       const self = this
-      getAPI.get("api/Estados/"+ self.estado.id +"/GetMunicipio").then((res)=> {
+      getAPI.get("api/Estados/"+ self.articulo.estado.id +"/GetMunicipio").then((res)=> {
         self.municipios = res.data
       });
     },
@@ -127,6 +129,15 @@ export default {
       const self=this
       getAPI.get("Recursos/api/Categorias").then((res)=> {
         self.categorias = res.data
+      });
+    },
+    postArticulos: async function() {
+      const self = this
+      await getAPI.post("Recursos/api/Articulos/",
+      {"nombreRecurso":self.articulo.nombre, "descripcion":self.articulo.descripcion, 
+      "Usuario":1,"estado":self.articulo.estado.id,"municipio":self.articulo.municipio.id, 
+      "categoria":self.articulo.categoria}).then((res)=> {
+        alert(JSON.stringify(res))
       });
     }
   },
