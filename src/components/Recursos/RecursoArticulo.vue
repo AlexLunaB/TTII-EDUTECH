@@ -15,6 +15,7 @@
                   v-model="titulo"
                   label="Título del artículo*"
                 ></v-text-field>
+                <p> {{titulo}} </p>
               </v-flex>
 
               <v-flex xs12>
@@ -22,8 +23,7 @@
                   v-model="descripcionA"
                   label="Descripción del artículo*"
                 ></v-text-field>
-                <span>El mensaje multilínea es:</span>
-                <p style="white-space: pre-line;">{{ descripcionA }}</p>
+                <p>{{ descripcionA }}</p>
               </v-flex>
               
 
