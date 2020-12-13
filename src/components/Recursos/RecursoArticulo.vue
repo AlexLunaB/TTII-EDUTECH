@@ -138,6 +138,7 @@ export default {
       "Usuario":1,"estado":self.articulo.estado.id,"municipio":self.articulo.municipio.id, 
       "categoria":self.articulo.categoria}).then((res)=> {
         alert(JSON.stringify(res))
+        
       });
     }
   },
