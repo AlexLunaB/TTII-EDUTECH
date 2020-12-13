@@ -15,6 +15,8 @@
 </script>
 
 
-<style>
-
+<style scoped>
+  hola{
+    padding: 0;
+  }
 </style>
