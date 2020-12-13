@@ -1,7 +1,7 @@
 <template>
 <nav>
   <v-navigation-drawer 
-    permanent v-model="drawer" 
+    v-model="drawer" 
     app mini-variant mini-variant-width="100" 
     class="barra"
     expand-on-hover
