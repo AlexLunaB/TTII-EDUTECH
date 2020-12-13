@@ -5,9 +5,11 @@ from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
+from taggit_serializer.serializers import TaggitSerializer
 
 from ObservatorioTTApp.models import MexicoState
-from recursos.Serializers.RecursoSerializer import RecursoSerializer, CategoriaSerializer, RecursoReadSerializer
+from recursos.Serializers.RecursoSerializer import RecursoSerializer, CategoriaSerializer, RecursoReadSerializer, \
+  TagSerializer
 from recursos.models import Recurso, Categoria
 
 
@@ -28,6 +30,23 @@ class RecursoViewSet(mixins.ListModelMixin,
       return RecursoSerializer
 
     return RecursoReadSerializer
+
+  @action(detail=False, methods=['get'])
+  def Tags(self,request):
+
+
+
+    tags=Recurso.tags.all()
+    print(tags)
+    ts=TagSerializer(data=tags,many=True)
+    print(ts.is_valid())
+    print(ts.errors)
+
+
+    return Response(ts.data)
+
+
+
 
   @action(detail=False, methods=['get'])
   def Estado(self, request, pk=None):

@@ -43,8 +43,10 @@ INSTALLED_APPS = [
     'foroDiscusion',
     'django_extensions',
     'rest_framework',
-'corsheaders',
-  'taggit',
+    'corsheaders',
+    'taggit',
+    'taggit_serializer',
+
 ]
 
 MIDDLEWARE = [
