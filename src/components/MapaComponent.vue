@@ -13,12 +13,13 @@
     viewBox="0 0 1198 819"
     enable-background="new 0 0 1198 819"
     xml:space="preserve"
+    @click="handleStateClick"
   >
     <g class="capa">
 
       <!-- quintana roo -->
       <path
-        id="estado_23 quintanaroo"
+        id="QR"
         @mouseover="estadoevent"
         class="estado"
         data-name_estado="Quintana Roo"
@@ -36,7 +37,7 @@
 
       <!-- Yucatán -->
       <path
-        id="estado_31 yucatan"
+        id="YUC"
         @mouseover="estadoevent"
         class="estado"
         data-name_estado="Yucatán"
@@ -50,7 +51,7 @@
 
       <!-- Campeche -->
       <path
-        id="estado_4 campeche"
+        id="CMP"
         class="estado"
         data-name_estado="Campeche"
         data-id_estado="4"
@@ -65,7 +66,7 @@
 
       <!-- Chiapas -->
       <path
-        id="estado_chiapas"
+        id="CHS"
         class="estado"
         data-name_estado="Chiapas"
         data-id_estado="5"
@@ -80,7 +81,7 @@
 
       <!-- Tabasco -->
       <path
-        id="estado_27 tabasco"
+        id="TAB"
         class="estado"
         data-name_estado="Tabasco"
         data-id_estado="27"
@@ -96,7 +97,7 @@
       <!-- veracruz -->
       <path
         v-on="mandafrente"
-        id="estado_30 veracruz"
+        id="VER"
         class="estado"
         data-name_estado="Veracruz"
         data-id_estado="30"
@@ -117,7 +118,7 @@
 
       <!-- Oaxaca -->
       <path
-        id="estado_20 oaxaca"
+        id="OAX"
         class="estado"
         data-name_estado="Oaxaca"
         data-id_estado="20"
@@ -134,7 +135,7 @@
 
       <!-- Puebla -->
       <path
-        id="estado_21 puebla"
+        id="PUE"
         class="estado"
         data-name_estado="Puebla"
         data-id_estado="21"
@@ -152,7 +153,7 @@
 
       <!-- Tamaulipas -->
       <path
-        id="estado_28 tamaulipas"
+        id="TMS"
         class="estado"
         data-name_estado="Tamaulipas"
         data-id_estado="28"
@@ -171,7 +172,7 @@
 
       <!-- Tlaxcala -->
       <path
-        id="estado_29 tlaxcala"
+        id="TLX"
         class="estado"
         data-name_estado="Tlaxcala"
         data-id_estado="29"
@@ -183,7 +184,7 @@
 
       <!-- Guerrero -->
       <path
-        id="estado_13 guerrero"
+        id="GRO"
         class="estado"
         data-name_estado="Guerrero"
         data-id_estado="13"
@@ -199,7 +200,7 @@
 
       <!-- Hidalgo -->
       <path
-        id="estado_14 hidalgo"
+        id="HGO"
         class="estado"
         data-name_estado="Hidalgo"
         data-id_estado="14"
@@ -214,7 +215,7 @@
 
       <!-- San luis potosí -->
       <path
-        id="estado_24 sanluipotosi"
+        id="SLP"
         class="estado"
         data-name_estado="San Luis Potosi"
         data-id_estado="24"
@@ -230,7 +231,7 @@
 
       <!-- Nuevo León -->
       <path
-        id="estado_19 nuevoleon"
+        id="NL"
         class="estado"
         data-name_estado="Nuevo León"
         data-id_estado="19"
@@ -248,7 +249,7 @@
 
       <!-- Estado de México -->
       <path
-        id="estado_11 estadodemexico"
+        id="MEX"
         class="estado"
         data-name_estado="Estado de México"
         data-id_estado="11"
@@ -263,7 +264,7 @@
 
       <!-- Morelos -->
       <path
-        id="estado_17 morelos"
+        id="MOR"
         class="estado"
         data-name_estado="Morelos"
         data-id_estado="17"
@@ -276,7 +277,7 @@
 
       <!-- distrito federal -->
       <path
-        id="estado_9 distritofederal"
+        id="CMX"
         class="estado"
         data-name_estado="Ciudad De México"
         data-id_estado="9"
@@ -288,7 +289,7 @@
 
       <!-- queretaro -->
       <path
-        id="estado_22 queretaro"
+        id="QRO"
         class="estado"
         data-name_estado="Querétaro"
         data-id_estado="22"
@@ -301,7 +302,7 @@
 
       <!-- Guanajuato -->
       <path
-        id="estado_12 guanajuato"
+        id="GTO"
         class="estado"
         data-name_estado="Guanajuato"
         data-id_estado="12"
@@ -316,7 +317,7 @@
 
       <!-- Coahuila -->
       <path
-        id="estado_7 coahuila"
+        id="COA"
         class="estado"
         data-name_estado="Coahuila"
         data-id_estado="7"
@@ -333,7 +334,7 @@
 
       <!-- Michoacan -->
       <path
-        id="estado_16 michoacan"
+        id="MCH"
         class="estado"
         data-name_estado="Michoacán"
         data-id_estado="16"
@@ -350,7 +351,7 @@
 
       <!-- Zacatecas -->
       <path
-        id="estado_32 zacatecas"
+        id="ZAC"
         class="estado"
         data-name_estado="Zacatecas"
         data-id_estado="32"
@@ -369,7 +370,7 @@
 
       <!-- Jalisco -->
       <path
-        id="estado_15 jalisco"
+        id="JAL"
         class="estado"
         data-name_estado="Jalisco"
         data-id_estado="15"
@@ -389,7 +390,7 @@
 
       <!-- Aguascalientes -->
       <path
-        id="estado_1 aguascalientes"
+        id="AGS"
         class="estado"
         data-name_estado="Aguascalientes"
         data-id_estado="1"
@@ -403,7 +404,7 @@
 
       <!-- Chihuahua -->
       <path
-        id="estado_6 chihuahua"
+        id="CHI"
         class="estado"
         data-name_estado="Chihuahua"
         data-id_estado="6"
@@ -421,7 +422,7 @@
 
       <!-- Colima -->
       <path
-        id="estado_8 colima"
+        id="COL"
         class="estado"
         data-name_estado="Colima"
         data-id_estado="8"
@@ -433,7 +434,7 @@
 
       <!-- Nayarit -->
       <path
-        id="estado_18 nayarit"
+        id="NAY"
         class="estado"
         data-name_estado="Nayarit"
         data-id_estado="18"
@@ -448,7 +449,7 @@
 
       <!-- Sinaloa -->
       <path
-        id="estado_25 sinaloa"
+        id="SIN"
         class="estado"
         data-name_estado="Sinaloa"
         data-id_estado="25"
@@ -464,7 +465,7 @@
 
       <!-- sonora -->
       <path
-        id="estado_26 sonora"
+        id="SON"
         class="estado"
         data-name_estado="Sonora"
         data-id_estado="26"
@@ -482,10 +483,9 @@
 
       <!-- Baja California Sur -->
       <path
-        id="pais_3 bajacaliforniasur"
+        id="BCS"
         class="estado"
-        data-name_estado="Baja California Sur
-"
+        data-name_estado="Baja California Sur" 
         data-id_estado="3"
         :fill="this.color"
         d="M269.706,414.703l8.956,11.354l-3.469,10.216l-8.906,5.928l-4.727,4.498l-2.41,0.51l-5.867-6.268
@@ -504,7 +504,7 @@
       <path
         
         @click="cambiaColor"
-        id="estado_2 bajacalifornia"
+        id="BC"
         class="estado"
         active-class="active"
         data-name_estado="Baja California"
@@ -520,7 +520,7 @@
       <!-- fin Baja California -->
                     <!-- durango -->
       <path
-        id="estado_10 durango"
+        id="DGO"
         class="estado"
         data-name_estado="Durango"
         data-id_estado="10"
@@ -538,7 +538,14 @@
 
   </svg>
 
+ 
+  <!-- <Modal ref="modal" headModal='texto desde props' contentModal='SADSDASDASDASD props'></Modal> -->
+  <ModalFullscreen ref="modal" headModal='texto desde props' contentModal='SADSDASDASDASD props'></ModalFullscreen>
+  
+
 </v-container>
+
+
 
 
 </template>
@@ -549,10 +556,20 @@ import { getAPI } from "../Api/axios-base";
 import Vue from "vue";
 import d3 from "d3"
 
+import Modal from "./Modal";
+import ModalFullscreen from "./ModalFulscreen"
+
+
+
+
 
 export default {
    
     name: "MapaComponent",
+    components: {
+      Modal,
+      ModalFullscreen
+    },
     data() {
     return {
       color: "#00adb5",
@@ -564,6 +581,8 @@ export default {
       servicios: [],
 
       user: {},
+    
+     
     };
   },
   methods:{
@@ -573,7 +592,20 @@ export default {
       },
       mandafrente: function(a){
                       d3.select(this).moveToFront();
-      }
+      },
+
+      handleStateClick: function (e) {
+        if (e.target.tagName === 'path') {
+          // console.log(e.target.id);
+
+          // alert(`Presionando el ${e.target.id}`);   
+
+          this.$refs.modal.showModal();
+          this.$refs.modal.setTextModal(e.target.id, 'Este es un texto como prop desde el mapa');
+
+          
+        }
+      } 
 
   },
   computed: {
@@ -601,7 +633,8 @@ path:hover{
    
 
     /* transform: scale(1.5,1.5); Igual que: scaleX(0.7) scaleY(0.7) */
-    transform: scale(1.5); /* Igual que: scaleX(2) scaleY(0.5) */
+    /* transform: scale(1.5); Igual que: scaleX(2) scaleY(0.5) */
+    transform: translate(-20, -40) scale(4)
     
 }
 path{
@@ -617,4 +650,11 @@ g{
     transition: transform .2s ease-in-out; 
 
 }
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+
+
 </style>
