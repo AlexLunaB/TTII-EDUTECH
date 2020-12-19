@@ -74,6 +74,22 @@
           >
           <v-btn color="green darken-1" flat @click="dialog = false; postArticulos()">Save</v-btn>
         </v-card-actions>
+
+        <v-fab-transition>
+        <v-btn
+          :key="activeFab.icon"
+          :color="activeFab.color"
+          fab
+          large
+          dark
+          bottom
+          left
+          class="v-btn--example"
+        >
+          <v-icon>{{ activeFab.icon }}</v-icon>
+        </v-btn>
+      </v-fab-transition>
+      
       </v-card>
     </v-dialog>
   </v-container>
@@ -138,7 +154,7 @@ export default {
       "Usuario":1,"estado":self.articulo.estado.id,"municipio":self.articulo.municipio.id, 
       "categoria":self.articulo.categoria}).then((res)=> {
         alert(JSON.stringify(res))
-        
+
       });
     }
   },

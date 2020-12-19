@@ -55,7 +55,16 @@
           <v-list-item-subtitle class="text-center">Blog</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
+
+      <v-list-item router to = "/Recursos">
+        <v-list-item-content>
+          <v-icon class="mb-2">fas fa-archive</v-icon>
+          <v-list-item-subtitle class="text-center">Recursos</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
+
+  
 
     <v-list style="position: absolute; bottom: 0" class="ml-3">
       <v-list-item>

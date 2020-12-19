@@ -1,7 +1,15 @@
 <template>
   <v-container id="contenedorHeader" fluid>
         <v-card color="basil">
-          <v-card-title class="text-center justify-center py-6">
+          <v-card-title class="text-center justify-center py-0 pa-0">
+            <v-img
+              class="pa-0"
+              height="250"
+              width="100%"
+
+              src="https://cdn.pixabay.com/photo/2017/08/06/22/01/books-2596809_960_720.jpg"
+            ></v-img>
+            
             <h1 class="font-weight-bold display-3 basil--text">BAhgxgxiL</h1>
           </v-card-title>
 
@@ -45,7 +53,7 @@ export default {
 <style scoped>
 /* Helper classes */
 .basil {
-background-color: #FFFBE6 !important;
+background-color:  #eeeeee!important;
 }
 .basil--text {
 color: #356859 !important;
