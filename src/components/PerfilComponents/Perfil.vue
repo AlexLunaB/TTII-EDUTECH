@@ -66,13 +66,9 @@
           <v-card flat>
             <!-- Preferencias -->
             <v-container fluid>
-              <v-subheader size="20">
-                Preferencias
-              </v-subheader>
+              <v-subheader size="20"> Preferencias </v-subheader>
               <h1>Preferencias</h1>
-              <v-card-text>
-                Preferencias
-              </v-card-text>
+              <v-card-text> Preferencias </v-card-text>
               <v-row align="center">
                 <v-col cols="12">
                   <v-autocomplete
@@ -86,6 +82,38 @@
                     label="Outlined"
                     multiple
                   ></v-autocomplete>
+                  <v-list shaped>
+                    <v-list-item-group v-model="model" multiple>
+                      <template v-for="(item, i) in items">
+                        <v-divider
+                          v-if="!item"
+                          :key="`divider-${i}`"
+                        ></v-divider>
+
+                        <v-list-item
+                          v-else
+                          :key="`item-${i}`"
+                          :value="item"
+                          active-class="deep-purple--text text--accent-4"
+                        >
+                          <template v-slot:default="{ active }">
+                            <v-list-item-content>
+                              <v-list-item-title
+                                v-text="item"
+                              ></v-list-item-title>
+                            </v-list-item-content>
+
+                            <v-list-item-action>
+                              <v-checkbox
+                                :input-value="active"
+                                color="deep-purple accent-4"
+                              ></v-checkbox>
+                            </v-list-item-action>
+                          </template>
+                        </v-list-item>
+                      </template>
+                    </v-list-item-group>
+                  </v-list>
                 </v-col>
               </v-row>
             </v-container>
@@ -104,9 +132,8 @@
   </v-container>
 </template>
 
-<script> 
-
-import {getAPI} from  '../../Api/axios-base';
+<script>
+import { getAPI } from "../../Api/axios-base";
 export default {
   data() {
     return {
@@ -116,34 +143,35 @@ export default {
       tipoUsuario: "Tipo de usuario",
       values: [],
       value: null,
-      categorias:[
-      ],
+      categorias: [],
+      items: [
+      'Dog Photos',
+      'Cat Photos',
+      '',
+      'Potatoes',
+      'Carrots',
+    ],
+    model: ['Carrots'],
     };
   },
 
-  methods:{
-    obtiene_clasificacion: function(){
+  methods: {
+    obtiene_clasificacion: function () {
+      const self = this;
+      //categorias de los tipos de recursos
+      getAPI.get("Recursos/api/categorias/").then((response) => {
+        // if API sends back new access and refresh token update the store
+        console.log("New access successfully generated");
+        console.log(response.data);
 
-      const self= this
-          //categorias de los tipos de recursos 
-     getAPI.get("Recursos/api/categorias/").then(response => { // if API sends back new access and refresh token update the store
-            console.log('New access successfully generated')
-            console.log(response.data)
+        self.categorias = response.data;
+      });
+    },
+  },
 
-            self.categorias=response.data
-          })
-       
-    }
-
-
-     },
-
-
-  mounted(){
-    this.obtiene_clasificacion()
-
-  }
-
+  mounted() {
+    this.obtiene_clasificacion();
+  },
 };
 </script>
 

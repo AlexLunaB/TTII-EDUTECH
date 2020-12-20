@@ -31,6 +31,9 @@ class RecursoViewSet(mixins.ListModelMixin,
 
     return RecursoReadSerializer
 
+
+
+
   @action(detail=False, methods=['get'])
   def Tags(self,request):
 
@@ -46,6 +49,26 @@ class RecursoViewSet(mixins.ListModelMixin,
     return Response(ts.data)
 
 
+
+  @action(detail=False, methods=['get'])
+  def Tags(self,request):
+
+
+
+    tags=Recurso.tags.all()
+    print(tags)
+    ts=TagSerializer(data=tags,many=True)
+    print(ts.is_valid())
+    print(ts.errors)
+
+
+    return Response(ts.data)
+
+  @action(detail=True, methods=[""])
+  def CalificaRecurso(self, request):
+
+
+    self
 
 
   @action(detail=False, methods=['get'])
