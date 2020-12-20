@@ -75,7 +75,7 @@
           <v-btn color="green darken-1" text @click="dialog = false; postArticulos()">Save</v-btn>
         </v-card-actions>
 
-        <v-fab-transition>
+        <!-- <v-fab-transition>
         <v-btn
           :key="activeFab.icon"
           :color="activeFab.color"
@@ -88,7 +88,7 @@
         >
           <v-icon>{{ activeFab.icon }}</v-icon>
         </v-btn>
-      </v-fab-transition>
+      </v-fab-transition> -->
       
       </v-card>
     </v-dialog>

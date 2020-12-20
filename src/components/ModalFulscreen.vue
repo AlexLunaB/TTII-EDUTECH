@@ -54,10 +54,11 @@
 
 
         <template v-for="(value) in recursos">
-          <v-img
+          <!-- <v-img
             height="250"
             src="https://www.quo.es/wp-content/uploads/2019/10/los-cinco-trabajos-que-por-ahora-no-podra-quitarte-un-robot.jpg"
-          ></v-img>
+          ></v-img> -->
+          <Carousel> </Carousel>
 
           <v-card-title>Nombre del recurso: {{value.nombreRecurso}}</v-card-title>
 
@@ -133,6 +134,7 @@
 <script>
 
 import {getAPI} from '../Api/axios-base'
+import Carousel from '../components/Carousel'
 
 getAPI()
   export default {
@@ -148,6 +150,9 @@ getAPI()
     },
     props: {
       
+    },
+    components: {
+      Carousel
     },
     methods: {
       showModal: function() {
