@@ -69,10 +69,10 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="red " flat @click="dialog = false"
+          <v-btn color="red " text @click="dialog = false"
             >Cancelar</v-btn
           >
-          <v-btn color="green darken-1" flat @click="dialog = false; postArticulos()">Save</v-btn>
+          <v-btn color="green darken-1" text @click="dialog = false; postArticulos()">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -86,7 +86,7 @@ export default {
     return {
       estados: [],
       municipios:[],
-      dialog: true,
+      dialog: false,
       articulo: {
         nombre:null,
         descripcion:null,
@@ -140,6 +140,10 @@ export default {
         alert(JSON.stringify(res))
         
       });
+    },
+
+    showAddResource: function() {
+      this.dialog = true;
     }
   },
 };
