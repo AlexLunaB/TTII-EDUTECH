@@ -114,6 +114,8 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         // send the username and password to the backend API:
         axiosBase.post('Usuarios/api/token/', {
+
+
           username: credentials.username,
           password: credentials.password
         })

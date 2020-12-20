@@ -25,5 +25,5 @@ urlpatterns = [
     path('', include('ObservatorioTTApp.urls')),
 
     path('Recursos/', include(('recursos.urls', 'recursos'), namespace='recursos')),
-
+    path('Usuarios/', include(('usuarios.urls', 'usuarios'), namespace='recursos')),
 ]

@@ -74,6 +74,7 @@
           >
           <v-btn color="green darken-1" text @click="dialog = false; postArticulos()">Save</v-btn>
         </v-card-actions>
+<<<<<<< HEAD
 
         <!-- <v-fab-transition>
         <v-btn
@@ -90,6 +91,8 @@
         </v-btn>
       </v-fab-transition> -->
       
+=======
+>>>>>>> d48c0945f60a4e020bab618c98cb89298ef8cf3d
       </v-card>
     </v-dialog>
   </v-container>
@@ -154,7 +157,7 @@ export default {
       "Usuario":1,"estado":self.articulo.estado.id,"municipio":self.articulo.municipio.id, 
       "categoria":self.articulo.categoria}).then((res)=> {
         alert(JSON.stringify(res))
-
+        
       });
     },
 
