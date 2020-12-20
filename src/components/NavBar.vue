@@ -55,20 +55,36 @@
           <v-list-item-subtitle class="text-center">Blog</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
+
+      <v-list-item>
+        <v-list-item-content>
+          <v-icon class="mb-2">fas fa-book-reader</v-icon>
+          <v-list-item-subtitle class="text-center">{{loggedIn}}</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item @click="logoutUser" v-if="loggedIn">
+        <v-list-item-content>
+          <v-icon class="mb-2">fas fa-sign-out-alt</v-icon>
+          <v-list-item-subtitle class="text-center">Cerrar sesión</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
 
-    <v-list style="position: absolute; bottom: 0" class="ml-3">
+    <!-- <v-list style="position: absolute; bottom: 0" class="ml-3" v-if="loggedIn" @click="logoutUser">
       <v-list-item>
         <v-list-item-action>
           <v-icon right>fas fa-sign-out-alt</v-icon>
         </v-list-item-action>
       </v-list-item>
-    </v-list>
+    </v-list> -->
   </v-navigation-drawer>
+  
 </nav>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
   export default {
       name: "Navbar",
       data(){
@@ -77,6 +93,12 @@
           correo: 'correo@dominio.com',
           drawer: true,
         }
+      },
+      computed: {
+        ...mapGetters(['loggedIn'])
+      },
+      methods: {
+        ...mapActions(['logoutUser'])
       }
   }
 </script>

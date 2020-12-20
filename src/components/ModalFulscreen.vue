@@ -16,6 +16,9 @@
           Open Dialog
         </v-btn>
       </template> -->
+
+
+     
       <v-card
         :loading="loading"
         class="mx-auto my-12"
@@ -51,6 +54,10 @@
             indeterminate
           ></v-progress-linear>
         </template>
+
+
+        
+      <v-container>
 
 
         <template v-for="(value) in recursos">
@@ -125,6 +132,8 @@
             </v-btn>
           </v-card-actions>
         </template>
+
+      </v-container>
       </v-card>
     </v-dialog>
   </v-row>

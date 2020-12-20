@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import VueRouter from 'vue-router'
 import Login from "../Layout/Login";
 import DashBoard from "../Layout/DashBoard";
 import CatalogoServicios from "../Layout/CatalogoServicios";
@@ -7,9 +8,10 @@ import ErrorComponent from "../components/ErrorComponent";
 import MapaComponent from "../components/MapaComponent";
 import Blog from "../components/Blog";
 import Perfil from "../components/PerfilComponents/Perfil";
+import store from '../store'
 
-Vue.use(Router)
-export default new Router({
+Vue.use(VueRouter)
+const router = new VueRouter({
   routes: [
 
     {
@@ -22,27 +24,31 @@ export default new Router({
       path: '/',
       name: "DashBoard",
       component: DashBoard,
+      meta: {rutaProtegida: true},
       children: [
         {
           path: "Inicio",
           name: "Mapa",
-          component: MapaComponent
+          component: MapaComponent,
+          meta: {rutaProtegida: true}
         },
         {
           path: "Servicios",
           name: "CatalogoServicios",
-          component: CatalogoServicios
-
+          component: CatalogoServicios,
+          meta: {rutaProtegida: true},
         },
         {
           path: "Blog",
           name: "Blog",
-          component: Blog
+          component: Blog,
+          meta: {rutaProtegida: true},
         },
         {
           path: "Perfil",
           name: "Peril",
-          component: Perfil
+          component: Perfil,
+          meta: {rutaProtegida: true},
         }
       ]
     },
@@ -55,3 +61,25 @@ export default new Router({
   ],
   mode: "history"
 });
+
+// const router = createRouter({
+//   history: createWebHistory(process.env.BASE_URL),
+//   routes
+// })
+
+// export default router
+
+router.beforeEach((to, from, next) => {
+  // alert(to.meta.rutaProtegida)
+  // console.log(to.meta.rutaProtegida)
+  if(to.meta.rutaProtegida) {
+    if(store.getters.loggedIn) {
+      next()
+    } else {
+      next('/Login')
+    }
+  } else {
+    next();
+  }
+})
+export default router

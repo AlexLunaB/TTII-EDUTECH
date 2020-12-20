@@ -74,25 +74,6 @@
           >
           <v-btn color="green darken-1" text @click="dialog = false; postArticulos()">Save</v-btn>
         </v-card-actions>
-<<<<<<< HEAD
-
-        <!-- <v-fab-transition>
-        <v-btn
-          :key="activeFab.icon"
-          :color="activeFab.color"
-          fab
-          large
-          dark
-          bottom
-          left
-          class="v-btn--example"
-        >
-          <v-icon>{{ activeFab.icon }}</v-icon>
-        </v-btn>
-      </v-fab-transition> -->
-      
-=======
->>>>>>> d48c0945f60a4e020bab618c98cb89298ef8cf3d
       </v-card>
     </v-dialog>
   </v-container>
