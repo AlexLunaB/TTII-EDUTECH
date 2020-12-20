@@ -43,7 +43,8 @@
                             v-model="password"
                             prepend-icon="lock"
                             type="password"
-                            color="teal accent-3">
+                            color="teal accent-3"
+                            v-on:keyup.enter="loginUser">
                           </v-text-field>
                         </v-form>
 
@@ -153,7 +154,7 @@
 </template>
 
 <script>
-
+import Swal from 'sweetalert2'
   export default {
     name: 'login',
 
@@ -176,6 +177,12 @@
             this.$router.push({name: 'Mapa'})
           })
           .catch(err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'ERROR...',
+              text: '¡Usuario / Contraseña incorrecto!',
+              footer: 'Intenta de nuevo'
+            })
             console.log(err)
             this.wrongCred = true // if the credentials were wrong set wrongCred to true
           })

@@ -115,6 +115,7 @@
                     </v-list-item-group>
                   </v-list>
                 </v-col>
+
               </v-row>
             </v-container>
             <!-- Fin Preferencias -->
@@ -144,14 +145,8 @@ export default {
       values: [],
       value: null,
       categorias: [],
-      items: [
-      'Dog Photos',
-      'Cat Photos',
-      '',
-      'Potatoes',
-      'Carrots',
-    ],
-    model: ['Carrots'],
+      items: ["Dog Photos", "Cat Photos", "", "Potatoes", "Carrots"],
+      model: ["Carrots"],
     };
   },
 
