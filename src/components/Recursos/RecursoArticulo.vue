@@ -15,7 +15,7 @@
                   v-model="articulo.nombre"
                   label="Título del artículo*"
                 ></v-text-field>
-                
+
               </v-flex>
 
               <v-flex xs12>
@@ -23,9 +23,9 @@
                   v-model="articulo.descripcion"
                   label="Descripción del artículo*"
                 ></v-text-field>
-   
+
               </v-flex>
-              
+
 
               <v-flex xs12 sm6>
                 <v-autocomplete
@@ -75,21 +75,7 @@
           <v-btn color="green darken-1" text @click="dialog = false; postArticulos()">Save</v-btn>
         </v-card-actions>
 
-        <v-fab-transition>
-        <v-btn
-          :key="activeFab.icon"
-          :color="activeFab.color"
-          fab
-          large
-          dark
-          bottom
-          left
-          class="v-btn--example"
-        >
-          <v-icon>{{ activeFab.icon }}</v-icon>
-        </v-btn>
-      </v-fab-transition>
-      
+
       </v-card>
     </v-dialog>
   </v-container>
@@ -121,7 +107,7 @@ export default {
       municipio:{
         id:null
       }
-      
+
     };
   },
   mounted: function () {
@@ -150,8 +136,8 @@ export default {
     postArticulos: async function() {
       const self = this
       await getAPI.post("Recursos/api/Articulos/",
-      {"nombreRecurso":self.articulo.nombre, "descripcion":self.articulo.descripcion, 
-      "Usuario":1,"estado":self.articulo.estado.id,"municipio":self.articulo.municipio.id, 
+      {"nombreRecurso":self.articulo.nombre, "descripcion":self.articulo.descripcion,
+      "Usuario":1,"estado":self.articulo.estado.id,"municipio":self.articulo.municipio.id,
       "categoria":self.articulo.categoria}).then((res)=> {
         alert(JSON.stringify(res))
 
