@@ -97,7 +97,7 @@
                           <v-icon>fab fa-facebook</v-icon>
                         </v-btn>
                       </div>
-                   
+
                         <div>
                           <h4 class="text-center ">Verifica tu correo</h4>
                           <v-form>
@@ -173,7 +173,7 @@
         })
           .then(() => {
             this.wrongCred = false
-            this.$router.push({name: 'Dashboard'})
+            this.$router.push({name: 'Mapa'})
           })
           .catch(err => {
             console.log(err)
