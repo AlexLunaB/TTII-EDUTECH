@@ -12,7 +12,7 @@
       <v-list-item router to="/Perfil">
         <v-layout justify-center>
           <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+            <v-img :src=perfil.foto></v-img>
           </v-list-item-avatar>
         </v-layout>        
       </v-list-item>
@@ -20,9 +20,9 @@
       <v-list-item router to="/Perfil">
         <v-list-item-content>
           <v-list-item-title class="title">
-            {{nombre}}
+            {{ perfil.nombre}} {{ perfil.apellidos }}
           </v-list-item-title>
-          <v-list-item-subtitle>{{correo}}</v-list-item-subtitle>
+          <v-list-item-subtitle>{{perfil.email}}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -85,22 +85,52 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-  export default {
-      name: "Navbar",
-      data(){
-        return {
-          nombre: 'Nombre Apellido',
-          correo: 'correo@dominio.com',
-          drawer: true,
-        }
+import { getAPI } from "../Api/axios-base";
+export default {
+  name: "Navbar",
+  data(){
+    return {
+      perfil: {
+        email: null,
+        nombre: null,
+        apellidos: null,
+        usuario: null,
+        foto: null,
+        municipio: null,
+        intereses: [],
       },
-      computed: {
-        ...mapGetters(['loggedIn'])
-      },
-      methods: {
-        ...mapActions(['logoutUser'])
-      }
-  }
+      nombre: 'Nombre Apellido',
+      correo: 'correo@dominio.com',
+      drawer: true,
+    };
+  },
+
+  methods: {
+    obtiene_datos_usuario: function () {
+      const self = this;
+      getAPI.get("Usuarios/api/Profile/").then((response) =>{
+        console.log(response.data);
+        console.log(response.data.usuario);
+        self.perfil.email = response.data.usuario.email;
+        self.perfil.nombre = response.data.usuario.first_name;
+        self.perfil.apellidos = response.data.usuario.last_name;
+        self.perfil.usuario = response.data.usuario.username;
+        self.perfil.foto = response.data.foto;
+        self.perfil.intereses = response.data.intereses;
+      });
+    },
+
+    ...mapActions(['logoutUser'])
+  },
+
+  mounted() {
+    this.obtiene_datos_usuario();
+  },
+
+  computed: {
+    ...mapGetters(['loggedIn'])
+  },
+};
 </script>
 
 <style scoped>

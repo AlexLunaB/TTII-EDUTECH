@@ -2,7 +2,7 @@
   <v-container id="contenedorHeader" fluid>
         <v-card color="basil">
           <v-card-title class="text-center justify-center py-6">
-            <h1 class="font-weight-bold display-3 basil--text">BAhgxgxiL</h1>
+            <h1 class="font-weight-bold display-3 basil--text">BLOG</h1>
           </v-card-title>
 
           <v-tabs
@@ -34,7 +34,7 @@ export default {
     return {
       tab: null,
       items: [
-        'Appetizers', 'Entrees', 'Deserts',
+        'Entrada 1', 'Entarada 2', 'Entrada 3',
       ],
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     }
