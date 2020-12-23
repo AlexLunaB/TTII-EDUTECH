@@ -56,7 +56,8 @@ const router = new VueRouter({
     {
       path: '*',
       name: "ErrorComponent",
-      component: ErrorComponent
+      component: ErrorComponent,
+      meta: {rutaProtegida: true},
     }
   ],
   mode: "history"

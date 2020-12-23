@@ -57,7 +57,7 @@
 
 
         
-      <v-container>
+      <v-container >
 
 
         <template v-for="(value) in recursos">
@@ -92,19 +92,50 @@
               $ • Italian, Cafe
             </div>
 
-            <div>ID: {{value.id}}</div>
+            <v-list-item-title class="headline mb-1">
+              ID: {{value.id}}
+            </v-list-item-title>
+            <v-list-item-title class="headline mb-1">
+              Usuario: {{value.Usuario}}
+            </v-list-item-title>
+            <v-list-item-title class="headline mb-1">
+              Descripcion: {{value.descripcion}}
+            </v-list-item-title>
+            <v-list-item-title class="headline mb-1">
+              Fecha de creacion: {{value.fechaCreacion}}
+            </v-list-item-title>
+            <v-list-item-title class="headline mb-1">
+              Fecha de modificación: {{value.fechaModificacion}}
+            </v-list-item-title>
+            <v-list-item-title class="headline mb-1">
+              Estado de procedencia: {{value.estado}}
+            </v-list-item-title>
+            <v-list-item-title class="headline mb-1">
+              Municipio de procedencia: {{value.municipio}}
+            </v-list-item-title>
+
+            <!-- <div>ID: {{value.id}}</div>
             <div>Usuario: {{value.Usuario}}</div>
             <div>Descripcion: {{value.descripcion}}</div>
             <div>Fecha de creacion: {{value.fechaCreacion}}</div>
             <div>Fecha de modificación: {{value.fechaModificacion}}</div>
             <div>Estado de procedencia: {{value.estado}}</div>
-            <div>Municipio de procedencia: {{value.municipio}}</div>
+            <div>Municipio de procedencia: {{value.municipio}}</div> -->
 
           </v-card-text>
 
-          <v-divider class="mx-4"></v-divider>
+          <!-- <div> 
+            <v-divider class="mx-4"></v-divider>
 
-          <v-card-title>Tonight's availability</v-card-title>
+          </div> -->
+
+          <hr class="dashed">
+          
+          <br><br>
+          
+          
+
+          <!-- <v-card-title>Tonight's availability</v-card-title>
 
           <v-card-text>
             <v-chip-group
@@ -130,7 +161,7 @@
             >
               Reserve
             </v-btn>
-          </v-card-actions>
+          </v-card-actions> -->
         </template>
 
       </v-container>
@@ -213,3 +244,12 @@ getAPI()
     },
   }
 </script>
+
+
+
+<style>
+  /* Dashed border */
+  hr.dashed {
+    border-top: 3px dashed #bbb;
+  }
+</style>

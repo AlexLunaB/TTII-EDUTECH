@@ -1,41 +1,36 @@
 <template>
-  <v-carousel v-model="model">
+  <v-carousel 
+    show-arrows-on-hover>
     <v-carousel-item
-      v-for="(color, i) in colors"
-      :key="color"
-    >
-      <v-sheet
-        :color="color"
-        height="100%"
-        tile
-      >
-        <v-row
-          class="fill-height"
-          align="center"
-          justify="center"
-        >
-          <div class="display-3">
-            Slide {{ i + 1 }}
-          </div>
-        </v-row>
-      </v-sheet>
-    </v-carousel-item>
+      v-for="(item,i) in items"
+      :key="i"
+      :src="item.src"
+      reverse-transition="fade-transition"
+      transition="fade-transition"
+    ></v-carousel-item>
   </v-carousel>
 </template>
 
 
-
 <script>
   export default {
-    data: () => ({
-      model: 0,
-      colors: [
-        'primary',
-        'secondary',
-        'yellow darken-2',
-        'red',
-        'orange',
-      ],
-    }),
+    data () {
+      return {
+        items: [
+          {
+            src: 'https://ep01.epimg.net/elpais/imagenes/2019/10/30/album/1572424649_614672_1572453030_noticia_normal.jpg',
+          },
+          {
+            src: 'https://www.quo.es/wp-content/uploads/2019/10/los-cinco-trabajos-que-por-ahora-no-podra-quitarte-un-robot.jpg',
+          },
+          {
+            src: 'https://i.blogs.es/594843/chrome/1366_2000.jpg',
+          },
+          {
+            src: 'https://cde.laprensa.e3.pe/ima/0/0/2/3/8/238082.jpg',
+          },
+        ],
+      }
+    },
   }
 </script>
