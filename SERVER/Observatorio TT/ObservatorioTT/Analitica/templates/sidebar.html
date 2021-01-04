@@ -1,234 +1,79 @@
 <!-- Main Sidebar Container -->
-{% load user_tags %}
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    {% load static %}
-    <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+  {% load static %}
+  <!-- Brand Logo -->
+  <a href="index3.html" class="brand-link">
 
-        <span class="brand-text font-weight-light">SAJERB</span>
-    </a>
+    <span class="brand-text font-weight-light">Administracion</span>
+  </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="{% static '/img/perro.jpg' %} " class="img-circle elevation-2" alt="User Image">
-            </div>
-            <div class="info">
-                <a href="#" class="d-block">{{ request.user }}</a>
-            </div>
-        </div>
-
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
-                {% if request.user|has_group:"Administradores"  %}
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link active">
-
-                            <i class="nav-icon fas fa-boxes"></i>
-                            <p>
-                                Inventarios
-                                <i class="right fas fa-angle-left"></i>
-
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-
-                            <li class="nav-item">
-                                <a href="{% url 'inventarios:articulo' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Articulos</p>
-                                </a>
-                            </li>
-
-
-                            <li class="nav-item">
-
-                                <a href="{% url 'inventarios:filtro_articulos' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Historial</p>
-                                </a>
-
-
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{% url 'inventarios:Existencias_filter' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Existencias </p>
-                                </a>
-
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{% url 'inventarios:TransferenciasAlmacen' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Transferencias </p>
-                                </a>
-
-                            </li>
-
-
-                        </ul>
-                    </li>
-
-                {% endif %}
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link active">
-
-                        <i class="nav-icon fas fa-file-alt"></i>
-                        <p>
-                            Documentos
-                            <i class="right fas fa-angle-left"></i>
-
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-
-                        <li class="nav-item">
-                            <a href="{% url 'inventarios:compras' %}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Generar Documento</p>
-                            </a>
-                        </li>
-
-
-                    </ul>
-
-
-                </li>
-                {% if request.user|has_group:"Administradores" or perms.Inventarios.view_provedoresclientes %}
-
-                    <li class="nav-item ">
-                        <a href="{% url 'inventarios:provedores' %}" class="nav-link ">
-
-                            <i class="nav-icon fas fa-users"></i>
-                            <p>
-                                Proveedores
-                            </p>
-                        </a>
-                    </li>
-                {% endif %}
-
-                {% if request.user|has_group:"Administradores" %}
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link ">
-                            <i class="nav-icon fas fa-archive"></i>
-                            <p>
-                                Administración
-                                <i class="right fas fa-angle-left"></i>
-
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-
-                            <li class="nav-item">
-                                <a href="{% url 'inventarios:lista_autorizacion' %}" class="nav-link">
-                                    <i class="fas fa-user-shield"></i>
-                                    <p>Administracion Documentos y Facturas</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'inventarios:reportes_amazon' %}" class="nav-link">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    <p>Reportes Amazon</p>
-                                </a>
-                            </li>
-
-                        </ul>
-
-
-                    </li>
-
-
-
-                {% endif %}
-
-
-
-                {% if request.user|has_group:"Administradores" %}
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link ">
-
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>
-                                Catalogos
-                                <i class="right fas fa-angle-left"></i>
-
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-
-                            <li class="nav-item">
-                                <a href="{% url 'inventarios:clasificacion' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Clasificación</p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{% url 'inventarios:almacen' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Almacenes</p>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{% url 'inventarios:documentos' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Documentos</p>
-                                </a>
-                            </li>
-                        </ul>
-
-                    </li>
-
-                {% endif %}
-
-                {% if request.user|has_group:"Administradores" or perms.Inventarios.view_cobro_documento %}
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link ">
-
-                            <i class="nav-icon fas fa-receipt"></i>
-                            <p>
-                                Cuentas
-                                <i class="right fas fa-angle-left"></i>
-
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-
-
-                            {% if request.user|has_group:"Administradores" or perms.Inventarios.edit_cobro_documento %}
-
-                            <li class="nav-item">
-                                <a href="{% url 'Cuentas:main' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Sistema de Cuentas</p>
-                                </a>
-                            </li>
-                                {% endif %}
-                            <li class="nav-item">
-                                <a href="{% url 'Inventarios:cobro' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Cobros y Pagos</p>
-                                </a>
-                            </li>
-
-
-                        </ul>
-
-
-                    </li>
-
-                {% endif %}
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="{% static '/img/perro.jpg' %} " class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a href="#" class="d-block">{{ request.user }}</a>
+      </div>
     </div>
-    <!-- /.sidebar -->
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+
+
+        <li class="nav-item ">
+          <a href="#" class="nav-link active">
+
+            <i class="nav-icon fas fa-home"></i>
+            <p>
+              Inicio
+
+
+            </p>
+          </a>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link active">
+
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>
+              Datos
+              <i class="right fas fa-angle-left"></i>
+
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+
+            <li class="nav-item">
+
+              <a class="nav-link" href="{%  url 'Analitica:GNacional' %}">
+
+                <i class="far fa-circle nav-icon"></i>
+                <p>Por Estado</p>
+
+
+              </a>              <a  href="{%  url 'Analitica:GEstado' %}" class="nav-link">
+
+                <i class="far fa-circle nav-icon"></i>
+                <p>A nivel Nacional</p>
+              </a>
+            </li>
+
+
+          </ul>
+
+
+        </li>
+
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
 </aside>

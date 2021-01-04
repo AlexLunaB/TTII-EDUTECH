@@ -9,7 +9,8 @@ import MapaComponent from "../components/MapaComponent";
 import Blog from "../components/Blog";
 import Perfil from "../components/PerfilComponents/Perfil";
 import store from '../store'
-
+import AddPost from "../components/Blog/AddPost"
+import BlogDetail from "../components/BlogComponents/BlogDetail"
 Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
@@ -44,6 +45,15 @@ const router = new VueRouter({
           component: Blog,
           meta: {rutaProtegida: true},
         },
+        {
+          path: "Blog/CrearPublicación",
+          name: "AddPub",
+          component: AddPost,
+          meta: {rutaProtegida: true},
+        },
+
+
+        { path: '/Blog/:id', component: BlogDetail , name:"post"},
         {
           path: "Perfil",
           name: "Peril",

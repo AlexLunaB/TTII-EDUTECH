@@ -1,10 +1,211 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+{% block head_content %}
+  <title>Sistema de contro</title>
+{% endblock %}
+
+{% block container %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+
+    <div class="content">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Tabla Inicio</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                <li class="breadcrumb-item active">Dashboard v1</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="card card-danger">
+            <div class="card-header">
+              <h3 class="card-title">Cantidad de Recursos Por estado</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chartjs-size-monitor">
+                <div class="chartjs-size-monitor-expand">
+                  <div class=""></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink">
+                  <div class=""></div>
+                </div>
+              </div>
+              <canvas id="myChart"
+                      style="min-height: 250px; height: 250px; max-height: 450px;  display: block; "
+                      width="300" height="450"></canvas>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Tags Más Utilizados</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chartjs-size-monitor">
+                <div class="chartjs-size-monitor-expand">
+                  <div class=""></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink">
+                  <div class=""></div>
+                </div>
+              </div>
+              <canvas id="myChart2"
+                      style="min-height: 250px; height: 250px; max-height: 400px; max-width: 100%; display: block; "
+                      width="323" height="400"></canvas>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </div>
+  </div>
+  <!-- /.content-wrapper -->
+
+
+{% endblock %}
+
+{% block js %}
+
+  <script>
+
+
+    var dataPoints = [];
+    var labels = [];
+    var data = [];
+    var colors = [];
+
+
+    var tags = {
+      labels: [],
+      data: [],
+      colors: [],
+
+    }
+
+    var dynamicColors = function () {
+      var r = Math.floor(Math.random() * 255);
+      var g = Math.floor(Math.random() * 255);
+      var b = Math.floor(Math.random() * 255);
+      return "rgb(" + r + "," + g + "," + b + ")";
+    };
+
+
+    $(document).ready(function () {
+      function addData(data) {
+
+
+        for (i in data) {
+
+          this.labels.push(data[i].nombre)
+          this.data.push(data[i].recurso__count)
+          this.colors.push(dynamicColors())
+
+
+        }
+        console.log(this.colors)
+
+        var ctx = document.getElementById("myChart").getContext('2d');
+
+
+        var myChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+
+            labels: this.labels,
+            datasets: [{
+              backgroundColor: this.colors,
+
+              data: this.data
+            }]
+          }
+        });
+
+
+      }
+
+
+      function addDataTags(data) {
+        for (i in data) {
+
+
+          this.tags.colors.push(dynamicColors())
+          this.tags.data.push(data[i])
+          this.tags.labels.push(i)
+        }
+
+
+        var ctx = document.getElementById("myChart2").getContext('2d');
+
+
+        var myChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+
+            labels: this.tags.labels,
+            datasets: [{
+              backgroundColor: this.tags.colors,
+
+              data: this.tags.data
+            }]
+          }
+        });
+
+
+      };
+
+
+      $.ajax({
+        url: '/Analitica/data/edos',
+        success: function (respuesta) {
+
+
+          addData(respuesta)
+        },
+        error: function () {
+          console.log("No se ha podido obtener la información");
+        }
+      });
+      $.ajax({
+        url: '/Analitica/data/tags',
+        success: function (respuesta) {
+
+
+          addDataTags(respuesta)
+        },
+        error: function () {
+          console.log("No se ha podido obtener la información");
+        }
+      });
+    })
+  </script>
+
+
+{% endblock %}

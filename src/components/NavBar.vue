@@ -4,7 +4,7 @@
     v-model="drawer" 
     app mini-variant mini-variant-width="100" 
     class="barra"
-    expand-on-hover
+  
     dark
   >
 

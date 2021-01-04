@@ -35,6 +35,8 @@ class EstadosMexicoViewSet(
 
 
 
+
+
 def home(request):
     return render(request, "ObservatorioTTApp/home.html")
 

@@ -27,5 +27,7 @@ urlpatterns = [
     path('', include('ObservatorioTTApp.urls')),
 
     path('Recursos/', include(('recursos.urls', 'recursos'), namespace='recursos')),
-    path('Usuarios/', include(('usuarios.urls', 'usuarios'), namespace='recursos')),
+    path('Usuarios/', include(('usuarios.urls', 'usuarios'), namespace='usuarios')),
+    path('Analitica/', include(('Analitica.urls', 'Analitica'), namespace='Analitica')),
+    path('Foro/', include(('foroDiscusion.urls', 'foroDiscusion'), namespace='foroDiscusion')),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

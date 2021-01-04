@@ -24,18 +24,18 @@
                     class="mx-0"
                 >
                     <v-rating
-                    v-model="rating"
+                    v-model="recurso.calificacion"
                     color="yellow darken-3"
                     background-color="grey darken-1"
                     @input="postCalificacion"
-                    half-increments
+                    
                     hover
                     large
 
                     ></v-rating>
 
                     <div class="grey--text ml-4" >
-                    {{rating}} (413)
+                    {{recurso.calificacion}} (413)
                     </div>
                 </v-row>
 
@@ -146,6 +146,12 @@ export default {
             //     alert(error);
             // }
             // console.log(this.recurso.id)
+            getAPI.post("Recursos/api/Articulos/"+this.recurso.id+"/CalificaRecurso/",{
+                "calificacion": this.recurso.calificacion
+            }).then((d)=>{
+          console.log(d)
+        })
+
             console.log(`ID: ${this.recurso.id} - Nombre: ${this.recurso.nombreRecurso} - Rating: ${this.rating}`)
         },
     }

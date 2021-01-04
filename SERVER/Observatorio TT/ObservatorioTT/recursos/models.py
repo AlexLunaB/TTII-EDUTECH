@@ -24,7 +24,6 @@ class Recurso(models.Model):
     fechaCreacion = models.DateTimeField(auto_now_add=True)
     fechaModificacion = models.DateTimeField(auto_now=True)
     descripcion = models.CharField(max_length = 250)
-    Estado= models,
     tags = TaggableManager()
 
     # created = models.DateTimeField(auto_now_add=True)
