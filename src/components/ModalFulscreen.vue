@@ -60,7 +60,7 @@
       <v-container >
 
         <div v-if="dialog">
-          <TarjetaRecurso v-for="recurso in recursos" :recurso = recurso> </TarjetaRecurso>
+          <TarjetaRecurso v-for="recurso in recursos" :key="recurso.id" :recurso = recurso> </TarjetaRecurso>
         </div>
         
 
