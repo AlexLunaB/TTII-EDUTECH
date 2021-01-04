@@ -94,20 +94,31 @@ export default new Vuex.Store({
     },
     logoutUser(context) {
       if (context.getters.loggedIn) {
-        return new Promise((resolve, reject) => {
-          axiosBase.post('/api/token/logout/')
-            .then(response => {
-              localStorage.removeItem('access_token')
-              localStorage.removeItem('refresh_token')
-              context.commit('destroyToken')
-            })
-            .catch(err => {
-              localStorage.removeItem('access_token')
-              localStorage.removeItem('refresh_token')
-              context.commit('destroyToken')
-              resolve(err)
-            })
-        })
+        try {
+          localStorage.removeItem('access_token')
+          localStorage.removeItem('refresh_token')
+          context.commit('destroyToken')
+          router.push({name: 'Login'})
+        } catch (error) {
+          console.log(error)
+        }
+
+        // return new Promise((resolve, reject) => {
+        //   axiosBase.post('/api/token/logout/')
+        //     .then(response => {
+        //       localStorage.removeItem('access_token')
+        //       localStorage.removeItem('refresh_token')
+        //       context.commit('destroyToken')
+        //       router.push({name: 'Login'})
+        //     })
+        //     .catch(err => {
+        //       localStorage.removeItem('access_token')
+        //       localStorage.removeItem('refresh_token')
+        //       context.commit('destroyToken')
+        //       router.push({name: 'Login'})
+        //       resolve(err)
+        //     })
+        // })
       }
     },
     loginUser(context, credentials) {
@@ -126,8 +137,11 @@ export default new Vuex.Store({
               refresh: response.data.refresh,
               user: JSON.stringify(response.data.user)
             }) // store the access and refresh token in localstorage
+            
             resolve()
           })
+          // console.log(state.accessToken)
+          // console.log(state.refreshToken)
           .catch(err => {
             reject(err)
           })

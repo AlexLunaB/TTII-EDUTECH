@@ -1,4 +1,6 @@
 <template>
+
+<v-col  cols="4" md="4" sm="12">
   <v-container fluid class="mb-0">
 
 
@@ -13,26 +15,15 @@
 
           <v-img
             height="250"
-            src="https://cdn.pixabay.com/photo/2017/08/06/22/01/books-2596809_960_720.jpg"
+            :src="this.articulo.Imagen"
           ></v-img>
 
           <v-card-title>{{tituloArticulo}} </v-card-title>
 
           <v-card-text>
-            <v-row align="center" class="mx-0">
-              <v-rating
-                :value="4.0"
-                color="amber"
-                dense
-                half-increments
-                readonly
-                size="15"
-              ></v-rating>
 
-              <div class="grey--text ml-4">{{valorCalificacion}} ({{totalCalificaciones}})</div>
-            </v-row>
 
-            <div class="my-4 subtitle-1"> {{subtituloArticulo}} </div>
+           
 
             <div class="my-2">
               {{resumenArticulo}}
@@ -44,35 +35,34 @@
 
           <v-divider class="mx-4"></v-divider>
 
-          <v-card-title>Comentar</v-card-title>
 
 
 
-          <v-card-text>
-            <v-text-field ></v-text-field>
-          </v-card-text>
 
           <v-card-actions>
-            <v-btn color="deep-purple lighten-2" text @click="reserve">
-              Comentar
+            <v-btn color="deep-purple" router @click="reserve">
+              Leer más
             </v-btn>
           </v-card-actions>
         </v-card>
 
   </v-container>
+</v-col>
 </template>
 
 <script>
 export default {
+  props: ['articulo'],
+
   data () {
     return {
-      tituloArticulo: 'Titulo del artículo',
+      tituloArticulo: this.articulo.temaDiscusion,
       // Valor ( en texto de la califcacion)
-      valorCalificacion: '4.5',
+
       // Numero de calificaciones
-      totalCalificaciones: '333',
-      resumenArticulo: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s',
-      subtituloArticulo: 'Subtitulo del articulo',
+
+      resumenArticulo: this.articulo.descripcion,
+
       loading: false,
       selection: 1,
     }
@@ -81,7 +71,11 @@ export default {
     reserve () {
       this.loading = true
 
-      setTimeout( () => (this.loading = false), 2000)
+      setTimeout( () => {
+        
+      this.loading = false
+      this.$router.push({name: 'post', params: { id: this.articulo.id}})
+      }, 2000)
     },
   }
 };

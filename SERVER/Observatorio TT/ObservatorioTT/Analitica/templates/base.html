@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block head_content %}
+
+    {% endblock %}
+    {% load static %}
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!--ESTILOS PROPIOS-->
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" >
+    <!--TOAST-->
+    <link href="{% static 'plugins/toastr/toastr.min.css' %}" rel="stylesheet ">
+    <link href="{% static 'plugins/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" >
+
+
+
+</head>
+<body class="hold-transition sidebar-mini">
+
+
+<div class="wrapper">
+    {% include "nav.html" %}
+    {% include "sidebar.html" %}
+
+
+    {% block container %}
+    {% endblock %}
+
+
+    {% include "footer.html" %}
+
+    {% block js %}
+
+    {% endblock %}
+
+</div>
+</body>
+
+</html>

@@ -10,9 +10,35 @@ from taggit_serializer.serializers import TaggitSerializer
 from ObservatorioTTApp.models import MexicoState
 from recursos.Serializers.RecursoSerializer import RecursoSerializer, CategoriaSerializer, RecursoReadSerializer, \
   TagSerializer
-from recursos.models import Recurso, Categoria
+from recursos.models import Recurso, Categoria, Rating
+from rest_framework.permissions import IsAuthenticated
+"""
+# for recommendation
+def recommend(request):
+	if not request.user.is_authenticated:
+		return redirect("login")
+	if not request.user.is_active:
+		raise Http404
+	df=pd.DataFrame(list(Myrating.objects.all().values()))
+	nu=df.user_id.unique().shape[0]
+	current_user_id= request.user.id
+	# if new user not rated any movie
+	if current_user_id>nu:
+		movie=Movie.objects.get(id=15)
+		q=Myrating(user=request.user,movie=movie,rating=0)
+		q.save()
 
-
+	print("Current user id: ",current_user_id)
+	prediction_matrix,Ymean = Myrecommend()
+	my_predictions = prediction_matrix[:,current_user_id-1]+Ymean.flatten()
+	pred_idxs_sorted = np.argsort(my_predictions)
+	pred_idxs_sorted[:] = pred_idxs_sorted[::-1]
+	pred_idxs_sorted=pred_idxs_sorted+1
+	print(pred_idxs_sorted)
+	preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(pred_idxs_sorted)])
+	movie_list=list(Movie.objects.filter(id__in = pred_idxs_sorted,).order_by(preserved)[:10])
+	return render(request,'web/recommend.html',{'movie_list':movie_list})
+"""
 class RecursoViewSet(mixins.ListModelMixin,
                      mixins.UpdateModelMixin,
                      mixins.CreateModelMixin,
@@ -21,6 +47,8 @@ class RecursoViewSet(mixins.ListModelMixin,
                      viewsets.GenericViewSet):
   queryset = Recurso.objects.all()
   serializer_class = RecursoSerializer
+  filter_backends = (filters.SearchFilter,)
+
 
   def get_serializer_class(self):
     """Return serializer based on action."""
@@ -64,12 +92,37 @@ class RecursoViewSet(mixins.ListModelMixin,
 
     return Response(ts.data)
 
-  @action(detail=True, methods=[""])
-  def CalificaRecurso(self, request):
+
+  @action(detail=True, methods=["POST"])
+  def CalificaRecurso(self, request,pk):
+    print(request.data.get("calificacion"))
 
 
-    self
 
+    usuario=self.request.user
+    calificacion=request.data.get("calificacion")
+
+    if not  calificacion:
+      return Response(data={"error":'calificacion no proporcionada'})
+
+
+    recurso=self.get_object()
+    source, created  =Rating.objects.get_or_create(recurso=recurso, user=usuario,)
+    print(source)
+    source.rating=  calificacion
+
+    source.save()
+
+    return Response(data={"ok": 'ok'})
+
+
+
+
+  def get_permissions(self):
+    if self.action == 'CalificaRecurso':
+      return [IsAuthenticated()]
+    else:
+      return super().get_permissions()
 
   @action(detail=False, methods=['get'])
   def Estado(self, request, pk=None):
@@ -87,7 +140,7 @@ class RecursoViewSet(mixins.ListModelMixin,
       ob=ob.recurso_set.all()
 
 
-      R=RecursoSerializer(ob,many=True)
+      R=RecursoReadSerializer(ob,many=True, context={"request":request})
       return Response(data=R.data)
 
 
@@ -95,6 +148,14 @@ class RecursoViewSet(mixins.ListModelMixin,
 
     else:
       return  Response(status=404)
+
+
+
+
+
+
+
+
 
 
 class CategoriaViewSet(mixins.ListModelMixin,
@@ -105,3 +166,10 @@ class CategoriaViewSet(mixins.ListModelMixin,
                      viewsets.GenericViewSet):
   queryset = Categoria.objects.all()
   serializer_class = CategoriaSerializer
+
+
+
+
+
+
+

@@ -4,3 +4,6 @@ from recursos.router import router
 
 urlpatterns = [    path('api/', include(router.urls),name="recursos_api"),
 ]
+
+
+
