@@ -11,11 +11,6 @@ export default new Vuex.Store({
   state: {
 
 
-    socket: {
-      isConnected: false,
-      message: '',
-      reconnectError: false
-    },
 
     accessToken: localStorage.getItem('access_token') || null, // makes sure the user is logged in even after
     // refreshing the page
@@ -137,7 +132,7 @@ export default new Vuex.Store({
               refresh: response.data.refresh,
               user: JSON.stringify(response.data.user)
             }) // store the access and refresh token in localstorage
-            
+
             resolve()
           })
           // console.log(state.accessToken)

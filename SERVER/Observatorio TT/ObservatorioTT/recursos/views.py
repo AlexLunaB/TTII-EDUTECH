@@ -4,6 +4,7 @@ from django.shortcuts import render
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 from taggit_serializer.serializers import TaggitSerializer
 
@@ -47,7 +48,8 @@ class RecursoViewSet(mixins.ListModelMixin,
                      viewsets.GenericViewSet):
   queryset = Recurso.objects.all()
   serializer_class = RecursoSerializer
-  filter_backends = (filters.SearchFilter,)
+  parser_classes = (MultiPartParser, FormParser,)
+
 
 
   def get_serializer_class(self):
@@ -80,16 +82,11 @@ class RecursoViewSet(mixins.ListModelMixin,
 
   @action(detail=False, methods=['get'])
   def Tags(self,request):
-
-
-
     tags=Recurso.tags.all()
     print(tags)
     ts=TagSerializer(data=tags,many=True)
     print(ts.is_valid())
     print(ts.errors)
-
-
     return Response(ts.data)
 
 

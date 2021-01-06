@@ -10,7 +10,10 @@ import Blog from "../components/Blog";
 import Perfil from "../components/PerfilComponents/Perfil";
 import store from '../store'
 import AddPost from "../components/Blog/AddPost"
+import AddRecurso from "../components/Recursos/AddRecurso"
+
 import BlogDetail from "../components/BlogComponents/BlogDetail"
+import BuscadorLayout from "../components/Buscador/BuscadorLayout"
 Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
@@ -33,6 +36,13 @@ const router = new VueRouter({
           component: MapaComponent,
           meta: {rutaProtegida: true}
         },
+
+        {
+          path: "Recurso/CrearRecurso",
+          name: "AddRecurso",
+          component: AddPost,
+          meta: {rutaProtegida: true},
+        },
         {
           path: "Servicios",
           name: "CatalogoServicios",
@@ -46,14 +56,25 @@ const router = new VueRouter({
           meta: {rutaProtegida: true},
         },
         {
-          path: "Blog/CrearPublicación",
+          path: "Blog/CrearPublicacion",
           name: "AddPub",
           component: AddPost,
           meta: {rutaProtegida: true},
         },
-
-
+        {
+          path: "Recurso/Add",
+          name: "AddRecurso",
+          component: AddRecurso,
+          meta: {rutaProtegida: true},
+        },
         { path: '/Blog/:id', component: BlogDetail , name:"post"},
+        {
+          path: "Buscador",
+          name: "Buscador",
+          component: BuscadorLayout,
+          meta: {rutaProtegida: true},
+        },
+
         {
           path: "Perfil",
           name: "Peril",

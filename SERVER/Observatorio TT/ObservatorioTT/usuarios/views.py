@@ -1,10 +1,13 @@
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import APIView
 
-from usuarios.models import Usuario
-from usuarios.serializers import UserSerializer, ProfileSerializer
+from recursos.Serializers.RecursoSerializer import TagSerializer
+from usuarios.models import Usuario, Profile
+from usuarios.serializers import UserSerializer, ProfileSerializer, ProfileModelSerializer, UserModelSerializer, \
+  UserSignUpSerializer
 
 """Users views."""
 
@@ -25,7 +28,7 @@ from rest_framework.permissions import (
 class UserViewSet(mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin,
                   viewsets.GenericViewSet,
-                  mixins.ListModelMixin):
+                  ):
     """User view set.
     Handle sign up, login and account verification.
     """
@@ -33,8 +36,43 @@ class UserViewSet(mixins.RetrieveModelMixin,
     queryset = Usuario.objects.filter(is_active=True)
     serializer_class = UserSerializer
     lookup_field = 'username'
-    def list(self, request, *args, **kwargs):
-      pass
+
+
+
+    @action(detail=False, methods=['get'])
+    def Tags(self, request):
+      tags = Profile.intereses.all()
+      print(tags)
+      ts = TagSerializer(data=tags, many=True)
+      print(ts.is_valid())
+      print(ts.errors)
+      return Response(ts.data)
+
+    @action(detail=False, methods=['post'])
+    def signup(self, request):
+      """User sign up."""
+      serializer = UserSignUpSerializer(data=request.data)
+      serializer.is_valid(raise_exception=True)
+      user = serializer.save()
+      data = UserModelSerializer(user).data
+      return Response(data, status=status.HTTP_201_CREATED)
+
+
+    @action(detail=False, methods=['put', 'patch'])
+    def profile(self, request, *args, **kwargs):
+        """Update profile data."""
+        user = request.user
+        profile = user.profile
+        partial = request.method == 'PATCH'
+        serializer = ProfileModelSerializer(
+            profile,
+            data=request.data,
+            partial=partial
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        data = UserModelSerializer(user).data
+        return Response(data)
 
 class ProfileUsers(APIView):
       """
@@ -43,6 +81,7 @@ class ProfileUsers(APIView):
       * Requires token authentication.
       * Only admin users are able to access this view.
       """
+
 
       def get(self, request, format=None):
 

@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 from taggit.managers import TaggableManager
+from taggit.models import GenericTaggedItemBase, TagBase
 
 from ObservatorioTTApp.models import MexicoMunicipio,MexicoState
 from usuarios.models import Usuario
@@ -15,16 +16,41 @@ class Categoria(models.Model):
 
 
 
+class MyCustomTag(TagBase):
+    # ... fields here
+
+    class Meta:
+      verbose_name = ("Tag")
+      verbose_name_plural = ("Tags")
+
+    # ... methods (if any) here
+
+
+class TaggedWhatever(GenericTaggedItemBase):
+  # TaggedWhatever can also extend TaggedItemBase or a combination of
+  # both TaggedItemBase and GenericTaggedItemBase. GenericTaggedItemBase
+  # allows using the same tag for different kinds of objects, in this
+  # example Food and Drink.
+
+  # Here is where you provide your custom Tag class.
+  tag = models.ForeignKey(
+    MyCustomTag,
+    on_delete=models.CASCADE,
+    related_name="%(app_label)s_%(class)s_items",
+  )
+
+
 class Recurso(models.Model):
     nombreRecurso = models.CharField(max_length = 50)
-    categoria = models.ManyToManyField(Categoria)
+
     Usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     estado= models.ForeignKey(MexicoState, on_delete=models.CASCADE)
     municipio= models.ForeignKey(MexicoMunicipio, on_delete=models.CASCADE)
     fechaCreacion = models.DateTimeField(auto_now_add=True)
     fechaModificacion = models.DateTimeField(auto_now=True)
     descripcion = models.CharField(max_length = 250)
-    tags = TaggableManager()
+    tags = TaggableManager(through=TaggedWhatever)
+
 
     # created = models.DateTimeField(auto_now_add=True)
     # updated = models.DateTimeField(auto_now_add=True)
@@ -50,7 +76,7 @@ class RecursosArchivo(models.Model):
   }
   archivo= models.FileField(upload_to="Archivos")
   tipo= models.CharField(choices=Options,default=IMG,max_length=3)
-  recurso= models.ForeignKey(Recurso, on_delete=models.CASCADE)
+  recurso= models.ForeignKey(Recurso, on_delete=models.CASCADE ,related_name='recurso_img')
 
 
 

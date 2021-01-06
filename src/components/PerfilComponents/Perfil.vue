@@ -1,6 +1,8 @@
 <template>
   <v-container fluid>
-    <v-card width="100%">
+    <v-row>
+      <v-col cols="12" md="6" sm="12">
+          <v-card width="100%">
       <v-toolbar flat color="#30475e" dark>
         <v-toolbar-title> Usuario: {{ perfil.usuario }} </v-toolbar-title>
       </v-toolbar>
@@ -19,11 +21,8 @@
         </v-tab>
 
         <v-tab-item>
-          <v-card class="mx-auto" tile>
-            <v-img
-              max-height="300"
-              src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg"
-            >
+          <v-card  flat>
+
               <v-row align="end" class="fill-height">
                 <v-col align-self="start" class="pa-0" cols="12">
                   <v-avatar class="profile" color="grey" size="164" tile>
@@ -60,7 +59,7 @@
               <v-layout justify-center>
                 <v-list-item>
                   <v-list-item-content>
-                    <v-list-item-title class="title"> 
+                    <v-list-item-title class="title">
                       Nombre: {{perfil.nombre}}
                     </v-list-item-title>
                     <v-list-item-title class="title">
@@ -78,7 +77,7 @@
                   </v-list-item-content>
                 </v-list-item>
               </v-layout>
-              
+
               {{ perfil.nombre}} {{ perfil.apellidos }}
               <!-- <v-btn> </v-btn> -->
             </v-card-text>
@@ -151,68 +150,27 @@
                 </v-col> -->
 
                 <v-col cols="12">
-                  <v-toolbar flat color="transparent">
-                    <v-spacer></v-spacer>
-                    <v-btn icon @click="$refs.search.focus()">
-                      <v-icon>mdi-magnify</v-icon>
-                    </v-btn>
-                  </v-toolbar>
 
-                  <v-container class="py-0">
-                    <v-row align="center" justify="start">
-                      <v-col
-                        v-for="(selection, i) in selections"
-                        :key="selection.text"
-                        class="shrink"
-                      >
-                        <v-chip
-                          :disabled="loading"
-                          close
-                          @click:close="selected.splice(i, 1)"
-                        >
-                          <v-icon left v-text="selection.icon"></v-icon>
-                          {{ selection.text }}
-                        </v-chip>
-                      </v-col>
+            <v-autocomplete
+              v-model="values"
+              :items="tags"
+              item-text="name"
+              item-value="name"
+              outlined
+              dense
+              chips
+              small-chips
+              label="Preferencias"
+              :search-input.sync="search"
+              multiple
+              v-on:keyup.enter="addNewTag"
+            ></v-autocomplete>
 
-                      <v-col v-if="!allSelected" cols="12">
-                        <v-text-field
-                          ref="search"
-                          v-model="search"
-                          full-width
-                          hide-details
-                          label="Buscar Tag"
-                          single-line
-                          v-on:keyup.enter="addNewTag"
-                        >
-                          ></v-text-field
-                        >
-                      </v-col>
-                    </v-row>
-                  </v-container>
 
-                  <v-divider v-if="!allSelected"></v-divider>
 
-                  <v-list>
-                    <template v-for="item in categories">
-                      <v-list-item
-                        v-if="!selected.includes(item)"
-                        :key="item.text"
-                        :disabled="loading"
-                        @click="selected.push(item)"
-                      >
-                        <v-list-item-avatar>
-                          <v-icon
-                            :disabled="loading"
-                            v-text="item.icon"
-                          ></v-icon>
-                        </v-list-item-avatar>
-                        <v-list-item-title
-                          v-text="item.text"
-                        ></v-list-item-title>
-                      </v-list-item>
-                    </template>
-                  </v-list>
+
+
+
 
                   <v-divider></v-divider>
 
@@ -242,7 +200,44 @@
           </v-card>
         </v-tab-item>
       </v-tabs>
-    </v-card>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" md="6" sm="12">
+        <v-row>
+
+          <v-col cols="12" md="12" sm="12">
+            <v-card>
+
+              <v-card-title>Mis Recursos</v-card-title>
+               <v-card-actions>
+              <v-btn color="primary">Agregar un recurso</v-btn>
+            </v-card-actions>
+            </v-card>
+
+
+
+          </v-col>
+
+
+          <v-col cols="12" md="12" sm="12">
+            <v-card>
+
+              <v-toolbar flat color="primary" dark>
+              <v-toolbar-title>Mis Artículos</v-toolbar-title>
+          </v-toolbar>
+            </v-card>
+
+          </v-col>
+
+
+        </v-row>
+      </v-col>
+
+
+    </v-row>
+
+
   </v-container>
 </template>
 
@@ -251,6 +246,7 @@ import { getAPI } from "../../Api/axios-base";
 export default {
   data() {
     return {
+      tags:[],
       perfil: {
         email: null,
         nombre: null,
@@ -325,7 +321,7 @@ export default {
   },
 
   watch: {
-    selected() {
+    values() {
       this.search = "";
     },
   },
@@ -354,6 +350,20 @@ export default {
         self.perfil.foto = response.data.foto;
         self.perfil.intereses = response.data.intereses;
       });
+
+    },
+
+      get_tags: function () {
+        self=this
+              getAPI.get("Usuarios/View/Tags/").then((response) =>{
+
+        self.tags=response.data;
+
+      });
+
+
+
+
     },
     next() {
       this.loading = true;
@@ -365,13 +375,20 @@ export default {
       }, 2000);
     },
     addNewTag() {
-      this.items.push({ text: this.search });
+      if (this.search != null || (this.search.trim()) != '')
+      {
+        alert(this.search.trim())
+         this.tags.push({ slug: this.search });
+         this.values.push({ slug: this.search });
+      }
+
     },
   },
 
   mounted() {
     // this.obtiene_clasificacion();
     this.obtiene_datos_usuario();
+    this.get_tags()
   },
 };
 </script>
