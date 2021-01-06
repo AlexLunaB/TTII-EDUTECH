@@ -1,6 +1,8 @@
 <template>
   <v-carousel 
-    show-arrows-on-hover>
+    show-arrows-on-hover
+    height="150px">
+    
     <v-carousel-item
       v-for="(item,i) in items"
       :key="i"

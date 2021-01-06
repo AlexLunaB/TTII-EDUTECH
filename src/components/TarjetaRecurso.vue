@@ -4,7 +4,7 @@
 <template>
     <!-- <v-card-title>Nombre del recurso: {{value.nombreRecurso}}</v-card-title>4 -->
     <div>
-        <v-card max-width=45% >
+        <v-card max-width=550>
 
 
             <!-- <div>{{recurso.id}}</div>
@@ -14,7 +14,7 @@
             height="250"
             src="https://www.quo.es/wp-content/uploads/2019/10/los-cinco-trabajos-que-por-ahora-no-podra-quitarte-un-robot.jpg"
             ></v-img> -->
-            <Carousel> </Carousel>
+            <Carousel > </Carousel>
 
             <v-card-title>Nombre del recurso: {{recurso.nombreRecurso}}</v-card-title>
 
@@ -23,46 +23,86 @@
                     align="center"
                     class="mx-0"
                 >
-                    <v-rating
-                    v-model="recurso.calificacion"
-                    color="yellow darken-3"
-                    background-color="grey darken-1"
-                    @input="postCalificacion"
+                    <v-col>
+                        <v-rating
+                        v-model="recurso.calificacion"
+                        color="yellow darken-3"
+                        background-color="grey darken-1"
+                        @input="postCalificacion"
+                        hover
+                        small
+                        large
+
+                        ></v-rating>
+
+                        <div class="grey--text ml-4" >
+                            {{recurso.calificacion}} (413)
+
+                        </div>
+                    </v-col>
+
+                    <v-col>
+                        <template>
+                            <div class="text-center">
+                                <v-btn
+                                    rounded
+                                    color="primary"
+                                    dark
+                                >
+                                Ver mas
+                                </v-btn>
+                            </div>
+                        </template>
+                    </v-col>
                     
-                    hover
-                    large
-
-                    ></v-rating>
-
-                    <div class="grey--text ml-4" >
-                    {{recurso.calificacion}} (413)
-                    </div>
                 </v-row>
 
                 <div class="my-4 subtitle-1">
-                    $ • Italian, Cafe
+                    Tags: {{recurso.tags.join(', ')}}
                 </div>
 
-                <v-list-item-title class="headline mb-1">
+                <div>
                     ID: {{recurso.id}}
-                </v-list-item-title>
-                <v-list-item-title class="headline mb-1">
+                </div>
+                <div>
                     Usuario: {{recurso.Usuario}}
-                </v-list-item-title>
-                <v-list-item-title class="headline mb-1">
+                </div>
+                <div>
                     Descripcion: {{recurso.descripcion}}
-                </v-list-item-title>
-                <v-list-item-title class="headline mb-1">
+                </div>
+                <div>
                     Fecha de creacion: {{recurso.fechaCreacion}}
-                </v-list-item-title>
-                <v-list-item-title class="headline mb-1">
+                </div>
+                <div>
                     Fecha de modificación: {{recurso.fechaModificacion}}
-                </v-list-item-title>
-                <v-list-item-title class="headline mb-1">
+                </div>
+                <div>
                     Estado de procedencia: {{recurso.estado}}
-                </v-list-item-title>
-                <v-list-item-title class="headline mb-1">
+                </div>
+                <div>
                     Municipio de procedencia: {{recurso.municipio}}
+                </div>
+
+                <!-- <v-list-item-title >
+                    
+                </v-list-item-title> -->
+                <v-list-item-title >
+                    
+                </v-list-item-title>
+                <v-list-item-title >
+                    
+                </v-list-item-title>
+                <v-list-item-title >
+                    
+                </v-list-item-title>
+                <v-list-item-title >
+                    
+                </v-list-item-title>
+                <v-list-item-title >
+                    
+                </v-list-item-title>
+                <v-list-item-title >
+                    
                 </v-list-item-title>
 
                 <!-- <div>ID: {{value.id}}</div>
@@ -80,9 +120,7 @@
 
             </div> -->
 
-            <hr class="dashed">
             
-            <br><br>
             
             
 
@@ -114,7 +152,8 @@
             </v-btn>
             </v-card-actions> -->
         </v-card>
-            
+        
+        <br>
     </div>
 </template>
 

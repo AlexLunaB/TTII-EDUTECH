@@ -102,36 +102,71 @@
                         <div>
                           <h4 class="text-center ">Verifica tu correo</h4>
                           <v-form>
-                            <v-text-field
-                            label="Nombre"
-                            name="Nombre"
-                            prepend-icon="person"
-                            type="text"
-                            color="teal accent-3">
-
-                            </v-text-field>
+                            
                             <v-text-field
                             label="Correo"
-                            name="correo"
+                            name="email"
                             prepend-icon="email"
                             type="text"
-                            color="teal accent-3">
+                            color="teal accent-3"
+                            v-model="datosUsuario.email">
+                            </v-text-field>
 
-                            </v-text-field><v-text-field
+                            <v-text-field
+                            label="Nombre de usuario"
+                            name="username"
+                            prepend-icon="person"
+                            type="text"
+                            color="teal accent-3"
+                            v-model="datosUsuario.username">
+                            </v-text-field>
+
+                            <v-text-field
                             label="Contraseña"
                             name="password"
                             prepend-icon="lock"
                             type="text"
-                            color="teal accent-3">
-
+                            color="teal accent-3"
+                            v-model="datosUsuario.password">
                             </v-text-field>
+
+                            <v-text-field
+                            label="Confirmar contraseña"
+                            name="password_confirmation"
+                            prepend-icon="lock"
+                            type="text"
+                            color="teal accent-3"
+                            v-model="datosUsuario.password_confirmation">
+                            </v-text-field>
+
+                            <v-text-field
+                            label="Nombre(s)"
+                            name="first_name"
+                            prepend-icon="person"
+                            type="text"
+                            color="teal accent-3"
+                            v-model="datosUsuario.first_name">
+                            </v-text-field>
+
+                            <v-text-field
+                            label="Apellidos"
+                            name="last_name"
+                            prepend-icon="person"
+                            type="text"
+                            color="teal accent-3"
+                            v-model="datosUsuario.last_name">
+                            </v-text-field>
+                            
+                            
+
+                            
                           </v-form>
                         </div>
 
 
                       </v-card-text>
                       <div class="text-center mt-n5">
-                          <v-btn color="teal "> Registrate!</v-btn>
+                          <v-btn color="teal" @click="postRegistro"> Registrate!</v-btn>
 
                         </div>
 
@@ -155,6 +190,7 @@
 
 <script>
 import Swal from 'sweetalert2'
+import { getAPI } from '../Api/axios-base'
   export default {
     name: 'login',
 
@@ -163,7 +199,16 @@ import Swal from 'sweetalert2'
         step: 1,
         username: '',
         password: '',
-        wrongCred: false // activates appropriate message if set to true
+        wrongCred: false, // activates appropriate message if set to true
+
+        datosUsuario: {
+          email:null,
+          username:null,
+          password:null,
+          password_confirmation:null,
+          first_name:null,
+          last_name:null
+        },
       }
     },
     methods: {
@@ -186,7 +231,35 @@ import Swal from 'sweetalert2'
             console.log(err)
             this.wrongCred = true // if the credentials were wrong set wrongCred to true
           })
-      }
+      },
+
+      postRegistro: async function() {
+        // const self = this
+        // await getAPI.post("Usuarios/View/signup/",
+        //     {"email":self.datosUsuario.email, "username":self.datosUsuario.username, 
+        //     "password":self.datosUsuario.password,"password_confirmation":self.datosUsuario.password_confirmation, 
+        //     "first_name":self.datosUsuario.first_name, "last_name": self.datosUsuario.last_name}).then((res)=> {
+        //   alert(JSON.stringify(res))
+          
+        // });
+
+
+        const self = this
+        try {
+          const res = await getAPI.post("Usuarios/View/signup/",
+            {"email":self.datosUsuario.email, "username":self.datosUsuario.username, 
+            "password":self.datosUsuario.password,"password_confirmation":self.datosUsuario.password_confirmation, 
+            "first_name":self.datosUsuario.first_name, "last_name": self.datosUsuario.last_name})
+
+            alert(JSON.stringify(res))
+          
+        } catch (error) {
+          console.log(error)
+        }
+
+
+        // console.log(this.datosUsuario)
+      },
     }
   }
 </script>

@@ -43,7 +43,7 @@
               text
               @click="dialog = false"
             >
-              Save
+              X
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
@@ -54,17 +54,34 @@
             indeterminate
           ></v-progress-linear>
         </template>
+        
+        <v-row>
+          <v-col>
+            Lo mas visitado de este estado......
+          </v-col>
+          <v-col v-if="dialog && recursos.length > 0">
 
+            <v-list style="max-height: 700px" class="overflow-y-auto">
+              <TarjetaRecurso v-for="recurso in recursos" :key="recurso.id" :recurso = recurso> </TarjetaRecurso>
+            </v-list>
+            
+          </v-col>
+          <v-col v-if="dialog && recursos.length === 0">
+            No hay recursos en este estado :c
+          </v-col>
+          <v-col>
+            Tal vez te interese......
+
+            <CardRecomendaciones> </CardRecomendaciones>
+          </v-col>
+        </v-row>
+        
+      
 
         
-      <v-container >
-
-        <div v-if="dialog">
-          <TarjetaRecurso v-for="recurso in recursos" :key="recurso.id" :recurso = recurso> </TarjetaRecurso>
-        </div>
         
 
-      </v-container>
+      
       </v-card>
     </v-dialog>
   </v-row>
@@ -76,6 +93,7 @@
 import {getAPI} from '../Api/axios-base'
 import Carousel from '../components/Carousel'
 import TarjetaRecurso from './TarjetaRecurso'
+import CardRecomendaciones from './CardRecomendaciones'
 
 
 export default { 
@@ -107,7 +125,8 @@ export default {
   },
   components: {
     Carousel,
-    TarjetaRecurso
+    TarjetaRecurso,
+    CardRecomendaciones
   },
   methods: {
     showModal: function() {
