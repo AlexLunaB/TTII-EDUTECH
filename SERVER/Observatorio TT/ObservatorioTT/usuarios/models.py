@@ -26,8 +26,13 @@ class Profile(models.Model):
   usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE,
                                  primary_key=True,
                                  )
+
+  estado= models.ForeignKey(MexicoState, on_delete=models.CASCADE,null=True)
+  semblanza= models.CharField(max_length=1000,null=True)
   municipio = models.ForeignKey(MexicoMunicipio, on_delete=models.CASCADE,null=True)
+  telefono=  models.CharField(max_length=12,null=True)
   foto= models.ImageField(upload_to="Perfil_Fotos",null=True)
   intereses = TaggableManager(through="recursos.TaggedWhatever", )
+
 
 

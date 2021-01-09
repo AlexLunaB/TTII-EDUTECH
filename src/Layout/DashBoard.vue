@@ -12,6 +12,8 @@
           hide-details
           prepend-icon="fas fa-search"
           single-line
+          v-model="valor"
+          v-on:keyup.enter="buscador()">
         ></v-text-field>
             <v-btn icon>
               <v-icon>mdi-magnify</v-icon>
@@ -40,12 +42,36 @@
   import VueNativeSock from "vue-native-websocket";
   import store from "../store";
   import FooterComponent from "../components/FooterComponent";
+  import { mapMutations } from 'vuex'
+
 
   export default {
 
+    data(){
+      return{
 
+
+        valor:""
+
+
+
+      }
+    },
+
+  methods: {
+
+    ...mapMutations(['ActualizaBuscador']),
+
+    buscador: function () {
+      this.$router.push({ path: 'Buscador', query: { search: this.valor }})
+      this.ActualizaBuscador(this.valor)
+
+
+    }
+  },
 
     mounted() {
+
 
       //inicializa Socket
       const vm = new Vue()

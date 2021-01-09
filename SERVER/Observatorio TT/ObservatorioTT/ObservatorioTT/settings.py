@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'corsheaders',
     'taggit',
     'taggit_serializer',
+    'widget_tweaks',
+    'Analitica',
+    'django_filters'
+
 
 ]
 
