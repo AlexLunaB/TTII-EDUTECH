@@ -1,5 +1,5 @@
-<template>
-  <v-app>
+<template >
+  <v-app :style="login">
     <v-main>
       <v-container class="fill-height" fluid>
 
@@ -12,7 +12,7 @@
                   <v-row>
                     <v-col cols="12" md="8">
                       <v-card-text class="mt-12">
-                        <h1 class="text-center display-2 teal--text text--accent-2">
+                        <h1 class="text-center display-2 primary--text text--accent-2">
                           EdutechMap
 
                         </h1>
@@ -28,11 +28,11 @@
                         </div>
 
                         <h4 class="text-center mlt-4">Logueate</h4>
-                        <v-form>
+                        <v-form >
                           <v-text-field
-                            label="Correo"
+                            label="Usuario"
                             name="username"
-                            prepend-icon="email"
+                            prepend-icon="person"
                             type="text"
                             v-model="username"
                             color="teal accent-3">
@@ -52,12 +52,12 @@
 
                       </v-card-text>
                       <div class="text-center mt-3">
-                        <v-btn rounded color="teal accent-3" @click="loginUser" dark>Inicia Sesión</v-btn>
+                        <v-btn rounded color="primary accent-3" @click="loginUser" dark>Inicia Sesión</v-btn>
                       </div>
                     </v-col>
 
 
-                    <v-col cols="12" md="4" class="teal accent-3">
+                    <v-col cols="12" md="4" class="primary accent-3">
                       <v-card-text class="white--text mt-12">
                         <h1 class="text-center display-1">Hola Bienvenido!</h1>
                         <h5 class="text-center"></h5>
@@ -79,7 +79,7 @@
                 <v-window-item :value="2">
 
                   <v-row class="fill-height">
-                    <v-col cols="12" md="4" class="teal accent-3">
+                    <v-col cols="12" md="4" class="primary accent-3">
                       <v-card-text class="white--text mt-12">
                         <h1 class="text-center display-1">Regresa</h1>
                         <h5 class="text-center"> Unete a la mayor red de recursos tecnoeducativos</h5>
@@ -92,7 +92,7 @@
 
                     <v-col cols="12" md="8">
                       <v-card-text>
-                        <h1 class="text-center display-2 teal--text text--accent-3">Crear Cuenta</h1>
+                        <h1 class="text-center display-2 primary--text text--accent-3">Crear Cuenta</h1>
                       <div class="text-center mt-4">
                         <v-btn class="mx-2" fab >
                           <v-icon>fab fa-facebook</v-icon>
@@ -101,7 +101,7 @@
 
                         <div>
                           <h4 class="text-center ">Verifica tu correo</h4>
-                          <v-form>
+                          <v-form ref="form">
                             
                             <v-text-field
                             label="Correo"
@@ -109,7 +109,8 @@
                             prepend-icon="email"
                             type="text"
                             color="teal accent-3"
-                            v-model="datosUsuario.email">
+                            v-model="datosUsuario.email"
+                            :rules="emailRules">
                             </v-text-field>
 
                             <v-text-field
@@ -125,18 +126,20 @@
                             label="Contraseña"
                             name="password"
                             prepend-icon="lock"
-                            type="text"
+                            type="password"
                             color="teal accent-3"
-                            v-model="datosUsuario.password">
+                            v-model="datosUsuario.password"
+                            :rules="passwordRules">
                             </v-text-field>
 
                             <v-text-field
                             label="Confirmar contraseña"
                             name="password_confirmation"
                             prepend-icon="lock"
-                            type="text"
+                            type="password"
                             color="teal accent-3"
-                            v-model="datosUsuario.password_confirmation">
+                            v-model="datosUsuario.password_confirmation"
+                            :rules="passwordRules">
                             </v-text-field>
 
                             <v-text-field
@@ -145,7 +148,8 @@
                             prepend-icon="person"
                             type="text"
                             color="teal accent-3"
-                            v-model="datosUsuario.first_name">
+                            v-model="datosUsuario.first_name"
+                            :rules="nameRules">
                             </v-text-field>
 
                             <v-text-field
@@ -154,8 +158,17 @@
                             prepend-icon="person"
                             type="text"
                             color="teal accent-3"
-                            v-model="datosUsuario.last_name">
+                            v-model="datosUsuario.last_name"
+                            :rules="nameRules">
                             </v-text-field>
+
+
+                            <v-checkbox 
+                            v-model="firstcheckbox" 
+                            :rules="[v => !!v || 'Debes estar de acuerdo para continuar']"
+                            label="Acepto los terminos y condiciones" 
+                            required>
+                            </v-checkbox>
                             
                             
 
@@ -166,9 +179,9 @@
 
                       </v-card-text>
                       <div class="text-center mt-n5">
-                          <v-btn color="teal" @click="postRegistro"> Registrate!</v-btn>
+                          <v-btn color="primary" @click="postRegistro"> Registrate!</v-btn>
 
-                        </div>
+                      </div>
 
                     </v-col>
                   </v-row>
@@ -201,14 +214,50 @@ import { getAPI } from '../Api/axios-base'
         password: '',
         wrongCred: false, // activates appropriate message if set to true
 
-        datosUsuario: {
-          email:null,
-          username:null,
-          password:null,
-          password_confirmation:null,
-          first_name:null,
-          last_name:null
+        login: { 
+          backgroundImage: 'url(../../static/images/Cables.jpg)' ,
+          // background: 'grey'
+          
         },
+
+        datosUsuario: {
+          email: '',
+          username: '',
+          password: '',
+          password_confirmation: '',
+          first_name: '',
+          last_name: ''
+        },
+
+        nameRules: [
+          v => !!v || 'Se requiere un nombre',
+          v => (v && v.length <= 20) || 'Máximo 20 caracteres',
+        ],
+
+        emailRules: [
+          v => !!v || 'Correo necesario',
+          v => /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'El correo debe ser valido',
+        ],
+
+        passwordRules: [
+          v => !!v || 'Contraseña necesaria',
+
+          v => (v && v.length >= 8) || 'La contraseña debe contener al menos 8 caracteres',
+          v => /(?=.*[A-Z])/.test(v) || 'Debe tener al menos una letra mayuscula',
+          v => /(?=.*\d)/.test(v) || 'Debe tener al menos un número',
+          v => /([!@$%])/.test(v) || 'Debe tener al menos un caracter especial [!@#$%]',
+
+          v => v === this.datosUsuario.password || 'Las contraseñas no coinciden'
+
+
+
+          // v => /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'La contraseña debe contener al menos una minuscula, un número, un caracter especial y una letra mayuscula.',
+        ],
+
+        firstcheckbox: false,
+
+        
+        
       }
     },
     methods: {
@@ -244,18 +293,40 @@ import { getAPI } from '../Api/axios-base'
         // });
 
 
-        const self = this
-        try {
-          const res = await getAPI.post("Usuarios/View/signup/",
-            {"email":self.datosUsuario.email, "username":self.datosUsuario.username, 
-            "password":self.datosUsuario.password,"password_confirmation":self.datosUsuario.password_confirmation, 
-            "first_name":self.datosUsuario.first_name, "last_name": self.datosUsuario.last_name})
+        if(this.$refs.form.validate()) {
 
-            alert(JSON.stringify(res))
-          
-        } catch (error) {
-          console.log(error)
+          const self = this
+          try {
+            const res = await getAPI.post("Usuarios/View/signup/",
+              {"email":self.datosUsuario.email, "username":self.datosUsuario.username, 
+              "password":self.datosUsuario.password,"password_confirmation":self.datosUsuario.password_confirmation, 
+              "first_name":self.datosUsuario.first_name, "last_name": self.datosUsuario.last_name})
+
+              // alert(JSON.stringify(res))
+
+              Swal.fire({
+                icon: 'success',
+                title: '¡Registro exitoso!',
+                text: 'Tu usuario ha sido creado en Eductech',
+                footer: 'Regresa al Login para iniciar sesión'
+              })
+
+              this.step--;
+            
+          } catch (error) {
+            console.log(error)
+            Swal.fire({
+                icon: 'error',
+                title: 'ERROR...',
+                text: 'Algo no salio bien',
+                footer: 'Intenta de nuevo'
+              })
+          }
+
         }
+        
+
+        
 
 
         // console.log(this.datosUsuario)
