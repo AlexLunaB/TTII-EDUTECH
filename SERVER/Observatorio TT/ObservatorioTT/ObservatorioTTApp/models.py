@@ -18,3 +18,7 @@ class MexicoMunicipio(models.Model):
   nombre= models.CharField(max_length=60)
   def __str__(self):
     return self.nombre
+
+class IntitucionEmpresa(models.Model):
+  NombreInstitucion= models.CharField(max_length=100)
+  Imagen= models.ImageField(upload_to="LogosInstitutos")

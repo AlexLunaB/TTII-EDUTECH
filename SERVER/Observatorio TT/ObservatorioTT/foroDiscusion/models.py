@@ -1,6 +1,9 @@
 from django.db import models
 
 # Create your models here.
+from taggit.managers import TaggableManager
+
+from recursos.models import TaggedWhatever
 from usuarios.models import Usuario
 
 
@@ -12,6 +15,7 @@ class ForoDiscusion(models.Model):
     administrador = models.ForeignKey(Usuario,on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    tags = TaggableManager(through=TaggedWhatever)
 
     class Meta:
         verbose_name = 'foroDiscusion'

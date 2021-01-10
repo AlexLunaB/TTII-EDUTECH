@@ -9,6 +9,7 @@
 
 
             >
+
               <v-card-title class="headline text-white red lighten-3">
                 Filtros
               </v-card-title>
@@ -47,9 +48,17 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col cols="12" md="9"></v-col>
+          <v-col cols="12" md="9">
+            <v-row>
+                <v-col cols="12" sm="12" md="6" v-for="articulo in recursos">
+                  <TarjetaRecurso :recurso="articulo"></TarjetaRecurso>
+
+                </v-col>
+            </v-row>
+          </v-col>
         </v-row>
       </v-card-text>
+
 
 
     </v-card>
@@ -62,12 +71,15 @@
 
   import {mapState} from 'vuex';
 
+  import TarjetaRecurso from "../TarjetaRecurso"
+
   import {getAPI} from "../../Api/axios-base";
 
   export default {
     name: "BuscadorLayout",
     data() {
       return {
+        recursos:[],
         visible: false,
         Post: [],
         categorias: [],
@@ -80,7 +92,7 @@
         }
       }
     },
-    components: {},
+    components: {TarjetaRecurso},
     computed: mapState(['buscador']),
     methods: {
 
@@ -109,7 +121,7 @@
 
 
         }).then((response) => {
-          console.log(response)
+           self.recursos=response.data
         });
       }, Filtrado: function () {
 
@@ -126,7 +138,8 @@
 
 
         }).then((response) => {
-          console.log(response)
+          self.recursos=response.data
+
         });
       },
       obtiene_municipios: function () {
