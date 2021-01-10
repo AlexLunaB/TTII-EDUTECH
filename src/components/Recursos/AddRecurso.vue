@@ -216,15 +216,17 @@
 
 <script>
   import {getAPI} from "../../Api/axios-base";
+  import Swal from 'sweetalert2'
+
 
   export default {
     name: "AddRecurso",
     data: function () {
       return {
         nameRules: [
-      v => !!v || 'Es Requerido',
+          v => !!v || 'Es Requerido',
 
-    ],
+        ],
         search: "",
         files: [],
         estados: [],
@@ -286,55 +288,66 @@
       },
 
 
+      postArticulos: async function () {
 
-    postArticulos: async function () {
-      let a=this.$refs.form.validate();
-      if(!a)
-        return
+        var self=this
+        let a = this.$refs.form.validate();
+        if (!a)
+          return
 
-      let formData = new FormData()
-      for (let file in this.files) {
-        console.log(this.files[file])
-        formData.append("image", this.files[file])
-      }
+        let formData = new FormData()
+        for (let file in this.files) {
+          console.log(this.files[file])
+          formData.append("image", this.files[file])
+        }
 
-      formData.append("nombreRecurso", this.articulo.nombre);
-      formData.append("descripcion", this.articulo.descripcion);
-      formData.append("Usuario", 1);
-      formData.append("estado", this.articulo.estado.id);
-      formData.append("municipio", this.articulo.municipio.id);
-      formData.append("tags", JSON.stringify(this.articulo.categoria));
+        formData.append("nombreRecurso", this.articulo.nombre);
+        formData.append("descripcion", this.articulo.descripcion);
+        formData.append("Usuario", 1);
+        formData.append("estado", this.articulo.estado.id);
+        formData.append("municipio", this.articulo.municipio.id);
+        formData.append("tags", JSON.stringify(this.articulo.categoria));
 
-      console.log(JSON.stringify(this.articulo.categoria))
-      alert((this.articulo.categoria))
+        console.log(JSON.stringify(this.articulo.categoria))
+        alert((this.articulo.categoria))
 
-      await getAPI.post("Recursos/api/Articulos/",
-        formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
+        await getAPI.post("Recursos/api/Articulos/",
+          formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
           }
-        }
-      ).then((res) => {
-        alert(JSON.stringify(res))
+        ).then((res) => {
 
-      });
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Tu Recurso se ha guardado con éxito',
+            showConfirmButton: false,
+            timer: 1500
+          }).then((e)=>{
+             this.$router.push({name: 'Perfil'})
+          })
+
+
+        });
+      },
+
+      get_tags: function () {
+        self = this
+        getAPI.get("/Recursos/api/Articulos/Tags/").then((response) => {
+
+          self.tags = response.data;
+
+        });
+      },
+
+
     },
-
-    get_tags: function () {
-      self = this
-      getAPI.get("/Recursos/api/Articulos/Tags/").then((response) => {
-
-        self.tags = response.data;
-
-      });
-    },
-
-
-  },
     watch: {
-        "articulo.categoria"(){
-          this.search=""
-        }
+      "articulo.categoria"() {
+        this.search = ""
+      }
 
 
     },

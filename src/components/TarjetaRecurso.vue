@@ -14,7 +14,7 @@
             height="250"
             src="https://www.quo.es/wp-content/uploads/2019/10/los-cinco-trabajos-que-por-ahora-no-podra-quitarte-un-robot.jpg"
             ></v-img> -->
-            <Carousel > </Carousel>
+            <Carousel :imagenes="recurso.recurso_img" > </Carousel>
 
             <v-card-title>Nombre del recurso: {{recurso.nombreRecurso}}</v-card-title>
 
@@ -54,7 +54,7 @@
                             </div>
                         </template>
                     </v-col>
-                    
+
                 </v-row>
 
                 <div class="my-4 subtitle-1">
@@ -84,25 +84,25 @@
                 </div>
 
                 <!-- <v-list-item-title >
-                    
+
                 </v-list-item-title> -->
                 <v-list-item-title >
-                    
+
                 </v-list-item-title>
                 <v-list-item-title >
-                    
+
                 </v-list-item-title>
                 <v-list-item-title >
-                    
+
                 </v-list-item-title>
                 <v-list-item-title >
-                    
+
                 </v-list-item-title>
                 <v-list-item-title >
-                    
+
                 </v-list-item-title>
                 <v-list-item-title >
-                    
+
                 </v-list-item-title>
 
                 <!-- <div>ID: {{value.id}}</div>
@@ -115,14 +115,14 @@
 
             </v-card-text>
 
-            <!-- <div> 
+            <!-- <div>
             <v-divider class="mx-4"></v-divider>
 
             </div> -->
 
-            
-            
-            
+
+
+
 
             <!-- <v-card-title>Tonight's availability</v-card-title>
 
@@ -152,7 +152,7 @@
             </v-btn>
             </v-card-actions> -->
         </v-card>
-        
+
         <br>
     </div>
 </template>
@@ -194,7 +194,7 @@ export default {
             console.log(`ID: ${this.recurso.id} - Nombre: ${this.recurso.nombreRecurso} - Rating: ${this.rating}`)
         },
     }
-   
+
 
 }
 </script>

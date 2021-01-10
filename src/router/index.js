@@ -37,12 +37,7 @@ const router = new VueRouter({
           meta: {rutaProtegida: true}
         },
 
-        {
-          path: "Recurso/CrearRecurso",
-          name: "AddRecurso",
-          component: AddPost,
-          meta: {rutaProtegida: true},
-        },
+
         {
           path: "Servicios",
           name: "CatalogoServicios",
@@ -77,7 +72,7 @@ const router = new VueRouter({
 
         {
           path: "Perfil",
-          name: "Peril",
+          name: "Perfil",
           component: Perfil,
           meta: {rutaProtegida: true},
         }

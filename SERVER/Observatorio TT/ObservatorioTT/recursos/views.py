@@ -1,7 +1,8 @@
+import django_filters
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.parsers import FormParser, MultiPartParser
@@ -11,6 +12,7 @@ from taggit_serializer.serializers import TaggitSerializer
 from ObservatorioTTApp.models import MexicoState
 from recursos.Serializers.RecursoSerializer import RecursoSerializer, CategoriaSerializer, RecursoReadSerializer, \
   TagSerializer
+from recursos.filters.filterRecursoView import RecursoFilter
 from recursos.models import Recurso, Categoria, Rating
 from rest_framework.permissions import IsAuthenticated
 """
@@ -48,9 +50,10 @@ class RecursoViewSet(mixins.ListModelMixin,
                      viewsets.GenericViewSet):
   queryset = Recurso.objects.all()
   serializer_class = RecursoSerializer
-  parser_classes = (MultiPartParser, FormParser,)
+  filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter)
+  filterset_class = RecursoFilter
 
-
+  search_fields = ['descripcion','nombreRecurso',"tags__name"]
 
   def get_serializer_class(self):
     """Return serializer based on action."""
@@ -89,6 +92,14 @@ class RecursoViewSet(mixins.ListModelMixin,
     print(ts.errors)
     return Response(ts.data)
 
+
+
+  @action(detail=False, methods=["Get"])
+  def PorUsuario(self, request,):
+    usuario=self.request.user
+    ob = usuario.recurso_set.all()
+    R = RecursoReadSerializer(ob, many=True, context={"request": request})
+    return Response(data=R.data)
 
   @action(detail=True, methods=["POST"])
   def CalificaRecurso(self, request,pk):

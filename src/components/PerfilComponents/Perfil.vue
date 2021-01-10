@@ -44,7 +44,7 @@
                   </v-list-item>
                 </v-col>
               </v-row>
-            </v-img>
+
           </v-card>
           <v-card flat>
             <v-card-text>
@@ -182,6 +182,7 @@
                       color="purple"
                       text
                       @click="next"
+
                     >
                       Next
                     </v-btn>
@@ -211,7 +212,7 @@
 
               <v-card-title>Mis Recursos</v-card-title>
                <v-card-actions>
-              <v-btn color="primary">Agregar un recurso</v-btn>
+              <v-btn color="primary" router :to="{ name: 'AddRecurso'}">Agregar un recurso</v-btn>
             </v-card-actions>
             </v-card>
 

@@ -12,6 +12,12 @@ export default new Vuex.Store({
 
 
 
+
+
+    buscador:'',
+
+
+
     accessToken: localStorage.getItem('access_token') || null, // makes sure the user is logged in even after
     // refreshing the page
     refreshToken: localStorage.getItem('refresh_token') || null,
@@ -42,7 +48,9 @@ export default new Vuex.Store({
       state.accessToken = null
       state.refreshToken = null
     },
-
+    ActualizaBuscador(state,search) {
+      state.buscador = search
+    }
 
 
   },

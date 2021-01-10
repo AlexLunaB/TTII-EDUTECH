@@ -1,12 +1,14 @@
 <template>
-  <v-carousel 
+
+
+  <v-carousel
     show-arrows-on-hover
     height="150px">
-    
+
     <v-carousel-item
-      v-for="(item,i) in items"
+      v-for="(item,i) in imagenes"
       :key="i"
-      :src="item.src"
+      :src="item.archivo"
       reverse-transition="fade-transition"
       transition="fade-transition"
     ></v-carousel-item>
@@ -16,7 +18,22 @@
 
 <script>
   export default {
+
+    props:["imagenes"],
+
+    mounted() {
+      console.log(this.imagenes)
+    },
+
+    watch:{
+      imagenes(){
+        console.log(this.imagenes)
+
+      }
+
+    },
     data () {
+
       return {
         items: [
           {
