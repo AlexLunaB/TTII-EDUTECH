@@ -22,7 +22,7 @@ import { getAPI } from '../../Api/axios-base';
 
 
 export default {
-    name: "BlogDetail",
+    name: "RecursoDetail",
     data() {
         return {
             id:this.$route.params.id,
@@ -39,10 +39,11 @@ export default {
     },
     methods: {
         
-                GetArticulo: function () {
+            GetArticulo: function () {
           self= this
-                getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
+                getAPI.get("Recursos/api/Articulos/"+this.id).then((res)=> {
                   self.Post = res.data
+                  console.log(res.data)
       });
        
     },

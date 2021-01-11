@@ -14,6 +14,7 @@ import AddRecurso from "../components/Recursos/AddRecurso"
 
 import BlogDetail from "../components/BlogComponents/BlogDetail"
 import BuscadorLayout from "../components/Buscador/BuscadorLayout"
+import RecursoDetail from '../components/Recursos/RecursoDetail'
 Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
@@ -63,6 +64,7 @@ const router = new VueRouter({
           meta: {rutaProtegida: true},
         },
         { path: '/Blog/:id', component: BlogDetail , name:"post"},
+        { path: '/Inicio/:id', component: RecursoDetail , name:"RecursoDetail"},
         {
           path: "Buscador",
           name: "Buscador",

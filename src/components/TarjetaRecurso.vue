@@ -4,7 +4,14 @@
 <template>
     <!-- <v-card-title>Nombre del recurso: {{value.nombreRecurso}}</v-card-title>4 -->
     <div>
-        <v-card max-width=550>
+        <v-card max-width=550 :loading="loading" class="mx-100% mt-0 mb-0" >
+            <template slot="progress">
+                <v-progress-linear
+                color="deep-purple"
+                height="10"
+                indeterminate
+                ></v-progress-linear>
+            </template>
 
 
             <!-- <div>{{recurso.id}}</div>
@@ -48,6 +55,7 @@
                                     rounded
                                     color="primary"
                                     dark
+                                    router @click="reserve"
                                 >
                                 Ver mas
                                 </v-btn>
@@ -61,27 +69,52 @@
                     Tags: {{recurso.tags.join(', ')}}
                 </div>
 
-                <div>
-                    ID: {{recurso.id}}
-                </div>
-                <div>
-                    Usuario: {{recurso.Usuario}}
-                </div>
-                <div>
-                    Descripcion: {{recurso.descripcion}}
-                </div>
-                <div>
-                    Fecha de creacion: {{recurso.fechaCreacion}}
-                </div>
-                <div>
-                    Fecha de modificación: {{recurso.fechaModificacion}}
-                </div>
-                <div>
-                    Estado de procedencia: {{recurso.estado}}
-                </div>
-                <div>
-                    Municipio de procedencia: {{recurso.municipio}}
-                </div>
+                <v-simple-table>
+                    <template v-slot:default>
+                    <thead>
+                        <tr>
+                        <th class="text-left">
+                            Datos del recurso
+                        </th>
+                        <th class="text-left">
+                            
+                        </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ID:</td>
+                            <td>{{recurso.id}}</td>
+                        </tr>
+                        <tr>
+                            <td>Usuario:</td>
+                            <td>{{recurso.Usuario}}</td>
+                        </tr>
+                        <tr>
+                            <td>Descripcion:</td>
+                            <td>{{recurso.descripcion}}</td>
+                        </tr>
+                        <tr>
+                            <td>Fecha de creacion:</td>
+                            <td>{{recurso.fechaCreacion}}</td>
+                        </tr>
+                        <tr>
+                            <td>Fecha de modificación:</td>
+                            <td>{{recurso.fechaModificacion}}</td>
+                        </tr>
+                        <tr>
+                            <td>Estado de procedencia:</td>
+                            <td>{{recurso.estado}}</td>
+                        </tr>
+                        <tr>
+                            <td>Municipio de procedencia:</td>
+                            <td>{{recurso.municipio}}</td>
+                        </tr>
+                    </tbody>
+                    </template>
+                </v-simple-table>
+
+                
 
                 <!-- <v-list-item-title >
 
@@ -112,6 +145,8 @@
                 <div>Fecha de modificación: {{value.fechaModificacion}}</div>
                 <div>Estado de procedencia: {{value.estado}}</div>
                 <div>Municipio de procedencia: {{value.municipio}}</div> -->
+
+                
 
             </v-card-text>
 
@@ -151,24 +186,30 @@
                 Reserve
             </v-btn>
             </v-card-actions> -->
+
+            
         </v-card>
 
         <br>
+        
     </div>
 </template>
 
 <script>
 import { getAPI } from "../Api/axios-base";
 import Carousel from './Carousel'
+import CommentsApp from './CommentsApp'
 export default {
     data() {
         return {
             recursos: [],
-            rating: 2.5
+            rating: 2.5,
+            loading: false
         }
     },
     components: {
-        Carousel
+        Carousel,
+        CommentsApp
     },
     props: {
         idEstado: String,
@@ -192,6 +233,16 @@ export default {
         })
 
             console.log(`ID: ${this.recurso.id} - Nombre: ${this.recurso.nombreRecurso} - Rating: ${this.rating}`)
+        },
+
+        reserve () {
+            this.loading = true
+
+            setTimeout( () => {
+                
+                this.loading = false
+                this.$router.push({name: 'RecursoDetail', params: { id: this.recurso.id}})
+            }, 2000)
         },
     }
 

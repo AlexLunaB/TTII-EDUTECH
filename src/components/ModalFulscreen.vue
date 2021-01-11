@@ -72,16 +72,11 @@
           <v-col>
             Tal vez te interese......
 
-            <CardRecomendaciones> </CardRecomendaciones>
+            <!-- <CardRecomendaciones> </CardRecomendaciones> -->
+            
           </v-col>
         </v-row>
         
-      
-
-        
-        
-
-      
       </v-card>
     </v-dialog>
   </v-row>
@@ -94,6 +89,7 @@ import {getAPI} from '../Api/axios-base'
 import Carousel from '../components/Carousel'
 import TarjetaRecurso from './TarjetaRecurso'
 import CardRecomendaciones from './CardRecomendaciones'
+import CommentsApp from './CommentsApp'
 
 
 export default { 
@@ -101,7 +97,6 @@ export default {
 
   mounted(){
 
-    
   },
 
 
@@ -126,7 +121,8 @@ export default {
   components: {
     Carousel,
     TarjetaRecurso,
-    CardRecomendaciones
+    CardRecomendaciones,
+    CommentsApp
   },
   methods: {
     showModal: function() {

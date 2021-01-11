@@ -50,14 +50,7 @@
         
                 <SingleComponent v-for="arti in Post" :articulo="arti"></SingleComponent>
                 
-        
-
-
-
-
-
-
-
+      
     </v-row>
 
     <!-- <div v-if="visible">

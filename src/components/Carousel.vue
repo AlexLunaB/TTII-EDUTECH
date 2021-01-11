@@ -22,7 +22,7 @@
     props:["imagenes"],
 
     mounted() {
-      console.log(this.imagenes)
+      // console.log(this.imagenes)
     },
 
     watch:{
