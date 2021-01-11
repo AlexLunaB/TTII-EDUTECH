@@ -29,8 +29,8 @@
               {{resumenArticulo}}
             </div>
 
-            <span class="date"> Hace 5 minutos </span>
-            <a href="#">Leer más</a>
+            <span class="date">Creado: {{this.articulo.created}} </span>
+            <!-- <a href="#">Leer más</a> -->
           </v-card-text>
 
           <v-divider class="mx-4"></v-divider>
