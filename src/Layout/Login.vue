@@ -166,7 +166,8 @@
                             <v-checkbox 
                             v-model="firstcheckbox" 
                             :rules="[v => !!v || 'Debes estar de acuerdo para continuar']"
-                            label="Acepto los terminos y condiciones" 
+                            label="Acepto los Terminos y Condiciones" 
+                            @click="abreTerminosCondiciones"
                             required>
                             </v-checkbox>
                             
@@ -256,7 +257,7 @@ import { getAPI } from '../Api/axios-base'
 
         firstcheckbox: false,
 
-        
+        dialog: false,
         
       }
     },
@@ -331,6 +332,11 @@ import { getAPI } from '../Api/axios-base'
 
         // console.log(this.datosUsuario)
       },
+
+      abreTerminosCondiciones: function() {
+        console.log("Abre modal")
+        // this.dialog: true
+      }, 
     }
   }
 </script>

@@ -42,10 +42,10 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item  router to="/Servicios">
+      <v-list-item router to="/Buscador">
         <v-list-item-content>
-          <v-icon class="mb-2">fas fa-briefcase</v-icon>
-          <v-list-item-subtitle class="text-center">Servicios</v-list-item-subtitle>
+          <v-icon class="mb-2">fas fa-search</v-icon>
+          <v-list-item-subtitle>Buscador</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -56,17 +56,10 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item>
-        <v-list-item-content>
-          <v-icon class="mb-2">fas fa-book-reader</v-icon>
-          <v-list-item-subtitle class="text-center">{{loggedIn}}</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-
       <v-list-item @click="logoutUser" v-if="loggedIn">
         <v-list-item-content>
           <v-icon class="mb-2">fas fa-sign-out-alt</v-icon>
-          <v-list-item-subtitle class="text-center">Cerrar sesión</v-list-item-subtitle>
+          <v-list-item-subtitle class="text-center">Salir</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>
