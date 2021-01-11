@@ -204,12 +204,19 @@
 
         <v-card-actions>
           <v-btn
-
             text
-            blue
+            color="blue darken-1"
             @click="submit"
           >
             Guardar Cambios
+          </v-btn>
+
+          <v-btn
+            text
+            color="blue darken-1"
+            @click="regresarPerfil"
+          >
+            CANCELAR
           </v-btn>
         </v-card-actions>
 
@@ -292,6 +299,18 @@
           this.obtiene_municipios()
         });
 
+      },
+
+      regresarPerfil: function() {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'info',
+            title: 'No se guardaron los cambios',
+            showConfirmButton: false,
+            timer: 2500
+          }).then((e)=>{
+             this.$router.push({name: 'Perfil'})
+          })
       },
 
       retorna(){
