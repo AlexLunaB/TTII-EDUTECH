@@ -30,11 +30,13 @@ class ProfileModelSerializer(serializers.ModelSerializer):
     return instance
     """Profile model serializer."""
   def update(self, instance, validated_data):
-    tags = validated_data.pop('intereses')
+    tags = validated_data.get('intereses')
     if tags:
+      tags = validated_data.pop('intereses')
       tags = map(lambda x: x.capitalize(), tags)
     instance = super(ProfileModelSerializer, self).update(instance,validated_data)
-    instance.intereses.set(*tags)
+    if tags:
+      instance.intereses.set(*tags)
     return instance
 
 
@@ -43,6 +45,9 @@ class ProfileModelSerializer(serializers.ModelSerializer):
 
       model = Profile
       fields = ('__all__')
+      read_only_fields = (
+        'foto',
+      )
 
 
 

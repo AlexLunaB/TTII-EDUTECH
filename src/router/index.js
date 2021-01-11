@@ -14,6 +14,7 @@ import AddRecurso from "../components/Recursos/AddRecurso"
 
 import BlogDetail from "../components/BlogComponents/BlogDetail"
 import BuscadorLayout from "../components/Buscador/BuscadorLayout"
+import editProfile from "../components/PerfilComponents/editProfile";
 Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
@@ -74,6 +75,12 @@ const router = new VueRouter({
           path: "Perfil",
           name: "Perfil",
           component: Perfil,
+          meta: {rutaProtegida: true},
+        },
+        {
+          path: "Perfil/Editar",
+          name: "PerfilEdit",
+          component: editProfile,
           meta: {rutaProtegida: true},
         }
       ]

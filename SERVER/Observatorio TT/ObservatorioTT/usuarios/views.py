@@ -25,16 +25,18 @@ from rest_framework.permissions import (
 
 
 
-class UserViewSet(mixins.RetrieveModelMixin,
+class UserViewSet(
+                  mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin,
                   viewsets.GenericViewSet,
+
                   ):
     """User view set.
     Handle sign up, login and account verification.
     """
 
     queryset = Usuario.objects.filter(is_active=True)
-    serializer_class = UserSerializer
+    serializer_class = UserModelSerializer
     lookup_field = 'username'
 
 
@@ -58,21 +60,59 @@ class UserViewSet(mixins.RetrieveModelMixin,
       return Response(data, status=status.HTTP_201_CREATED)
 
 
-    @action(detail=False, methods=['put', 'patch'])
+    @action(detail=False, methods=['put', 'patch','get'])
     def profile(self, request, *args, **kwargs):
         """Update profile data."""
         user = request.user
         profile = user.profile
-        partial = request.method == 'PATCH'
-        serializer = ProfileModelSerializer(
+
+        if request.method=="PATCH" or  request.method=="PUT":
+
+          #actualizaFoto
+          print(request.data)
+          partial = request.method == 'PATCH'
+
+          serializer = ProfileModelSerializer(
             profile,
-            data=request.data,
+            data=request.data["usuario"]["profile"],
             partial=partial
-        )
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        data = UserModelSerializer(user).data
-        return Response(data)
+          )
+
+          userserializer= UserModelSerializer(
+            user,
+            data=request.data["usuario"],
+            partial=partial
+          )
+          userserializer.is_valid()
+          userserializer.save()
+          serializer.is_valid()
+          serializer.save()
+          data = UserModelSerializer(user, context={"request": request}).data
+          return Response(data)
+
+        else:
+          data = UserModelSerializer(user, context={"request":request}).data
+          return Response(data)
+    @action(detail=False, methods=['put', 'patch','get'])
+    def foto(self, request, *args, **kwargs):
+        """Update profile data."""
+        user = request.user
+        profile = user.profile
+        if request.method=="PATCH" or  request.method=="PUT":
+          print(request.data)
+          imagen=self.request.data["foto"]
+
+          if imagen:
+            print(imagen)
+            profile.foto=imagen
+            profile.save()
+
+            data = UserModelSerializer(user, context={"request": request}).data
+            return Response(data)
+          else:
+            return Response(status=400,data={"msj":"No se adjunto una imagen"})
+
+
 
 class ProfileUsers(APIView):
       """
