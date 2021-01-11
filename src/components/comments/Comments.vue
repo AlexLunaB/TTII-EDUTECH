@@ -1,7 +1,7 @@
 <template>
     <div class="comments">
         <div :class="comments_wrapper_classes">
-            <single-comment 
+            <single-comment
                 v-for="comment in comments"
                 :comment="comment"
                 :key="comment.id"
@@ -12,10 +12,10 @@
             <div class="avatar">
                 <img :src="current_user.avatar" alt="">
             </div>
-            <input 
-                type="text" 
-                v-model.trim="reply" 
-                class="reply--text" 
+            <input
+                type="text"
+                v-model.trim="reply"
+                class="reply--text"
                 placeholder="Leave a comment..."
                 maxlength="250"
                 required

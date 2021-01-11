@@ -77,7 +77,7 @@
                             Datos del recurso
                         </th>
                         <th class="text-left">
-                            
+
                         </th>
                         </tr>
                     </thead>
@@ -114,7 +114,7 @@
                     </template>
                 </v-simple-table>
 
-                
+
 
                 <!-- <v-list-item-title >
 
@@ -146,7 +146,7 @@
                 <div>Estado de procedencia: {{value.estado}}</div>
                 <div>Municipio de procedencia: {{value.municipio}}</div> -->
 
-                
+
 
             </v-card-text>
 
@@ -187,18 +187,18 @@
             </v-btn>
             </v-card-actions> -->
 
-            
+
         </v-card>
 
         <br>
-        
+
     </div>
 </template>
 
 <script>
 import { getAPI } from "../Api/axios-base";
 import Carousel from './Carousel'
-import CommentsApp from './CommentsApp'
+import CommentsApp from './comments/CommentsApp'
 export default {
     data() {
         return {
@@ -239,7 +239,7 @@ export default {
             this.loading = true
 
             setTimeout( () => {
-                
+
                 this.loading = false
                 this.$router.push({name: 'RecursoDetail', params: { id: this.recurso.id}})
             }, 2000)

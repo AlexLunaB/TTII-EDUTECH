@@ -18,7 +18,7 @@
       </template> -->
 
 
-     
+
       <v-card
         :loading="loading"
         class="mx-auto my-12"
@@ -54,7 +54,7 @@
             indeterminate
           ></v-progress-linear>
         </template>
-        
+
         <v-row>
           <v-col>
             Lo mas visitado de este estado......
@@ -64,7 +64,7 @@
             <v-list style="max-height: 700px" class="overflow-y-auto">
               <TarjetaRecurso v-for="recurso in recursos" :key="recurso.id" :recurso = recurso> </TarjetaRecurso>
             </v-list>
-            
+
           </v-col>
           <v-col v-if="dialog && recursos.length === 0">
             No hay recursos en este estado :c
@@ -73,10 +73,10 @@
             Tal vez te interese......
 
             <!-- <CardRecomendaciones> </CardRecomendaciones> -->
-            
+
           </v-col>
         </v-row>
-        
+
       </v-card>
     </v-dialog>
   </v-row>
@@ -89,10 +89,10 @@ import {getAPI} from '../Api/axios-base'
 import Carousel from '../components/Carousel'
 import TarjetaRecurso from './TarjetaRecurso'
 import CardRecomendaciones from './CardRecomendaciones'
-import CommentsApp from './CommentsApp'
+import CommentsApp from './comments/CommentsApp'
 
 
-export default { 
+export default {
 
 
   mounted(){
@@ -116,7 +116,7 @@ export default {
     }
   },
   props: {
-    
+
   },
   components: {
     Carousel,
@@ -140,9 +140,9 @@ export default {
       this.contentModalProp = contentModal;
 
       // return headModal;
-      
 
-      
+
+
     },
     reserve () {
       this.loading = true
@@ -163,11 +163,11 @@ export default {
                 this.recursos = response.data
             })
         },
-    
 
-    
 
-    
+
+
+
   },
 }
 </script>
