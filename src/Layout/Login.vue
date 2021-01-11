@@ -49,6 +49,7 @@
                         </v-form>
 
                         <!-- <h3 class="text-center mt-3"> ¿Olvidaste tu contraseña?</h3> -->
+                        <!-- <h3 class="text-center mt-3" @click="abreOlvidoContra"> ¿Olvidaste tu contraseña?</h3> -->
 
                       </v-card-text>
                       <div class="text-center mt-3">
@@ -338,7 +339,11 @@ import { getAPI } from '../Api/axios-base'
       abreTerminosCondiciones: function() {
         console.log("Abre modal")
         // this.dialog: true
-      }, 
+      },
+      
+      abreOlvidoContra: function () {
+        console.log("Abre olvide contrasenia")
+      },
     }
   }
 </script>

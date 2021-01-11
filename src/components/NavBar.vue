@@ -20,9 +20,9 @@
       <v-list-item router to="/Perfil">
         <v-list-item-content>
           <v-list-item-title class="title">
-            {{ perfil.nombre}} {{ perfil.apellidos }}
+            {{ perfil.nombre}}
           </v-list-item-title>
-          <v-list-item-subtitle>{{perfil.email}}</v-list-item-subtitle>
+          <v-list-item-subtitle>{{perfil.usuario}}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -101,15 +101,13 @@ export default {
   methods: {
     obtiene_datos_usuario: function () {
       const self = this;
-      getAPI.get("Usuarios/api/Profile/").then((response) =>{
-        console.log(response.data);
-        console.log(response.data.usuario);
-        self.perfil.email = response.data.usuario.email;
-        self.perfil.nombre = response.data.usuario.first_name;
-        self.perfil.apellidos = response.data.usuario.last_name;
-        self.perfil.usuario = response.data.usuario.username;
-        self.perfil.foto = response.data.foto;
-        self.perfil.intereses = response.data.intereses;
+      getAPI.get("Usuarios/View/profile/").then((response) => {
+        console.log(response)
+        self.perfil.email = response.data.email;
+        self.perfil.nombre = response.data.first_name;
+        self.perfil.apellidos = response.data.last_name;
+        self.perfil.usuario = response.data.username;
+        self.perfil.foto = response.data.profile.foto;
       });
     },
 
