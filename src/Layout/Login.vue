@@ -17,7 +17,7 @@
 
                         </h1>
 
-                        <div class="text-center" mt-4>
+                        <!-- <div class="text-center" mt-4>
                           <v-btn class="mx-2" fab color="black" outlined>
                             <v-icon>fab fa-facebook-f</v-icon>
 
@@ -25,7 +25,7 @@
                           <v-btn class="mx-2" fab color="black" outlined>
                             <v-icon>fab fa-twitter</v-icon>
                           </v-btn>
-                        </div>
+                        </div> -->
 
                         <h4 class="text-center mlt-4">Logueate</h4>
                         <v-form >
@@ -48,7 +48,8 @@
                           </v-text-field>
                         </v-form>
 
-                        <h3 class="text-center mt-3" @click="abreOlvidoContra"> ¿Olvidaste tu contraseña?</h3>
+                        <!-- <h3 class="text-center mt-3"> ¿Olvidaste tu contraseña?</h3> -->
+                        <!-- <h3 class="text-center mt-3" @click="abreOlvidoContra"> ¿Olvidaste tu contraseña?</h3> -->
 
                       </v-card-text>
                       <div class="text-center mt-3">
@@ -93,11 +94,11 @@
                     <v-col cols="12" md="8">
                       <v-card-text>
                         <h1 class="text-center display-2 primary--text text--accent-3">Crear Cuenta</h1>
-                      <div class="text-center mt-4">
+                      <!-- <div class="text-center mt-4">
                         <v-btn class="mx-2" fab >
                           <v-icon>fab fa-facebook</v-icon>
                         </v-btn>
-                      </div>
+                      </div> -->
 
                         <div>
                           <h4 class="text-center ">Verifica tu correo</h4>
@@ -313,6 +314,8 @@ import { getAPI } from '../Api/axios-base'
               })
 
               this.step--;
+
+              this.$refs.form.reset()
             
           } catch (error) {
             console.log(error)

@@ -56,25 +56,31 @@
         </template>
 
         <v-row>
-          <v-col>
-            Lo mas visitado de este estado......
-          </v-col>
-          <v-col v-if="dialog && recursos.length > 0">
+          <v-col v-if="dialog && recursos.length > 0" class="overflow-y-auto" cols="12" md="12">
 
-            <v-list style="max-height: 700px" class="overflow-y-auto">
-              <TarjetaRecurso v-for="recurso in recursos" :key="recurso.id" :recurso = recurso> </TarjetaRecurso>
-            </v-list>
+            <!-- <v-list style="max-height: 700px;" >
+              
+            </v-list> -->
+
+            <v-row>
+              <v-col cols="12" sm="12" md="4" v-for="recurso in recursos" :key="recurso.id">
+                <TarjetaRecurso  :recurso = recurso> </TarjetaRecurso>
+              </v-col>
+              
+            </v-row>
+
+            
 
           </v-col>
           <v-col v-if="dialog && recursos.length === 0">
             No hay recursos en este estado :c
           </v-col>
-          <v-col>
+          <!-- <v-col>
             Tal vez te interese......
 
-            <!-- <CardRecomendaciones> </CardRecomendaciones> -->
+            <CardRecomendaciones> </CardRecomendaciones>
 
-          </v-col>
+          </v-col> -->
         </v-row>
 
       </v-card>

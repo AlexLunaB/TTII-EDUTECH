@@ -4,7 +4,7 @@
 <template>
     <!-- <v-card-title>Nombre del recurso: {{value.nombreRecurso}}</v-card-title>4 -->
     <div>
-        <v-card max-width=550 :loading="loading" class="mx-100% mt-0 mb-0" >
+        <v-card max-width=550 :loading="loading" class="mx-100% mt-0 mb-0 ml-auto mr-auto"  >
             <template slot="progress">
                 <v-progress-linear
                 color="deep-purple"
@@ -23,7 +23,7 @@
             ></v-img> -->
             <Carousel :imagenes="recurso.recurso_img" > </Carousel>
 
-            <v-card-title>Nombre del recurso: {{recurso.nombreRecurso}}</v-card-title>
+            <v-card-title class="justify-center">Nombre del recurso: {{recurso.nombreRecurso}}</v-card-title>
 
             <v-card-text>
                 <v-row
@@ -82,13 +82,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <!-- <tr>
                             <td>ID:</td>
                             <td>{{recurso.id}}</td>
-                        </tr>
+                        </tr> -->
                         <tr>
-                            <td>Usuario:</td>
-                            <td>{{recurso.Usuario}}</td>
+                            <td>Subido por:</td>
+                            <td>{{recurso.Usuario.username}}</td>
                         </tr>
                         <tr>
                             <td>Descripcion:</td>
@@ -98,10 +98,10 @@
                             <td>Fecha de creacion:</td>
                             <td>{{recurso.fechaCreacion}}</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td>Fecha de modificación:</td>
                             <td>{{recurso.fechaModificacion}}</td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td>Estado de procedencia:</td>
                             <td>{{recurso.estado}}</td>

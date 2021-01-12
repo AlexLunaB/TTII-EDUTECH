@@ -96,6 +96,7 @@ export default {
           self= this
                 getAPI.get("/Foro/api/Post").then((res)=> {
                   self.Post = res.data
+                  console.log(res.data)
       });
 
             
