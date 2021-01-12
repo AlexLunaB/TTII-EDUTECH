@@ -547,7 +547,7 @@
         class="estado"
         data-name_estado="Baja California Sur"
         data-id_estado="3"
-        :fill="this.color"
+        :fill="colorCantidad"
         d="M269.706,414.703l8.956,11.354l-3.469,10.216l-8.906,5.928l-4.727,4.498l-2.41,0.51l-5.867-6.268
     l-4.997-21.521l-7.127-6.228l-7.397-4.589l-21.42-21.641l-16.492-16.042h-1.859l-1.19-5.917l-2.868,1.909l-3.429-5.837
     l-2.959-1.062l-3.498-9.895l4.778-28.657l-9.305-23.029l-5.818-2.689l-30.666-26.058l-3.548,1.649l-5.118,0.2l-7.706-9.855
@@ -571,7 +571,7 @@
         active-class="active"
         data-name_estado="Baja California"
         data-id_estado="2"
-        :fill="this.color"
+        :fill="colorCantidad"
         d="M165.284,218.434v1.649l-49.957-3.148l0.9-3.958l1.289-7.697l3.829-8.136l-10.926-14.494l-7.816-9.125
     l-16.932-19.301l-7.216-5.488l-13.644-12.364v-4.018l-3.029-4.338l0.22-14.393l-7.187-7.187l-1.299-18.262l-6.287-5.207
     l-0.65-10.276l-6.367-10.524l-2.528-4.858l-0.4-4.848l3.328-6.667l-2.889-5.527l-4.477-2.549l-2.729-10.115l-5.788-10.326
@@ -588,7 +588,7 @@
         class="estado"
         data-name_estado="Durango"
         data-id_estado="10"
-        :fill="this.color"
+        :fill="colorCantidad"
         d="M543.218,365.136l5.198,14.435l-0.99,8.096l-29.104,1.929l-21.08,15.753l-0.87,17.862l-8.826,9.256
     l-3.488,11.564l-1.987,3.088l-3.979,28.297l-3.479-2.188l-4.02,1.699l-5.707-5.718v-2.479l-6.405-1.229l-4.68,1.06l-1.139-0.5
     l1.119-3.907l2.099-6.526l-6.557-6.308l-14.073-3.688l-10.315-11.364l-1.06-9.306l-5.437-11.415l-1.541-13.174l-12.773-11.404
@@ -647,6 +647,11 @@
 
         user: {},
 
+        cantRecursos: {'DGO': 95, 'BC': 50, 'BCS': 20},
+        cantDurango: 95,
+        cantBC: 50,
+        cantBCS: 20
+
 
       };
     },
@@ -688,6 +693,25 @@
       theme() {
         return this.$vuetify.theme.dark ? "dark" : "light";
       },
+      colorCantidad(e) {
+        // let id = e.target.id;
+        
+        const idEstados = Object.keys(this.cantRecursos)
+        const valEstados = Object.values(this.cantRecursos)
+        console.log(idEstados)
+        console.log(valEstados)
+        console.log(e.target.id)
+        for(let id of idEstados) {
+          
+        }
+
+        // for(let i=0; i < this.cantRecursos.length; i++){
+        //   if(e.target.tagName === 'path' && 'path' === i) {
+        //     return (this.i <= 100 && this.i > 70)  ? '#17FF00' : (this.i <= 70 && this.i > 30) ? '#FFFF00' : (this.i <= 30 && this.i > 0) ? '#FF0000' : this.color;
+        //   }
+        // }
+        
+      }
     },
     mounted() {
       this.GetArticulos()
