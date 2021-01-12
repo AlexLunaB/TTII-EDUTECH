@@ -1,105 +1,115 @@
 <template>
-<v-container fluid>
-    
-    <v-card >
-        
-        <v-row>
-            <v-col cols="8" style="background-color: #F3F3F3" >
+  <v-container fluid>
 
-                <v-container style="background-color: #FFFFFF" >
-                    
-                    <h1 class="text-center display-2 black--text text--accent-2">{{this.Post.temaDiscusion}}</h1>
+    <v-card>
 
-                    <h4>Creado el {{this.Post.created}} por {{this.Post.administrador.username}}</h4>
+      <v-row>
+        <v-col cols="8" style="background-color: #F3F3F3">
 
-                    <v-img
-                    
-                    max-height="400"
-                    max-width="800"
-                    :src="this.Post.Imagen"
-                    class="ml-auto mr-auto mt-10 mb-10"
-                    ></v-img>
+          <v-container style="background-color: #FFFFFF">
 
-                    <div>{{this.Post.descripcion}}</div>
+            <h1 class="text-center display-2 black--text text--accent-2">{{this.Post.temaDiscusion}}</h1>
 
-                    <div v-html="this.Post.html"></div>
+            <h4>Creado el {{this.Post.created}} por {{this.Post.administrador.username}}</h4>
 
-                    
-                </v-container>
-            </v-col >
+            <v-img
 
-            <v-col style="background-color: #FFF3E6">
-                <CardRecomendaciones v-for="post in Posts" :key="post.id" :post = post></CardRecomendaciones>
-            </v-col>
-        </v-row>
-        
+              max-height="400"
+              max-width="800"
+              :src="this.Post.Imagen"
+              class="ml-auto mr-auto mt-10 mb-10"
+            ></v-img>
+
+            <div>{{this.Post.descripcion}}</div>
+
+            <div v-html="this.Post.html"></div>
+
+
+          </v-container>
+        </v-col>
+
+        <v-col cols="4" >
+          <v-card style="background-color: #FFF3E6" >
+            <CardRecomendaciones v-for="post in Posts" :key="post.id" :post=post></CardRecomendaciones>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-container>
+            <CommentsApp></CommentsApp>
+          </v-container>
+        </v-col>
+      </v-row>
+
     </v-card>
-</v-container>
+  </v-container>
 </template>
 
 <script>
-import { getAPI } from '../../Api/axios-base';
-import CardRecomendaciones from '../CardRecomendaciones'
+  import {getAPI} from '../../Api/axios-base';
+  import CardRecomendaciones from '../CardRecomendaciones'
+  import CommentsApp from "../comments/CommentsApp";
 
 
-
-export default {
+  export default {
     name: "BlogDetail",
     data() {
-        return {
-            id:this.$route.params.id,
-            Post:{},
-            Posts:{}
-           
-        }
+      return {
+        id: this.$route.params.id,
+        Post: {},
+        Posts: {}
+
+      }
     },
 
-    
-    components: {
 
-        CardRecomendaciones
-       
+    components: {
+      CommentsApp,
+
+      CardRecomendaciones
+
     },
     methods: {
-        
-        GetArticulo: async function () {
 
-            try {
-                self= this
-                const res = await getAPI.get("/Foro/api/Post/"+this.id)
-                self.Post = res.data
-                // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
-                //     self.Post = res.data
-                // });
-                console.log(res.data)
-            } catch (error) {
-                console.log(error)
-            }
-        },
+      GetArticulo: async function () {
 
-        GetArticulos: async function () {
+        try {
+          self = this
+          const res = await getAPI.get("/Foro/api/Post/" + this.id)
+          self.Post = res.data
+          // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
+          //     self.Post = res.data
+          // });
+          console.log(res.data)
+        } catch (error) {
+          console.log(error)
+        }
+      },
 
-            try {
-                self= this
-                const res = await getAPI.get("/Foro/api/Post")
-                self.Posts = res.data
-                // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
-                //     self.Post = res.data
-                // });
-                console.log(res.data)
-            } catch (error) {
-                console.log(error)
-            }
-        },
- 
-    }, 
+      GetArticulos: async function () {
 
-    mounted(){ 
-        this.GetArticulo()
-        this.GetArticulos()
-      
+        try {
+          self = this
+          const res = await getAPI.get("/Foro/api/Post/"+ this.id+"/Similares")
+          self.Posts = res.data
+          // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
+          //     self.Post = res.data
+          // });
+          console.log(res.data)
+        } catch (error) {
+          console.log(error)
+        }
+      },
+
+    },
+
+    mounted() {
+      this.GetArticulo()
+      this.GetArticulos()
+
     }
-};
+  };
 </script>
 
 <style scoped>

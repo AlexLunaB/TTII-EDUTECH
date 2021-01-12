@@ -6,6 +6,7 @@ from taggit.models import Tag
 from taggit_serializer.serializers import TaggitSerializer, TagListSerializerField
 
 from recursos.models import Recurso, Categoria, Rating, MyCustomTag, RecursosArchivo
+from usuarios.serializers import UserModelSerializer
 
 
 class CategoriaSerializer(serializers.ModelSerializer):
@@ -24,6 +25,11 @@ class RecursoReadSerializer(TaggitSerializer,serializers.ModelSerializer):
   calificacion= serializers.SerializerMethodField(read_only=True,required=False)
   recurso_img =RecursoArchivoSerializer(
                        many=True, read_only=True)
+  Usuario=UserModelSerializer(read_only=True)
+  estado = serializers.StringRelatedField()
+  municipio = serializers.StringRelatedField()
+  fechaCreacion =serializers.DateTimeField(format="%Y-%m-%d a las %H:%M:%S", required=False, read_only=True)
+  fechaModificacion = serializers.DateTimeField(format="%Y-%m-%d a las  %H:%M:%S", required=False, read_only=True)
 
 
   class Meta:

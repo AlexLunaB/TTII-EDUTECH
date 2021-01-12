@@ -39,6 +39,10 @@ export default new Vuex.Store({
       state.refreshToken = refresh
       state.user = user
     },
+    updateUserInfo(state,user) {
+
+      state.user = user
+    },
     updateAccess(state, access) {
       state.accessToken = access
       localStorage.setItem('access_token', access)

@@ -1,10 +1,10 @@
 <template>
 <nav>
-  <v-navigation-drawer 
-    v-model="drawer" 
-    app mini-variant mini-variant-width="100" 
+  <v-navigation-drawer
+    v-model="drawer"
+    app mini-variant mini-variant-width="100"
     class="barra"
-  
+
     dark
   >
 
@@ -14,7 +14,7 @@
           <v-list-item-avatar>
             <v-img :src=perfil.foto></v-img>
           </v-list-item-avatar>
-        </v-layout>        
+        </v-layout>
       </v-list-item>
 
       <v-list-item router to="/Perfil">
@@ -72,7 +72,7 @@
       </v-list-item>
     </v-list> -->
   </v-navigation-drawer>
-  
+
 </nav>
 </template>
 
@@ -102,7 +102,6 @@ export default {
     obtiene_datos_usuario: function () {
       const self = this;
       getAPI.get("Usuarios/View/profile/").then((response) => {
-        console.log(response)
         self.perfil.email = response.data.email;
         self.perfil.nombre = response.data.first_name;
         self.perfil.apellidos = response.data.last_name;

@@ -13,6 +13,8 @@
             ></v-progress-linear>
           </template>
 
+
+
           <v-img
             height="250"
             :src="this.articulo.Imagen"
@@ -23,11 +25,20 @@
           <v-card-text>
 
 
-           
+
 
             <div class="my-2">
               {{resumenArticulo}}
             </div>
+
+                  <v-chip
+                    v-for="r in articulo.tags"
+        class="ma-2"
+        color="green"
+        text-color="white"
+      >
+                    {{r}}
+      </v-chip>
 
             <span class="date"> Hace 5 minutos </span>
             <a href="#">Leer más</a>
@@ -72,7 +83,7 @@ export default {
       this.loading = true
 
       setTimeout( () => {
-        
+
       this.loading = false
       this.$router.push({name: 'post', params: { id: this.articulo.id}})
       }, 2000)

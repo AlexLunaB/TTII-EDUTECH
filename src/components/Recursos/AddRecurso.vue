@@ -196,6 +196,21 @@
           </v-col>
         </v-row>
 
+        <v-row>
+
+
+          <v-col cols="12">
+            <quill-editor
+              ref="myQuillEditor"
+              v-model="articulo.html"
+              :options="editorOption"
+
+            />
+
+
+          </v-col>
+        </v-row>
+
         <v-card-actions>
           <v-btn
 
@@ -217,9 +232,12 @@
 <script>
   import {getAPI} from "../../Api/axios-base";
   import Swal from 'sweetalert2'
+    import {quillEditor} from 'vue-quill-editor'
+
 
 
   export default {
+    components:{quillEditor},
     name: "AddRecurso",
     data: function () {
       return {
@@ -227,6 +245,12 @@
           v => !!v || 'Es Requerido',
 
         ],
+                editorConfig: {
+          // The configuration of the rich-text editor.
+        },
+        editorOption: {
+          // Some Quill options...
+        },
         search: "",
         files: [],
         estados: [],
@@ -238,7 +262,8 @@
           estado: null,
           municipio: null,
           categoria: [],
-          usuario: 1
+          usuario: 1,
+          html:""
         },
         estado: {
           id: null
@@ -280,7 +305,7 @@
       },
       addNewTag() {
         if (this.search != null || (this.search.trim()) != '') {
-          alert("estoy lleno")
+
 
           this.tags.push({slug: this.search});
           this.articulo.categoria.push(this.search);
@@ -290,7 +315,7 @@
 
       postArticulos: async function () {
 
-        var self=this
+        var self = this
         let a = this.$refs.form.validate();
         if (!a)
           return
@@ -305,6 +330,7 @@
         formData.append("descripcion", this.articulo.descripcion);
         formData.append("Usuario", 1);
         formData.append("estado", this.articulo.estado.id);
+        formData.append("html", this.articulo.html);
         formData.append("municipio", this.articulo.municipio.id);
         formData.append("tags", JSON.stringify(this.articulo.categoria));
 
@@ -325,8 +351,8 @@
             title: 'Tu Recurso se ha guardado con éxito',
             showConfirmButton: false,
             timer: 1500
-          }).then((e)=>{
-             this.$router.push({name: 'Perfil'})
+          }).then((e) => {
+            this.$router.push({name: 'Perfil'})
           })
 
 

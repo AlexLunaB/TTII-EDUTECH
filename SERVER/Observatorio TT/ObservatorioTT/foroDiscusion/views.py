@@ -2,10 +2,13 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import mixins, viewsets
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from foroDiscusion.models import ForoDiscusion
 from foroDiscusion.serializer import PostSerializer, PostReadSerializer, PostDetailSerializer
+from recursos.Serializers.RecursoSerializer import TagSerializer
 
 
 class PostViewSet(
@@ -28,6 +31,30 @@ class PostViewSet(
       return  PostDetailSerializer
     else:
       return PostReadSerializer
+
+
+  @action(detail=False, methods=['get'])
+  def Tags(self,request):
+
+
+
+    tags=ForoDiscusion.tags.all()
+    print(tags)
+    ts=TagSerializer(data=tags,many=True)
+    print(ts.is_valid())
+    print(ts.errors)
+
+
+    return Response(ts.data)
+
+  @action(detail=True, methods=["Get"])
+  def Similares(self, request,pk):
+    recurso=self.get_object()
+    recomendacion=recurso.tags.similar_objects()[:5]
+    R = PostReadSerializer(recomendacion, many=True, context={"request": request})
+    return Response(data=R.data)
+
+
 
 
   def perform_create(self, serializer):

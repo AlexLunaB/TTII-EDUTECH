@@ -49,6 +49,7 @@ class Recurso(models.Model):
     fechaCreacion = models.DateTimeField(auto_now_add=True)
     fechaModificacion = models.DateTimeField(auto_now=True)
     descripcion = models.CharField(max_length = 250)
+    html = models.TextField(null=True)
     tags = TaggableManager(through=TaggedWhatever)
 
 

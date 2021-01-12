@@ -1,4 +1,5 @@
 import django_filters
+from django.db.models import Case, When
 from django.shortcuts import render
 
 # Create your views here.
@@ -10,38 +11,17 @@ from rest_framework.response import Response
 from taggit_serializer.serializers import TaggitSerializer
 
 from ObservatorioTTApp.models import MexicoState
+from ObservatorioTTApp.recomendador import Myrecommend
 from recursos.Serializers.RecursoSerializer import RecursoSerializer, CategoriaSerializer, RecursoReadSerializer, \
   TagSerializer
 from recursos.filters.filterRecursoView import RecursoFilter
 from recursos.models import Recurso, Categoria, Rating
 from rest_framework.permissions import IsAuthenticated
-"""
-# for recommendation
-def recommend(request):
-	if not request.user.is_authenticated:
-		return redirect("login")
-	if not request.user.is_active:
-		raise Http404
-	df=pd.DataFrame(list(Myrating.objects.all().values()))
-	nu=df.user_id.unique().shape[0]
-	current_user_id= request.user.id
-	# if new user not rated any movie
-	if current_user_id>nu:
-		movie=Movie.objects.get(id=15)
-		q=Myrating(user=request.user,movie=movie,rating=0)
-		q.save()
+import  numpy as np
+import pandas as pd
 
-	print("Current user id: ",current_user_id)
-	prediction_matrix,Ymean = Myrecommend()
-	my_predictions = prediction_matrix[:,current_user_id-1]+Ymean.flatten()
-	pred_idxs_sorted = np.argsort(my_predictions)
-	pred_idxs_sorted[:] = pred_idxs_sorted[::-1]
-	pred_idxs_sorted=pred_idxs_sorted+1
-	print(pred_idxs_sorted)
-	preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(pred_idxs_sorted)])
-	movie_list=list(Movie.objects.filter(id__in = pred_idxs_sorted,).order_by(preserved)[:10])
-	return render(request,'web/recommend.html',{'movie_list':movie_list})
-"""
+
+
 class RecursoViewSet(mixins.ListModelMixin,
                      mixins.UpdateModelMixin,
                      mixins.CreateModelMixin,
@@ -67,19 +47,43 @@ class RecursoViewSet(mixins.ListModelMixin,
 
 
 
-  @action(detail=False, methods=['get'])
-  def Tags(self,request):
+  @action(detail=True,  methods=['get'])
+  def recommend(self,request,pk):
+
+
+    df = pd.DataFrame(list(Rating.objects.all().values()))
+    nu = df.user_id.unique().shape[0]
+    current_user_id = request.user.id
+
+    # if new user not rated any movie
+    if current_user_id > nu:
+      movie = Recurso.objects.get(id=30)
+      q = Rating(user=request.user, recurso=movie, rating=0)
+      q.save()
+
+    print("Current user id: ", current_user_id)
+    prediction_matrix, Ymean = Myrecommend()
+    my_predictions = prediction_matrix[:, current_user_id - 1] + Ymean.flatten()
+    pred_idxs_sorted = np.argsort(my_predictions)
+    pred_idxs_sorted[:] = pred_idxs_sorted[::-1]
+    pred_idxs_sorted = pred_idxs_sorted + 1
+    print(pred_idxs_sorted)
+    preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(pred_idxs_sorted)])
+    movie_list = list(Recurso.objects.filter(id__in=pred_idxs_sorted, ).order_by(preserved)[:10])
+    R=RecursoSerializer(many=True,data=movie_list)
+    R.is_valid()
 
 
 
-    tags=Recurso.tags.all()
-    print(tags)
-    ts=TagSerializer(data=tags,many=True)
-    print(ts.is_valid())
-    print(ts.errors)
+    return  Response(data={'recursos_list': R.data})
 
 
-    return Response(ts.data)
+  def perform_create(self, serializer):
+    serializer=serializer.save(Usuario=self.request.user)
+    a= super().perform_create(serializer)
+    return a
+
+
 
 
 
@@ -120,6 +124,18 @@ class RecursoViewSet(mixins.ListModelMixin,
     source.rating=  calificacion
 
     source.save()
+
+    return Response(data={"ok": 'ok'})
+
+  @action(detail=True, methods=["Get"])
+  def Similares(self, request,pk):
+    recurso=self.get_object()
+
+    recomendacion=recurso.tags.similar_objects()[:5]
+    R = RecursoReadSerializer(recomendacion, many=True, context={"request": request})
+    return Response(data=R.data)
+
+
 
     return Response(data={"ok": 'ok'})
 

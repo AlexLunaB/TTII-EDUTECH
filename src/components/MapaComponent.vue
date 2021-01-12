@@ -1,21 +1,23 @@
 <template>
-<v-container class="contenedor">
-    
-  <svg
-    version="1.1"
-    id="Capa_1"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    x="0px"
-    y="0px"
-    width="100%"
-    height="70%"
-    viewBox="0 0 1198 819"
-    enable-background="new 0 0 1198 819"
-    xml:space="preserve"
-    @click="handleStateClick"
-    @mouseover="handleStateHover"
-  >
+  <v-container class="contenedor">
+
+
+
+    <svg
+      version="1.1"
+      id="Capa_1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      x="0px"
+      y="0px"
+      width="100%"
+      height="70%"
+      viewBox="0 0 1198 819"
+      enable-background="new 0 0 1198 819"
+      xml:space="preserve"
+      @click="handleStateClick"
+      @mouseover="handleStateHover"
+    >
     <g class="capa">
 
       <!-- quintana roo -->
@@ -450,7 +452,6 @@
       <!-- fin Aguascalientes -->
 
 
-
       <!-- Chihuahua -->
       <path
         id="CHI"
@@ -544,7 +545,7 @@
       <path
         id="BCS"
         class="estado"
-        data-name_estado="Baja California Sur" 
+        data-name_estado="Baja California Sur"
         data-id_estado="3"
         :fill="this.color"
         d="M269.706,414.703l8.956,11.354l-3.469,10.216l-8.906,5.928l-4.727,4.498l-2.41,0.51l-5.867-6.268
@@ -563,7 +564,7 @@
 
       <!-- Baja California -->
       <path
-        
+
         @click="cambiaColor"
         id="BC"
         class="estado"
@@ -581,7 +582,7 @@
         <title>Baja California</title>
       </path>
       <!-- fin Baja California -->
-                    <!-- durango -->
+      <!-- durango -->
       <path
         id="DGO"
         class="estado"
@@ -598,135 +599,139 @@
       >
         <title>Durango</title>
       </path>
-      
+
       <!-- fin durango -->
     </g>
 
   </svg>
 
- 
-  <!-- <Modal ref="modal" headModal='texto desde props' contentModal='SADSDASDASDASD props'></Modal> -->
-  <ModalFullscreen ref="modal" headModal='texto desde props' contentModal='SADSDASDASDASD props'></ModalFullscreen>
-  
 
-</v-container>
+    <!-- <Modal ref="modal" headModal='texto desde props' contentModal='SADSDASDASDASD props'></Modal> -->
+    <ModalFullscreen ref="modal" headModal='texto desde props' contentModal='SADSDASDASDASD props'></ModalFullscreen>
 
 
+  </v-container>
 
 
 </template>
 
 
 <script>
-import { getAPI } from "../Api/axios-base";
-import Vue from "vue";
-import d3 from "d3"
-
-import Modal from "./Modal";
-import ModalFullscreen from "./ModalFulscreen"
+  import {getAPI} from "../Api/axios-base";
+  import Vue from "vue";
 
 
+  import Modal from "./Modal";
+  import ModalFullscreen from "./ModalFulscreen"
 
 
 
-export default {
-   
+  export default {
+
     name: "MapaComponent",
     components: {
       Modal,
-      ModalFullscreen
+      ModalFullscreen,
+
     },
     data() {
-    return {
-      color: "#00adb5",
-      with: 2,
-      radius: 10,
-      padding: 8,
-      lineCap: "round",
-      date2: new Date().toISOString().substr(0, 19),
-      servicios: [],
+      return {
+        items:[],
+        color: "#00adb5",
+        with: 2,
+        radius: 10,
+        padding: 8,
+        lineCap: "round",
+        date2: new Date().toISOString().substr(0, 19),
+        servicios: [],
 
-      user: {},
-    
-     
-    };
-  },
-  methods:{
-      cambiaColor: function(a){
-          alert(a.target.id)
-          this.auxiliar(a.target.id)
+        user: {},
+
+
+      };
+    },
+    methods: {
+      GetArticulos: function () {
+        self = this
+        getAPI.get("/Foro/api/Post").then((res) => {
+          self.items = res.data
+        });
+
+
       },
-      mandafrente: function(a){
-                      d3.select(this).moveToFront();
+      cambiaColor: function (a) {
+        alert(a.target.id)
+        this.auxiliar(a.target.id)
       },
+
 
       handleStateClick: function (e) {
         if (e.target.tagName === 'path') {
           // console.log(e.target.id);
 
-          // alert(`Presionando el ${e.target.id}`);   
+          // alert(`Presionando el ${e.target.id}`);
 
           this.$refs.modal.showModal();
           this.$refs.modal.setTextModal(e.target.id, 'Este es un texto como prop desde el mapa');
 
-          
+
         }
       },
-      handleStateHover: function(e) {
-        if(e.target.tagName === 'path') {
+      handleStateHover: function (e) {
+        if (e.target.tagName === 'path') {
           // console.log(e.target.id)
         }
       }
 
-  },
-  computed: {
-    theme() {
-      return this.$vuetify.theme.dark ? "dark" : "light";
     },
-  },
-  mounted() {
-    this.obtieneServicio();
-    this.ObtienePerfil();
-  },
-};
+    computed: {
+      theme() {
+        return this.$vuetify.theme.dark ? "dark" : "light";
+      },
+    },
+    mounted() {
+      this.GetArticulos()
+
+    },
+  };
 </script>
 
 <style scoped>
-.contenedor{
+  .contenedor {
     position: relative;
     overflow: hidden;
 
-}
-path:hover{
+  }
+
+  path:hover {
     color: tomato;
     fill: yellowgreen;
     z-index: -1;
-   
+
 
     /* transform: scale(1.5,1.5); Igual que: scaleX(0.7) scaleY(0.7) */
     /* transform: scale(1.5); Igual que: scaleX(2) scaleY(0.5) */
     transform: translate(-20, -40) scale(4)
-    
-}
-path{
-    transition: 1s all; 
+
+  }
+
+  path {
+    transition: 1s all;
     transform-origin: 50% 50%;
     transform-box: fill-box;
-   
-}
 
-g{
-      position: relative;
+  }
+
+  g {
+    position: relative;
     overflow: hidden;
-    transition: transform .2s ease-in-out; 
+    transition: transform .2s ease-in-out;
 
-}
+  }
 
-.overflow-hidden {
-  overflow: hidden;
-}
-
-
+  .overflow-hidden {
+    overflow: hidden;
+  }
 
 
 </style>
