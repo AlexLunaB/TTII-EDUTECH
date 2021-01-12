@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+
     <div class="comments-outside">
       <div class="comments-header">
         <div class="comments-stats">
@@ -15,7 +15,7 @@
             </div>
           </div>
         </div>
-        <comments 
+        <comments
           :comments_wrapper_classes="['custom-scrollbar', 'comments-wrapper']"
           :comments="comments"
           :current_user="current_user"
@@ -23,7 +23,7 @@
         ></comments>
     </div>
 
-  </div>
+
 </template>
 
 <script>
@@ -53,13 +53,13 @@ export default {
           text: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor ',
         },
         {
-          id: 2,                            
+          id: 2,
           user: 'example1',
           avatar: 'http://via.placeholder.com/100x100/2d58a7',
           text: 'lorem ipsum dolor',
         },
         {
-          id: 3,                            
+          id: 3,
           user: 'example2',
           avatar: 'http://via.placeholder.com/100x100/36846e',
           text: 'lorem ipsum dolor again',
@@ -90,11 +90,9 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
 a {
   text-decoration: none;
 }
-
 hr {
   display: block;
   height: 1px;
@@ -103,13 +101,10 @@ hr {
   margin: 1em 0;
   padding: 0;
 }
-
 .comments-outside {
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-  margin: 0 auto;
-  max-width: 600px;
+  margin: auto;
 }
-
 .comments-header {
   background-color: #C8C8C8;
   padding: 10px;
