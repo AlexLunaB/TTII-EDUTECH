@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from taggit.models import Tag
 from taggit_serializer.serializers import TaggitSerializer, TagListSerializerField
 
-from recursos.models import Recurso, Categoria, Rating, MyCustomTag, RecursosArchivo
+from recursos.models import Recurso, Categoria, Rating, MyCustomTag, RecursosArchivo, Comentario
 from usuarios.serializers import UserModelSerializer
 
 
@@ -19,17 +19,52 @@ class RecursoArchivoSerializer(serializers.ModelSerializer):
   class Meta:
     model= RecursosArchivo
     fields=("__all__")
+class ComentarioSerializer(serializers.ModelSerializer):
+  usuario= UserModelSerializer()
+  class Meta:
+    model= Comentario
+    fields=("__all__")
 
 class RecursoReadSerializer(TaggitSerializer,serializers.ModelSerializer):
   tags = TagListSerializerField()
   calificacion= serializers.SerializerMethodField(read_only=True,required=False)
   recurso_img =RecursoArchivoSerializer(
                        many=True, read_only=True)
+
   Usuario=UserModelSerializer(read_only=True)
   estado = serializers.StringRelatedField()
   municipio = serializers.StringRelatedField()
   fechaCreacion =serializers.DateTimeField(format="%Y-%m-%d a las %H:%M:%S", required=False, read_only=True)
   fechaModificacion = serializers.DateTimeField(format="%Y-%m-%d a las  %H:%M:%S", required=False, read_only=True)
+
+  def get_calificacion(self,obj):
+    request= self.context.get("request",None)
+
+    if not request.user.is_anonymous:
+      try:
+        user=request.user
+
+        r=Rating.objects.get(user=user,recurso=obj)
+        return r.rating
+      except Rating.DoesNotExist:
+        return None
+
+
+  class Meta:
+    model = Recurso
+    fields = ("__all__")
+class RecursoDetailSerializer(TaggitSerializer,serializers.ModelSerializer):
+  tags = TagListSerializerField()
+  calificacion= serializers.SerializerMethodField(read_only=True,required=False)
+  recurso_img =RecursoArchivoSerializer(
+                       many=True, read_only=True)
+  comentario_set = ComentarioSerializer(many=True,read_only=True,label="Comentarios")
+  Usuario=UserModelSerializer(read_only=True)
+  estado = serializers.StringRelatedField()
+  municipio = serializers.StringRelatedField()
+  fechaCreacion =serializers.DateTimeField(format="%Y-%m-%d a las %H:%M:%S", required=False, read_only=True)
+  fechaModificacion = serializers.DateTimeField(format="%Y-%m-%d a las  %H:%M:%S", required=False, read_only=True)
+
 
 
   class Meta:

@@ -10,7 +10,7 @@ from ObservatorioTTApp.serializer.EstadoSerializer import EdoSerializer, Municip
 
 
 class EstadosMexicoViewSet(
-  mixins.ListModelMixin,
+                         mixins.ListModelMixin,
                          mixins.UpdateModelMixin,
                          mixins.CreateModelMixin,
                          mixins.RetrieveModelMixin,

@@ -6,8 +6,8 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from foroDiscusion.models import ForoDiscusion
-from foroDiscusion.serializer import PostSerializer, PostReadSerializer, PostDetailSerializer
+from foroDiscusion.models import ForoDiscusion, ComentarioBlog
+from foroDiscusion.serializer import PostSerializer, PostReadSerializer, PostDetailSerializer, ComentarioBlogSerializer
 from recursos.Serializers.RecursoSerializer import TagSerializer
 
 
@@ -53,6 +53,32 @@ class PostViewSet(
     recomendacion=recurso.tags.similar_objects()[:5]
     R = PostReadSerializer(recomendacion, many=True, context={"request": request})
     return Response(data=R.data)
+
+
+
+  @action(detail=False, methods=["Get"])
+  def PorUsuario(self, request,):
+    usuario=self.request.user
+    ob = usuario.forodiscusion_set.all()
+    R = PostReadSerializer(ob, many=True, context={"request": request})
+    return Response(data=R.data)
+
+  @action(detail=True, methods=["POST"])
+  def Comentar(self, request, pk):
+
+    self.get_object()
+
+    usuario = self.request.user
+    Comenta = request.data.get("comentario")
+    if not Comenta:
+      return Response(data={"Comentario": ''}, status=400)
+
+    if usuario.is_anonymous:
+      return Response(data={"error": 'Usuario No logueado'}, status=400)
+    recurso = self.get_object()
+    c = ComentarioBlog.objects.create(comentario=Comenta, usuario=usuario, recurso=recurso)
+    cs = ComentarioBlogSerializer(c)
+    return Response(data=cs.data, status=400)
 
 
 

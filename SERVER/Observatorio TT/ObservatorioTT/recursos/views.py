@@ -1,3 +1,5 @@
+import json
+
 import django_filters
 from django.db.models import Case, When
 from django.shortcuts import render
@@ -13,9 +15,9 @@ from taggit_serializer.serializers import TaggitSerializer
 from ObservatorioTTApp.models import MexicoState
 from ObservatorioTTApp.recomendador import Myrecommend
 from recursos.Serializers.RecursoSerializer import RecursoSerializer, CategoriaSerializer, RecursoReadSerializer, \
-  TagSerializer
+  TagSerializer, ComentarioSerializer, RecursoDetailSerializer
 from recursos.filters.filterRecursoView import RecursoFilter
-from recursos.models import Recurso, Categoria, Rating
+from recursos.models import Recurso, Categoria, Rating, Comentario
 from rest_framework.permissions import IsAuthenticated
 import  numpy as np
 import pandas as pd
@@ -41,8 +43,31 @@ class RecursoViewSet(mixins.ListModelMixin,
       return RecursoSerializer
     if self.action == 'update':
       return RecursoSerializer
+    if self.action == 'retrieve':
+      return RecursoDetailSerializer
 
     return RecursoReadSerializer
+
+  def list(self, request, *args, **kwargs):
+    """Add circle to serializer context."""
+    response = super().list(request, *args, **kwargs)
+
+    recursos=super(RecursoViewSet, self).filter_queryset(self.queryset)
+    recurso_estado={}
+    for recurso in recursos:
+      if not recurso.estado.id in recurso_estado:
+        recurso_estado[recurso.estado.id] = {"conteo": 0, "id": recurso.estado.id}
+      recurso_estado[recurso.estado.id]["conteo"] += 1
+
+    data = {
+      'recursos': response.data,
+      'conteo': recurso_estado
+    }
+    response.data = data
+    return response
+
+
+
 
 
 
@@ -125,7 +150,25 @@ class RecursoViewSet(mixins.ListModelMixin,
 
     source.save()
 
-    return Response(data={"ok": 'ok'})
+    return Response(data={"ok": 'ok'})\
+
+  @action(detail=True, methods=["POST"])
+  def Comentar(self, request,pk):
+
+
+    self.get_object()
+
+    usuario=self.request.user
+    Comenta=request.data.get("comentario")
+    if not Comenta:
+      return Response(data={"Comentario": ''}, status=400)
+
+    if  usuario.is_anonymous:
+      return Response(data={"error":'Usuario No logueado'},status=400)
+    recurso=self.get_object()
+    c=Comentario.objects.create(comentario=Comenta,usuario=usuario,recurso=recurso)
+    cs=ComentarioSerializer(c)
+    return Response(data=cs.data,status=400)
 
   @action(detail=True, methods=["Get"])
   def Similares(self, request,pk):
@@ -190,8 +233,6 @@ class CategoriaViewSet(mixins.ListModelMixin,
                      viewsets.GenericViewSet):
   queryset = Categoria.objects.all()
   serializer_class = CategoriaSerializer
-
-
 
 
 

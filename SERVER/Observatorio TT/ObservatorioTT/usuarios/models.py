@@ -9,14 +9,13 @@ from ObservatorioTTApp.models import MexicoState, MexicoMunicipio
 
 
 PERMISO_USUARIO = (
-  ("AD", "Administrador"),
-  ("GE", "General"),
-  ("IN", "Investigador"),
+  ("ED", "Editor"),
+  ("LE", "Lector"),
 )
 
 
 class Usuario(AbstractUser):
-  permiso = models.CharField(max_length=20, choices=PERMISO_USUARIO, default='GE')
+  permiso = models.CharField(max_length=20, choices=PERMISO_USUARIO, default='LE')
 
   def __str__(self):
     return self.username

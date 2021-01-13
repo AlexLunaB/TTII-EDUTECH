@@ -3,6 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import APIView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from recursos.Serializers.RecursoSerializer import TagSerializer
 from usuarios.models import Usuario, Profile
@@ -22,8 +24,20 @@ from rest_framework.permissions import (
     IsAuthenticated
 )
 
+#Obtiene el token con el que se trabajará
+class TokenGetWithUserSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        data['refresh'] = str(refresh)
+        data['access'] = str(refresh.access_token)
+        # Add extra responses here
+        data['user'] = UserModelSerializer(self.user).data,
+        data['groups'] = self.user.groups.values_list('name', flat=True)
+        return data
 
-
+class MyTokenObtainPairView(TokenObtainPairView):
+      serializer_class = TokenGetWithUserSerializer
 
 class UserViewSet(
                   mixins.RetrieveModelMixin,

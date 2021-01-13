@@ -79,6 +79,10 @@ class RecursosArchivo(models.Model):
   tipo= models.CharField(choices=Options,default=IMG,max_length=3)
   recurso= models.ForeignKey(Recurso, on_delete=models.CASCADE ,related_name='recurso_img')
 
+class Comentario(models.Model):
+   comentario= models.CharField(max_length=1000)
+   recurso= models.ForeignKey(Recurso, on_delete=models.CASCADE)
+   usuario= models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
 
 class Rating(models.Model):

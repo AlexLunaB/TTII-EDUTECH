@@ -67,6 +67,7 @@ class UserModelSerializer(serializers.ModelSerializer):
       'last_name',
       'email',
       'profile'
+      ,'permiso'
     )
 
 class UserSignUpSerializer(serializers.Serializer):
