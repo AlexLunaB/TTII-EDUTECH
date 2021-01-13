@@ -1,115 +1,113 @@
 <template>
-  <v-container fluid>
+<v-container fluid>
+    
+    <v-card >
+        
+        <v-row>
+            <v-col cols="8" style="background-color: #F3F3F3" >
 
-    <v-card>
+                <v-container style="background-color: #FFFFFF" >
+                    
+                    <h1 class="text-center display-2 black--text text--accent-2">{{this.Post.temaDiscusion}}</h1>
 
-      <v-row>
-        <v-col cols="8" style="background-color: #F3F3F3">
+                    <h4>Creado el {{this.Post.created}} por {{this.Post.administrador.username}}</h4>
 
-          <v-container style="background-color: #FFFFFF">
+                    <v-img
+                    
+                    max-height="400"
+                    max-width="800"
+                    :src="this.Post.Imagen"
+                    class="ml-auto mr-auto mt-10 mb-10"
+                    ></v-img>
 
-            <h1 class="text-center display-2 black--text text--accent-2">{{this.Post.temaDiscusion}}</h1>
+                    <div>{{this.Post.descripcion}}</div>
 
-            <h4>Creado el {{this.Post.created}} por {{this.Post.administrador.username}}</h4>
+                    <div v-html="this.Post.html"></div>
 
-            <v-img
+                    
+                </v-container>
+            </v-col >
 
-              max-height="400"
-              max-width="800"
-              :src="this.Post.Imagen"
-              class="ml-auto mr-auto mt-10 mb-10"
-            ></v-img>
-
-            <div>{{this.Post.descripcion}}</div>
-
-            <div v-html="this.Post.html"></div>
-
-
-          </v-container>
-        </v-col>
-
-        <v-col cols="4" >
-          <v-card style="background-color: #FFF3E6" >
-            <CardRecomendaciones v-for="post in Posts" :key="post.id" :post=post></CardRecomendaciones>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12">
-          <v-container>
-            <CommentsApp></CommentsApp>
-          </v-container>
-        </v-col>
-      </v-row>
-
+            <v-col style="background-color: #FFF3E6">
+                <v-row>
+                    <CardRecomendaciones v-for="post in Posts" :key="post.id" :post = post></CardRecomendaciones>
+                </v-row>
+                <v-row>
+                    <!-- <CommentsApp></CommentsApp> -->
+                    hooasdasdjaskjd
+                </v-row>
+            </v-col>
+        </v-row>
+        
     </v-card>
-  </v-container>
+</v-container>
 </template>
 
 <script>
-  import {getAPI} from '../../Api/axios-base';
-  import CardRecomendaciones from '../CardRecomendaciones'
-  import CommentsApp from "../comments/CommentsApp";
+import { getAPI } from '../../Api/axios-base';
+import CardRecomendaciones from '../CardRecomendaciones'
+import CommentsApp from '../comments/CommentsApp'
 
 
-  export default {
+
+export default {
     name: "BlogDetail",
     data() {
-      return {
-        id: this.$route.params.id,
-        Post: {},
-        Posts: {}
-
-      }
+        return {
+            id:this.$route.params.id,
+            Post:{},
+            Posts:{}
+           
+        }
     },
 
-
+    
     components: {
-      CommentsApp,
 
-      CardRecomendaciones
-
+        CardRecomendaciones,
+        CommentsApp
+       
     },
     methods: {
+        
+        GetArticulo: async function () {
 
-      GetArticulo: async function () {
+            try {
+                self= this
+                const res = await getAPI.get("/Foro/api/Post/"+this.id)
+                self.Post = res.data
+                // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
+                //     self.Post = res.data
+                // });
+                console.log(res.data)
+            } catch (error) {
+                console.log(error)
+            }
+        },
 
-        try {
-          self = this
-          const res = await getAPI.get("/Foro/api/Post/" + this.id)
-          self.Post = res.data
-          // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
-          //     self.Post = res.data
-          // });
-          console.log(res.data)
-        } catch (error) {
-          console.log(error)
-        }
-      },
+        GetArticulos: async function () {
 
-      GetArticulos: async function () {
+            try {
+                self= this
+                const res = await getAPI.get("/Foro/api/Post")
+                self.Posts = res.data
+                // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
+                //     self.Post = res.data
+                // });
+                console.log(res.data)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+ 
+    }, 
 
-        try {
-          self = this
-          const res = await getAPI.get("/Foro/api/Post/"+ this.id+"/Similares")
-          self.Posts = res.data
-          // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
-          //     self.Post = res.data
-          // });
-          console.log(res.data)
-        } catch (error) {
-          console.log(error)
-        }
-      },
-
-    },
-
-    mounted() {
-      this.GetArticulo()
-      this.GetArticulos()
-
+    mounted(){ 
+        this.GetArticulo()
+        this.GetArticulos()
+      
     }
-  };
+};
 </script>
 
 <style scoped>
