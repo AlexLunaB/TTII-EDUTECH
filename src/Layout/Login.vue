@@ -115,12 +115,13 @@
                             </v-text-field>
 
                             <v-text-field
-                            label="Nombre de usuario"
+                            label="Nombre de usuario (sin espacios)"
                             name="username"
                             prepend-icon="person"
                             type="text"
                             color="teal accent-3"
-                            v-model="datosUsuario.username">
+                            v-model="datosUsuario.username"
+                            :rules="usernameRules">
                             </v-text-field>
 
                             <v-text-field
@@ -167,7 +168,7 @@
                             <v-checkbox 
                             v-model="firstcheckbox" 
                             :rules="[v => !!v || 'Debes estar de acuerdo para continuar']"
-                            label="Acepto los Terminos y Condiciones" 
+                            label="Acepto los términos y condiciones" 
                             @click="abreTerminosCondiciones"
                             required>
                             </v-checkbox>
@@ -233,6 +234,11 @@ import { getAPI } from '../Api/axios-base'
 
         nameRules: [
           v => !!v || 'Se requiere un nombre',
+          v => (v && v.length <= 20) || 'Máximo 20 caracteres',
+        ],
+
+        usernameRules: [
+          v => !!v || 'Se requiere un nombre de usuario',
           v => (v && v.length <= 20) || 'Máximo 20 caracteres',
         ],
 

@@ -86,14 +86,96 @@
       </v-col >
       
       <v-col cols="12" md="6" sm="12" >
-          <h1 class="text-center display-2 black--text text--accent-2">{{this.Post.nombreRecurso}}</h1>
+          
+          <!-- <h1 class="text-center display-2 black--text text--accent-2">{{this.Post.nombreRecurso}}</h1>
           <h4>Creado el {{this.Post.fechaCreacion}} por {{this.Post.Usuario.username}}</h4>
-          <div>{{this.Post.descripcion}}</div>
-          <div v-html="this.Post.html"></div>
+
+          <template>
+            <v-carousel
+                show-arrows-on-hover
+                height="250px">
+
+                <v-carousel-item
+                v-for="(item,i) in Post.recurso_img"
+                :key="i"
+                :src="item.archivo"
+                reverse-transition="fade-transition"
+                transition="fade-transition"
+                ></v-carousel-item>
+            </v-carousel>
+          </template>
+          <br>
+          <h5>{{this.Post.descripcion}}</h5>
+          <div v-html="this.Post.html"></div> -->
+
+          <template>
+            <v-card
+              class="mx-auto"
+              max-width="100%"
+            >
+              <h1 class="text-center display-2 black--text text--accent-2">{{this.Post.nombreRecurso}}</h1>
+              <!-- <v-img
+                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                height="200px"
+              ></v-img> -->
+              <template>
+                <v-carousel
+                    show-arrows-on-hover
+                    height="250px">
+
+                    <v-carousel-item
+                    v-for="(item,i) in Post.recurso_img"
+                    :key="i"
+                    :src="item.archivo"
+                    reverse-transition="fade-transition"
+                    transition="fade-transition"
+                    ></v-carousel-item>
+                </v-carousel>
+              </template>
+
+              <h4>Creado el {{this.Post.fechaCreacion}} por {{this.Post.Usuario.username}}</h4>
+
+              <v-card-title>
+                {{this.Post.descripcion}}
+              </v-card-title>
+
+              <!-- <v-card-subtitle >
+                
+              </v-card-subtitle> -->
+
+              <v-card-actions>
+                <!-- <v-btn
+                  color="orange lighten-2"
+                  text
+                >
+                  Explore
+                </v-btn> -->
+
+                <v-spacer></v-spacer>
+
+                <v-btn
+                  icon
+                  @click="show = !show"
+                >
+                  <v-icon>{{ show ? 'fas fa-chevron-up' : 'fas fa-chevron-down' }}</v-icon>
+                </v-btn>
+              </v-card-actions>
+
+              <v-expand-transition>
+                <div v-show="show">
+                  <v-divider></v-divider>
+
+                  <v-card-text v-html="this.Post.html">
+                    
+                  </v-card-text>
+                </div>
+              </v-expand-transition>
+            </v-card>
+          </template>
       </v-col>
 
       <v-col>
-          <CommentsApp></CommentsApp>
+          <CommentsApp :perfil = perfil :id = id :Post = Post></CommentsApp>
       </v-col>
     </v-row>
 
@@ -114,15 +196,17 @@ export default {
             id:this.$route.params.id,
             Post:{},
            
-            // perfil: {
-            //     email: null,
-            //     nombre: null,
-            //     apellidos: null,
-            //     usuario: null,
-            //     foto: null,
-            //     municipio: null,
-            //     intereses: [],
-            // },
+            perfil: {
+                email: null,
+                nombre: null,
+                apellidos: null,
+                usuario: null,
+                foto: null,
+                municipio: null,
+                intereses: [],
+            },
+
+            show: false,
             
         }
     },
@@ -139,32 +223,36 @@ export default {
             self= this
             getAPI.get("Recursos/api/Articulos/"+this.id).then((res)=> {
                   self.Post = res.data
-                  console.log(res.data)
+                  console.log('RecursoDetail',res.data)
             });
        
         },
 
-        // obtiene_datos_usuario: function () {
-        //     const self = this;
-        //     getAPI.get("Usuarios/View/profile/").then((response) => {
+        obtiene_datos_usuario: function () {
+            const self = this;
+            getAPI.get("Usuarios/View/profile/").then((response) => {
 
-        //     self.perfil.email = response.data.email;
-        //     self.perfil.nombre = response.data.first_name;
-        //     self.perfil.apellidos = response.data.last_name;
-        //     self.perfil.usuario = response.data.username;
-        //     self.perfil.foto = response.data.profile.foto;
-        //     self.perfil.semblanza = response.data.profile.semblanza;
-        //     self.perfil.intereses = response.data.profile.intereses;
-        //     });
+            self.perfil.email = response.data.email;
+            self.perfil.nombre = response.data.first_name;
+            self.perfil.apellidos = response.data.last_name;
+            self.perfil.usuario = response.data.username;
+            self.perfil.foto = response.data.profile.foto;
+            self.perfil.semblanza = response.data.profile.semblanza;
+            self.perfil.intereses = response.data.profile.intereses;
 
-        // },
+            // console.log(response.data)
+            });
+
+            
+
+        },
 
         
     }, 
 
     mounted(){ 
-        this.GetArticulo()
-        // this.obtiene_datos_usuario()
+        this.GetArticulo(),
+        this.obtiene_datos_usuario()
     }
 };
 </script>

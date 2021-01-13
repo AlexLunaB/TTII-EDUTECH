@@ -1,29 +1,119 @@
 <template>
-  <v-container class="contenedor">
+  <v-container class="contenedor" fluid>
 
 
+    <v-row>
+      <v-col cols="12" sm="12" md="6">
 
-    <svg
-      version="1.1"
-      id="Capa_1"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      x="0px"
-      y="0px"
-      width="100%"
-      height="70%"
-      viewBox="0 0 1198 819"
-      enable-background="new 0 0 1198 819"
-      xml:space="preserve"
-      @click="handleStateClick"
-      @mouseover="handleStateHover"
+        <v-card
+          class="mx-auto"
+          outlined
+        >
+          <v-card-title>¿Que deseas Buscar?</v-card-title>
+
+          <v-container>
+
+            <v-text-field
+              v-model="search"
+              v-on:keyup.enter="GetDetalle()"
+              prepend-icon="fas fa-search"
+              single-line
+            ></v-text-field>
+          </v-container>
+
+          <v-card-actions>
+            <v-btn
+              outlined
+              rounded
+              text
+            >
+              Button
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+
+
+        <v-card></v-card>
+
+
+      </v-col>
+      <v-col cols="12" sm="12" md="6">
+
+        <v-card
+          class="mx-auto"
+          outlined
+        >
+          <v-card-title>Acerca de Tu búsqueda</v-card-title>
+
+
+          <v-container>
+            Resultados para... <H3>{{search}}</H3>
+            <h3></h3>
+
+            <template v-for="r in rangos">
+              <v-chip
+                class="ma-2"
+                label
+                text-color="white"
+                :color="r.color"
+
+              >
+                <v-icon left>
+                  mdi-label
+                </v-icon>
+                {{r.valormax}}-{{r.valormin}}
+              </v-chip>
+            </template>
+          </v-container>
+
+          <v-card-actions>
+            <v-btn
+              outlined
+              rounded
+              text
+            >
+              Button
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+
+
+        <v-card></v-card>
+
+
+      </v-col>
+
+    </v-row>
+
+    <SvgPanZoom
+      style="width: 100%; height: 800px; border:0px solid black; background-color:white;"
+
+      :controlIconsEnabled="true"
+      :fit="false"
+      :center="true"
     >
-    <g class="capa">
+      <svg
+        version="1.1"
+        id="Capa_1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        width="100%"
+        height="100%"
+        viewBox="0 0 1198 819"
+        enable-background="new 0 0 1198 819"
+        xml:space="preserve"
+
+      >
+
+    <g class="capa" id="dibujomapa" @click="handleStateClick"
+       @mouseover="handleStateHover">
 
       <!-- quintana roo -->
       <path
         id="QR"
-        @mouseover="estadoevent"
+
         class="estado"
         data-name_estado="Quintana Roo"
         data-id_estado="23"
@@ -35,6 +125,11 @@
     l48.856-37.443l10.275-16.432l-0.21-20.841l7.257-0.17l2.848-2.379l1.642-1.649l-1.84-1.659l4.188-1.608l5.417,2.809l6.367,7.807
     L1168.658,498.584z"
       >
+
+        <span
+          data-text="Thanks for hovering! I'm a tooltip"
+          class="tooltip"
+        ></span>
         <title>Quintana Roo</title>
       </path>
 
@@ -43,7 +138,7 @@
       <!-- Yucatán -->
       <path
         id="YUC"
-        @mouseover="estadoevent"
+
         class="estado"
         data-name_estado="Yucatán"
         data-id_estado="31"
@@ -109,7 +204,6 @@
 
       <!-- veracruz -->
       <path
-        v-on="mandafrente"
         id="VER"
         class="estado"
         data-name_estado="Veracruz"
@@ -547,7 +641,7 @@
         class="estado"
         data-name_estado="Baja California Sur"
         data-id_estado="3"
-        :fill="colorCantidad"
+        :fill="this.color"
         d="M269.706,414.703l8.956,11.354l-3.469,10.216l-8.906,5.928l-4.727,4.498l-2.41,0.51l-5.867-6.268
     l-4.997-21.521l-7.127-6.228l-7.397-4.589l-21.42-21.641l-16.492-16.042h-1.859l-1.19-5.917l-2.868,1.909l-3.429-5.837
     l-2.959-1.062l-3.498-9.895l4.778-28.657l-9.305-23.029l-5.818-2.689l-30.666-26.058l-3.548,1.649l-5.118,0.2l-7.706-9.855
@@ -571,7 +665,7 @@
         active-class="active"
         data-name_estado="Baja California"
         data-id_estado="2"
-        :fill="colorCantidad"
+        :fill="this.color"
         d="M165.284,218.434v1.649l-49.957-3.148l0.9-3.958l1.289-7.697l3.829-8.136l-10.926-14.494l-7.816-9.125
     l-16.932-19.301l-7.216-5.488l-13.644-12.364v-4.018l-3.029-4.338l0.22-14.393l-7.187-7.187l-1.299-18.262l-6.287-5.207
     l-0.65-10.276l-6.367-10.524l-2.528-4.858l-0.4-4.848l3.328-6.667l-2.889-5.527l-4.477-2.549l-2.729-10.115l-5.788-10.326
@@ -588,7 +682,7 @@
         class="estado"
         data-name_estado="Durango"
         data-id_estado="10"
-        :fill="colorCantidad"
+        :fill="this.color"
         d="M543.218,365.136l5.198,14.435l-0.99,8.096l-29.104,1.929l-21.08,15.753l-0.87,17.862l-8.826,9.256
     l-3.488,11.564l-1.987,3.088l-3.979,28.297l-3.479-2.188l-4.02,1.699l-5.707-5.718v-2.479l-6.405-1.229l-4.68,1.06l-1.139-0.5
     l1.119-3.907l2.099-6.526l-6.557-6.308l-14.073-3.688l-10.315-11.364l-1.06-9.306l-5.437-11.415l-1.541-13.174l-12.773-11.404
@@ -604,6 +698,7 @@
     </g>
 
   </svg>
+    </SvgPanZoom>
 
 
     <!-- <Modal ref="modal" headModal='texto desde props' contentModal='SADSDASDASDASD props'></Modal> -->
@@ -623,21 +718,31 @@
 
   import Modal from "./Modal";
   import ModalFullscreen from "./ModalFulscreen"
-
-
+  import SvgPanZoom from 'vue-svg-pan-zoom';
 
   export default {
+
 
     name: "MapaComponent",
     components: {
       Modal,
       ModalFullscreen,
+      SvgPanZoom
 
     },
-    data() {
+    data: () => {
       return {
-        items:[],
-        color: "#00adb5",
+
+        rangos: [],
+
+        rango: {
+          valormax: 0,
+          valormin: 0,
+          color: []
+        },
+        search: "",
+        items: [],
+        color: "black",
         with: 2,
         radius: 10,
         padding: 8,
@@ -645,24 +750,114 @@
         date2: new Date().toISOString().substr(0, 19),
         servicios: [],
 
+
         user: {},
 
         cantRecursos: {'DGO': 95, 'BC': 50, 'BCS': 20},
         cantDurango: 95,
         cantBC: 50,
-        cantBCS: 20
+        cantBCS: 20,
+
+
+        totales: []
 
 
       };
     },
     methods: {
-      GetArticulos: function () {
+      GetDetalle: function () {
         self = this
-        getAPI.get("/Foro/api/Post").then((res) => {
-          self.items = res.data
+        self.rangos = []
+        getAPI.get("/Recursos/api/Articulos/", {
+          "params": {
+            "search": self.search
+          }
+        }).then((res) => {
+          self.items = res.data.recursos
+          self.totales = res.data.conteo
+
+
+          self.obtenNumeroMayor(self.totales).then(e => {
+            //e.value es el estado con mas datos
+            const maximo = e.value
+            var c = document.getElementById("dibujomapa").children;
+            for (var i = 0; i < c.length; i++) {
+
+
+              let color5 = "#ff0027";
+
+              var id = c[i].id
+              if (self.totales[id]) {
+
+
+                var porcentaje = (((self.totales[id].conteo / maximo)))
+                var rango = {
+                  valormax: 0,
+                  valormin: 0,
+                  color: []
+                }
+                if (porcentaje == 1) {
+                  porcentaje = -.5;
+                  rango.valormax = maximo * 1
+                  rango.valormin = maximo * 1
+
+                } else if (porcentaje >= .75) {
+                  porcentaje = -.25;
+                  rango.valormax = maximo * 1
+                  rango.valormin = maximo * .75
+                } else if (porcentaje >= .5) {
+                  porcentaje = 0;
+                  rango.valormax = maximo * .75
+                  rango.valormin = maximo * .5
+                } else if (porcentaje >= .25) {
+                  rango.valormax = maximo * .5
+                  rango.valormin = maximo * .25
+                  porcentaje = .25;
+                } else {
+                  porcentaje = .4
+                  rango.valormax = maximo * .25
+                  rango.valormin = 1
+                }
+
+                var color = this.pSBC(porcentaje, color5)
+                rango.color = color
+                if (!this.containsObject(rango, this.rangos))
+                  self.rangos.push(rango)
+                c[i].setAttribute("fill", color)
+              } else {
+
+
+                var color = this.pSBC(.6, color5)
+                var rango = {
+                  valormax: 0,
+                  valormin: 0,
+                  color: color
+                }
+                if (!this.containsObject(rango, this.rangos))
+                  self.rangos.push(rango)
+
+
+                c[i].setAttribute("fill", color)
+              }
+            }
+
+
+          })
+
+
         });
 
 
+      },
+      containsObject: function (obj, list) {
+        var i;
+        for (i = 0; i < list.length; i++) {
+          if (list[i].color == obj.color) {
+            return true;
+          }
+        }
+
+        return false;
       },
       cambiaColor: function (a) {
         alert(a.target.id)
@@ -684,25 +879,77 @@
       },
       handleStateHover: function (e) {
         if (e.target.tagName === 'path') {
-          // console.log(e.target.id)
+
         }
+      },
+
+      // Version 4.0
+      pSBC: (p, c0, c1, l) => {
+        let r, g, b, P, f, t, h, i = parseInt, m = Math.round, a = typeof (c1) == "string";
+        if (typeof (p) != "number" || p < -1 || p > 1 || typeof (c0) != "string" || (c0[0] != 'r' && c0[0] != '#') || (c1 && !a)) return null;
+        if (!this.pSBCr) this.pSBCr = (d) => {
+          let n = d.length, x = {};
+          if (n > 9) {
+            [r, g, b, a] = d = d.split(","), n = d.length;
+            if (n < 3 || n > 4) return null;
+            x.r = i(r[3] == "a" ? r.slice(5) : r.slice(4)), x.g = i(g), x.b = i(b), x.a = a ? parseFloat(a) : -1
+          } else {
+            if (n == 8 || n == 6 || n < 4) return null;
+            if (n < 6) d = "#" + d[1] + d[1] + d[2] + d[2] + d[3] + d[3] + (n > 4 ? d[4] + d[4] : "");
+            d = i(d.slice(1), 16);
+            if (n == 9 || n == 5) x.r = d >> 24 & 255, x.g = d >> 16 & 255, x.b = d >> 8 & 255, x.a = m((d & 255) / 0.255) / 1000;
+            else x.r = d >> 16, x.g = d >> 8 & 255, x.b = d & 255, x.a = -1
+          }
+          return x
+        };
+        h = c0.length > 9, h = a ? c1.length > 9 ? true : c1 == "c" ? !h : false : h, f = this.pSBCr(c0), P = p < 0, t = c1 && c1 != "c" ? this.pSBCr(c1) : P ? {
+          r: 0,
+          g: 0,
+          b: 0,
+          a: -1
+        } : {r: 255, g: 255, b: 255, a: -1}, p = P ? p * -1 : p, P = 1 - p;
+        if (!f || !t) return null;
+        if (l) r = m(P * f.r + p * t.r), g = m(P * f.g + p * t.g), b = m(P * f.b + p * t.b);
+        else r = m((P * f.r ** 2 + p * t.r ** 2) ** 0.5), g = m((P * f.g ** 2 + p * t.g ** 2) ** 0.5), b = m((P * f.b ** 2 + p * t.b ** 2) ** 0.5);
+        a = f.a, t = t.a, f = a >= 0 || t >= 0, a = f ? a < 0 ? t : t < 0 ? a : a * P + t * p : 0;
+        if (h) return "rgb" + (f ? "a(" : "(") + r + "," + g + "," + b + (f ? "," + m(a * 1000) / 1000 : "") + ")";
+        else return "#" + (4294967296 + r * 16777216 + g * 65536 + b * 256 + (f ? m(a * 255) : 0)).toString(16).slice(1, f ? undefined : -2)
+      },
+
+      obtenNumeroMayor: function (lista) {
+        return new Promise((resolve, reject) => {
+
+          var numero = 0
+          for (let a in lista) {
+            if (lista[a].conteo > numero)
+              numero = lista[a].conteo
+          }
+          resolve({
+            error: false,
+            value: numero
+          })
+
+        });
+
       }
+
 
     },
     computed: {
       theme() {
         return this.$vuetify.theme.dark ? "dark" : "light";
-      },
+      }
+      ,
       colorCantidad(e) {
         // let id = e.target.id;
-        
+
         const idEstados = Object.keys(this.cantRecursos)
         const valEstados = Object.values(this.cantRecursos)
         console.log(idEstados)
         console.log(valEstados)
-        console.log(e.target.id)
-        for(let id of idEstados) {
-          
+        for (let id of idEstados) {
+
+
         }
 
         // for(let i=0; i < this.cantRecursos.length; i++){
@@ -710,14 +957,29 @@
         //     return (this.i <= 100 && this.i > 70)  ? '#17FF00' : (this.i <= 70 && this.i > 30) ? '#FFFF00' : (this.i <= 30 && this.i > 0) ? '#FF0000' : this.color;
         //   }
         // }
-        
-      }
-    },
-    mounted() {
-      this.GetArticulos()
 
-    },
-  };
+      }
+    }
+    ,
+    mounted() {
+
+      this.GetDetalle()
+
+
+      let color1 = "rgb(20,60,200)";
+      let color2 = "rgba(20,60,200,0.67423)";
+      let color3 = "#67DAF0";
+      let color4 = "#5567DAF0";
+      let color5 = "#F3A";
+      let color6 = "#F3A9";
+      let color7 = "rgb(200,60,20)";
+      let color8 = "rgba(200,60,20,0.98631)";
+      // Tests:
+
+    }
+    ,
+  }
+  ;
 </script>
 
 <style scoped>
@@ -725,6 +987,11 @@
     position: relative;
     overflow: hidden;
 
+  }
+
+  .tooltip {
+    position: relative; /* making the .tooltip span a container for the tooltip text */
+    border-bottom: 1px dashed #000; /* little indicater to indicate it's hoverable */
   }
 
   path:hover {
