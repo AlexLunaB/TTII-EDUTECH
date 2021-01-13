@@ -56,20 +56,20 @@
         </template>
 
         <v-row>
-          <v-col v-if="dialog && recursos.length > 0" class="overflow-y-auto" cols="12" md="12">
+          <v-col v-if="dialog && recursos.recursos.length > 0" class="overflow-y-auto" cols="12" md="12">
 
             <!-- <v-list style="max-height: 700px;" >
-              
+
             </v-list> -->
 
             <v-row>
-              <v-col cols="12" sm="12" md="4" v-for="recurso in recursos" :key="recurso.id">
+              <v-col cols="12" sm="12" md="4" v-for="recurso in recursos.recursos" :key="recurso.id">
                 <TarjetaRecurso  :recurso = recurso> </TarjetaRecurso>
               </v-col>
-              
+
             </v-row>
 
-            
+
 
           </v-col>
           <v-col v-if="dialog && recursos.length === 0">
@@ -122,6 +122,7 @@ export default {
     }
   },
   props: {
+    busqueda:""
 
   },
   components: {
@@ -158,9 +159,10 @@ export default {
 
 
      getRecursos: function() {
-            getAPI.get("Recursos/api/Articulos/Estado/", {
+            getAPI.get("Recursos/api/Articulos/", {
                 params:{
-                "Estado": this.headModalProp
+                "estado": this.headModalProp,
+                "search": this.busqueda
                 }
             }
             ).then(response => {

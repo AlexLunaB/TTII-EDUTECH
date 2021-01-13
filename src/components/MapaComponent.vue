@@ -702,7 +702,7 @@
 
 
     <!-- <Modal ref="modal" headModal='texto desde props' contentModal='SADSDASDASDASD props'></Modal> -->
-    <ModalFullscreen ref="modal" headModal='texto desde props' contentModal='SADSDASDASDASD props'></ModalFullscreen>
+    <ModalFullscreen ref="modal" headModal='texto desde props' :busqueda="search" contentModal='SADSDASDASDASD props'></ModalFullscreen>
 
 
   </v-container>

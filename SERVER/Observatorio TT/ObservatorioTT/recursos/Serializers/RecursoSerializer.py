@@ -52,7 +52,9 @@ class RecursoReadSerializer(TaggitSerializer,serializers.ModelSerializer):
 
   class Meta:
     model = Recurso
-    fields = ("__all__")
+    exclude = ('html',)
+
+
 class RecursoDetailSerializer(TaggitSerializer,serializers.ModelSerializer):
   tags = TagListSerializerField()
   calificacion= serializers.SerializerMethodField(read_only=True,required=False)

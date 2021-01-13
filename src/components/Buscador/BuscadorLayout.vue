@@ -10,7 +10,7 @@
 
             >
 
-              <v-card-title class="headline text-white red lighten-3">
+              <v-card-title dark class="headline text-white red darken-3">
                 Filtros
               </v-card-title>
               <v-card-text>
@@ -50,7 +50,7 @@
           </v-col>
           <v-col cols="12" md="9">
             <v-row>
-                <v-col cols="12" sm="12" md="6" v-for="articulo in recursos">
+                <v-col cols="12" sm="12" md="6" v-for="articulo in recursos.recursos">
                   <TarjetaRecurso :recurso="articulo"></TarjetaRecurso>
 
                 </v-col>
