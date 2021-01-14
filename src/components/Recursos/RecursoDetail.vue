@@ -51,6 +51,12 @@
                                 </span>
                     </div>
                     <div class="text-center mb-3">
+                      <v-icon>fas fa-map-marker-alt</i></v-icon>
+                      <span>
+                      {{Post.Usuario.profile.estado}}
+                                </span>
+                    </div>
+                    <div class="text-center mb-3">
                       <v-icon>phone-alt</v-icon>
                       <span>
                       {{Post.Usuario.profile.telefono}}

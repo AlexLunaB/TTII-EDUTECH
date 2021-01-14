@@ -34,7 +34,7 @@
                 </v-row>
                 <v-row>
                     <!-- <CommentsApp></CommentsApp> -->
-                    hooasdasdjaskjd
+                    
                 </v-row>
             </v-col>
         </v-row>

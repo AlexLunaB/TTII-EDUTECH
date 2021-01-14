@@ -29,6 +29,9 @@ export default new Vuex.Store({
     loggedIn(state) {
 
       return state.accessToken != null
+    },
+    getterPermiso(state) {
+      return JSON.parse(state.permiso)
     }
   },
   mutations: {

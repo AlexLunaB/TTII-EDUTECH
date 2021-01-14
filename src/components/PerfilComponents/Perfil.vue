@@ -190,6 +190,7 @@
 
 <script>
   import {getAPI} from "../../Api/axios-base";
+  import store from '../../store'
 
   export default {
     data() {
@@ -350,7 +351,9 @@
           // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
           //     self.Post = res.data
           // });
-          console.log(res.data)
+          // console.log(res.data)
+          const datosssss = store.getters.getterPermiso
+          console.log(datosssss[0].permiso)
         } catch (error) {
           console.log(error)
         }
@@ -364,7 +367,7 @@
           // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
           //     self.Post = res.data
           // });
-          console.log(res.data)
+          // console.log(res.data)
         } catch (error) {
           console.log(error)
         }
