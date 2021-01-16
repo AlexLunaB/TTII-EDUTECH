@@ -20,7 +20,7 @@
     <v-card>
 
 
-      <v-form>
+      <v-form ref="form">
 
         <v-row>
 
@@ -64,6 +64,7 @@
                   color="purple darken-2"
                   label="Es como va aparecer al momento de publicarlo"
                   required
+                  :rules="nameRules"
                 ></v-text-field>
               </v-list-item-content>
             </v-list-item>
@@ -108,7 +109,7 @@
                 <v-list-item-title>Descripción del artículo</v-list-item-title>
 
 
-                <v-textarea v-model="formdata.Description"></v-textarea>
+                <v-textarea :rules="nameRules" v-model="formdata.Description"></v-textarea>
               </v-list-item-content>
             </v-list-item>
 
@@ -225,7 +226,13 @@
         },
         editorOption: {
           // Some Quill options...
-        }
+        },
+        nameRules: [
+          v => !!v || 'Es Requerido',
+
+        ],
+
+
 
       };
     }, methods: {
@@ -263,6 +270,11 @@
 
 
       submit() {
+
+        var self = this
+        let a = this.$refs.form.validate();
+        if (!a)
+          return
 
         var self = this
 

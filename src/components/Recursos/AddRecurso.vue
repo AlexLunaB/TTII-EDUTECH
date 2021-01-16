@@ -114,6 +114,22 @@
 
           </v-col>
 
+          <v-col cols="12" md="6" sm="12">
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>Autor(es)</v-list-item-title>
+
+
+                <v-text-field
+                  required
+                  :rules="nameRules"
+                  v-model="articulo.autores"
+                  label="Ingresa los autores, separalos por coma"
+                ></v-text-field>
+              </v-list-item-content>
+            </v-list-item>
+          </v-col>
+
 
         </v-row>
         <v-row>
@@ -263,7 +279,8 @@
           municipio: null,
           categoria: [],
           usuario: 1,
-          html:""
+          html:"",
+          autores:''
         },
         estado: {
           id: null
@@ -333,6 +350,7 @@
         formData.append("html", this.articulo.html);
         formData.append("municipio", this.articulo.municipio.id);
         formData.append("tags", JSON.stringify(this.articulo.categoria));
+        formData.append("autores", this.articulo.autores);
 
         console.log(JSON.stringify(this.articulo.categoria))
         alert((this.articulo.categoria))

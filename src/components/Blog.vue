@@ -1,14 +1,15 @@
 <template>
 <v-container fluid>
     
-    <v-btn
+    <!-- <v-btn
         block
         elevation="2"
         color = "primary"
         @click="handleStateClick"
+        
     >
-        ¿Agregar recurso? Click aqui
-    </v-btn>
+        ¿Agregar recurso? Click aqui 
+    </v-btn> -->
 
     <v-row>
         <v-col cols="12">
@@ -33,6 +34,7 @@
           color="orange"
           dark
           router :to="{ name: 'AddPub'}"
+          v-if="permisoUsuario === 'GE'"
         >
           Compartir
         </v-btn>
@@ -70,6 +72,7 @@ import HeaderBlog from './BlogComponents/HeaderBlog';
 import SingleComponent from './BlogComponents/SingleComponent';
 import RecursoArticulo from './Recursos/RecursoArticulo';
 import { getAPI } from '../Api/axios-base';
+import store from '../store'
 
 export default {
     name: "Blog",
@@ -77,6 +80,7 @@ export default {
         return {
             visible: false,
             Post: [],
+            permisoUsuario: store.getters.getterPermiso[0].permiso
         }
     },
     components: {

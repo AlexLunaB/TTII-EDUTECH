@@ -65,9 +65,18 @@
 
                 </v-row>
 
-                <div class="my-4 subtitle-1">
+                <v-chip
+                    v-for="r in recurso.tags"
+                    class="ma-2"
+                    color="green"
+                    text-color="white"
+                >
+                                {{r}}
+                </v-chip>
+
+                <!-- <div class="my-4 subtitle-1">
                     Tags: {{recurso.tags.join(', ')}}
-                </div>
+                </div> -->
 
                 <v-simple-table>
                     <template v-slot:default>
@@ -89,6 +98,12 @@
                         <tr>
                             <td>Subido por:</td>
                             <td>{{recurso.Usuario.username}}</td>
+                        </tr>
+                        <tr>
+                            <td>Autor(es):</td>
+                            <td v-if="recurso.autores">{{recurso.autores}}</td>
+                            <td v-else>No disponible</td>
+                            
                         </tr>
                         <tr>
                             <td>Descripcion:</td>

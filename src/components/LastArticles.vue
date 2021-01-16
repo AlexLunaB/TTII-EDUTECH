@@ -13,8 +13,8 @@
         </div>
 
         <h2>Articulo de prueba</h2>
-        <span class="date"> Hace 5 minutos </span>
-        <a href="#">Leer más</a>
+        <!-- <span class="date"> Hace 5 minutos </span>
+        <a href="#">Leer más</a> -->
 
         <div class="clearfix"></div>
       </article>

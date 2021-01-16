@@ -57,6 +57,12 @@
                       {{perfil.email}}
                                 </span>
                     </div>
+                    <div class="text-center mb-3">
+                      <v-icon>fas fa-phone-alt</v-icon>
+                      <span>
+                      {{perfil.telefono}}
+                                </span>
+                    </div>
                     <div class="text-center">
                       <v-chip
                         class="ma-2"
@@ -86,7 +92,7 @@
 
       </v-col>
 
-      <v-col cols="12" md="6" sm="12">
+      <v-col cols="12" md="6" sm="12" v-if="permisoUsuario !== 'GE'">
         <v-row>
 
           <v-col cols="12" md="12" sm="12">
@@ -98,7 +104,7 @@
               <v-data-table
                 :headers="headersRecursos"
                 :items="recursosUsuario"
-                item-key="name"
+                item-key="id"
                 class="elevation-1"
                 :search="searchRecursos"
                 :custom-filter="filterOnlyCapsTextRecursos"
@@ -204,6 +210,7 @@
           foto: null,
           municipio: null,
           intereses: [],
+          telefono: null
         },
         nombre: "Luis Pavel",
         apellidoP: "Varela",
@@ -221,9 +228,9 @@
         searchBlogs: '',
         calories: '',
         recursosUsuario: [],
-        blogsUsuario: []
+        blogsUsuario: [],
         
-
+        permisoUsuario: store.getters.getterPermiso[0].permiso
       };
     },
 
@@ -237,28 +244,31 @@
             text: 'Nombre',
             value: 'nombreRecurso',
             sortable: true,
+            width: "20%"
             // filter: value => {
             //   if (!this.calories) return true
 
             //   return value < parseInt(this.calories)
             // },
           },
-          {
-            text: 'Tags',
-            value: 'tags',
-            sortable: false,
-          
-          },
+          // {
+          //   text: 'Tags',
+          //   value: 'tags',
+          //   sortable: false,
+          //   width: "20px"
+          // },
           {
             text: 'Descripción',
             value: 'descripcion',
             sortable: false,
+            width: "40%"
           
           },
           {
             text: 'Creado',
             value: 'fechaCreacion',
             sortable: false,
+            width: "20%"
           
           },
           // 
@@ -278,12 +288,12 @@
             //   return value < parseInt(this.calories)
             // },
           },
-          {
-            text: 'Tags',
-            value: 'tags',
-            sortable: false,
+          // {
+          //   text: 'Tags',
+          //   value: 'tags',
+          //   sortable: false,
           
-          },
+          // },
           {
             text: 'Descripción',
             value: 'descripcion',
@@ -330,6 +340,8 @@
           self.perfil.foto = response.data.profile.foto;
           self.perfil.semblanza = response.data.profile.semblanza;
           self.perfil.intereses = response.data.profile.intereses;
+          self.perfil.telefono = response.data.profile.telefono;
+
         });
 
       },
@@ -352,8 +364,7 @@
           //     self.Post = res.data
           // });
           // console.log(res.data)
-          const datosssss = store.getters.getterPermiso
-          console.log(datosssss[0].permiso)
+          console.log(this.permisoUsuario)
         } catch (error) {
           console.log(error)
         }
@@ -367,7 +378,7 @@
           // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
           //     self.Post = res.data
           // });
-          // console.log(res.data)
+          console.log(res.data)
         } catch (error) {
           console.log(error)
         }

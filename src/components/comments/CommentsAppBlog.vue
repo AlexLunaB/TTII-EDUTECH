@@ -14,18 +14,18 @@
             </div>
           </div>
         </div>
-        <comments
+        <CommentsBlog
           :comments_wrapper_classes="['custom-scrollbar', 'comments-wrapper']"
           :comments="comments"
           :current_user="current_user"
           :perfil = perfil
           @submit-comment="submitComment"
-        ></comments>
+        ></CommentsBlog>
     </div>
 </template>
 
 <script>
-import Comments from './Comments'
+import CommentsBlog from './CommentsBlog'
 import Swal from 'sweetalert2'
 import { getAPI } from '../../Api/axios-base'
 
@@ -37,7 +37,7 @@ export default {
     Post: {}
   },
   components: {
-    Comments
+    CommentsBlog
   },
   data() {
     return {
@@ -50,7 +50,7 @@ export default {
         avatar: 'http://via.placeholder.com/100x100/a74848',
         user: 'exampler'
       },
-      comments: this.Post.comentario_set
+      comments: this.Post.comentarioblog_set
         // {
         //   id: 1,
         //   user: 'example',
@@ -83,7 +83,7 @@ export default {
 
       const self = this
       try {
-          const res = await getAPI.post("Recursos/api/Articulos/"+this.id+"/Comentar/",
+          const res = await getAPI.post("Foro/api/Post/"+this.id+"/Comentar/",
           {"comentario": reply})
           // this.comments = this.Post.comentario_set
 
@@ -104,7 +104,7 @@ export default {
           { 
             // alert("Hello"); 
             location.reload()
-          }, 3000);
+          }, 2000);
           
 
           
@@ -116,7 +116,7 @@ export default {
               text: 'Algo no salio bien',
               footer: 'Intenta de nuevo'
           })
-          location.reload()
+          // location.reload()
       }
     }
   }

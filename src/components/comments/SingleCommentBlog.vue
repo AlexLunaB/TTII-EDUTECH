@@ -11,7 +11,7 @@
 
 <script>
     export default {
-        name: 'singleComment',
+        name: 'SingleCommentBlog',
         props: ['comment', 'perfil']
     }
 </script>

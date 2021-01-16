@@ -1,12 +1,12 @@
 <template>
     <div class="comments">
         <div :class="comments_wrapper_classes">
-            <single-comment
+            <SingleCommentBlog
                 v-for="comment in comments"
                 :comment="comment"
                 :key="comment.id"
                 :perfil = perfil
-            ></single-comment>
+            ></SingleCommentBlog>
         </div>
         <hr>
         <div class="reply">
@@ -28,11 +28,11 @@
 </template>
 
 <script>
-import singleComment from './SingleComment'
+import SingleCommentBlog from './SingleCommentBlog'
     export default {
-        name: 'comments',
+        name: 'CommentsBlog',
         components: {
-            singleComment
+            SingleCommentBlog
         },
         data() {
             return {

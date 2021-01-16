@@ -57,7 +57,7 @@
                                 </span>
                     </div>
                     <div class="text-center mb-3">
-                      <v-icon>phone-alt</v-icon>
+                      <v-icon>fas fa-phone-alt</v-icon>
                       <span>
                       {{Post.Usuario.profile.telefono}}
                                 </span>
@@ -139,7 +139,9 @@
                 </v-carousel>
               </template>
 
-              <h4>Creado el {{this.Post.fechaCreacion}} por {{this.Post.Usuario.username}}</h4>
+              <h4>Subido el {{this.Post.fechaCreacion}} por {{this.Post.Usuario.username}}</h4>
+              <br>
+              <h4>Autoria a nombre de {{this.Post.autores}}</h4>
 
               <v-card-title>
                 {{this.Post.descripcion}}

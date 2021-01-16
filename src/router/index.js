@@ -16,6 +16,9 @@ import BlogDetail from "../components/BlogComponents/BlogDetail"
 import BuscadorLayout from "../components/Buscador/BuscadorLayout"
 import RecursoDetail from '../components/Recursos/RecursoDetail'
 import editProfile from "../components/PerfilComponents/editProfile";
+
+const permisoUsuario = store.getters.getterPermiso[0].permiso;
+
 Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
@@ -24,7 +27,8 @@ const router = new VueRouter({
       path: '/Login',
       name: 'Login',
       component: Login,
-      children: []
+      children: [],
+      meta: {rutaProtegidaLogin: true},
     },
     {
       path: '/',
@@ -56,16 +60,25 @@ const router = new VueRouter({
           path: "Blog/CrearPublicacion",
           name: "AddPub",
           component: AddPost,
-          meta: {rutaProtegida: true},
+          meta: {rutaProtegidaLE: true},
         },
         {
           path: "Recurso/Add",
           name: "AddRecurso",
           component: AddRecurso,
-          meta: {rutaProtegida: true},
+          meta: {rutaProtegidaLE: true},
         },
-        { path: '/Blog/:id', component: BlogDetail , name:"post"},
-        { path: '/Inicio/:id', component: RecursoDetail , name:"RecursoDetail"},
+        { 
+          path: '/Blog/:id', 
+          component: BlogDetail , 
+          name:"post", 
+          meta: {rutaProtegida: true}
+        },
+        { 
+          path: '/Inicio/:id', 
+          component: RecursoDetail , 
+          name:"RecursoDetail", 
+          meta: {rutaProtegida: true},},
         {
           path: "Buscador",
           name: "Buscador",
@@ -116,6 +129,31 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     next();
+  }
+
+  if(to.meta.rutaProtegidaLE) {
+    if((store.getters.loggedIn) && (permisoUsuario === 'GE')) {
+      next()
+    } else {
+      next('/Login')
+    }
+  } else {
+    next();
+  }
+
+  if(to.meta.rutaProtegidaLE) {
+    if((store.getters.loggedIn) && (permisoUsuario !== 'GE')) {
+      next('Inicio')
+    } 
+  } else {
+    next();
+  }
+
+  if(to.meta.rutaProtegidaLogin) {
+    if(store.getters.loggedIn) {
+      next('Inicio')
+    }
+    
   }
 })
 export default router

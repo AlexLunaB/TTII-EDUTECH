@@ -122,7 +122,12 @@
                               label=""
                               v-model="Img"
                               filled
-                              prepend-icon="mdi-camera"
+                              show-size
+                              counter
+                              prepend-icon="fas fa-camera"
+                              placeholder="Elige una imagen para tu perfil"
+                              :rules="verificaTam"
+                              counter-size-string="$vuetify.fileInput.counterSize"
                 ></v-file-input>
 
                 <div id="preview">
@@ -201,6 +206,26 @@
 
         </v-row>
 
+        <v-row>
+          <v-col cols="12" md="6" sm="12">
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>Telefono de contacto</v-list-item-title>
+                <v-text-field
+
+                  v-model="user.profile.telefono"
+
+
+                  color="purple darken-2"
+
+                  required
+                ></v-text-field>
+              </v-list-item-content>
+            </v-list-item>
+          </v-col>
+
+        </v-row>
+
 
         <v-card-actions>
           <v-btn
@@ -270,7 +295,11 @@
         },
         editorOption: {
           // Some Quill options...
-        }
+        },
+
+        verificaTam: [
+          // files => !files || !files.some(file => file.size > 2e6) || 'Avatar size should be less than 2 MB!'
+        ],
 
       };
     }, methods: {

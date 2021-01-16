@@ -28,14 +28,15 @@
                         </div> -->
 
                         <h4 class="text-center mlt-4">Logueate</h4>
-                        <v-form >
+                        <v-form ref="formLogin">
                           <v-text-field
                             label="Usuario"
                             name="username"
                             prepend-icon="person"
                             type="text"
                             v-model="username"
-                            color="teal accent-3">
+                            color="teal accent-3"
+                            :rules="[v => !!v || 'Usuario necesario']">
                           </v-text-field>
                           <v-text-field
                             label="Contraseña"
@@ -44,12 +45,16 @@
                             prepend-icon="lock"
                             type="password"
                             color="teal accent-3"
-                            v-on:keyup.enter="loginUser">
+                            v-on:keyup.enter="loginUser"
+                            :rules="[v => !!v || 'Contraseña necesaria']">
                           </v-text-field>
                         </v-form>
 
                         <!-- <h3 class="text-center mt-3"> ¿Olvidaste tu contraseña?</h3> -->
-                        <!-- <h3 class="text-center mt-3" @click="abreOlvidoContra"> ¿Olvidaste tu contraseña?</h3> -->
+                        <!-- <h3 class="text-center mt-3" > ¿Olvidaste tu contraseña?</h3> -->
+                        <div class="text-center mt-3">
+                          <v-btn rounded color="warning accent-3" @click="step+=2" dark>¿Olvidaste tu contraseña?</v-btn>
+                        </div>
 
                       </v-card-text>
                       <div class="text-center mt-3">
@@ -105,7 +110,7 @@
                           <v-form ref="form">
                             
                             <v-text-field
-                            label="Correo"
+                            label="Correo (Ej. nombre@dominio.com)"
                             name="email"
                             prepend-icon="email"
                             type="text"
@@ -193,6 +198,60 @@
                 </v-window-item>
 
 
+                <v-window-item :value="3">
+
+                  <v-row class="fill-height">
+                    <v-col cols="12" md="4" class="primary accent-3">
+                      <v-card-text class="white--text mt-12">
+                        <h1 class="text-center display-1">Regresa</h1>
+                        <h5 class="text-center"> Recupera tu contraseña</h5>
+                      </v-card-text>
+
+                      <div class="text-center">
+                        <v-btn rounded outlined dark @click="step-=2">Regresa al Login</v-btn>
+                      </div>
+                    </v-col>
+
+                    <v-col cols="12" md="8">
+                      <v-card-text>
+                        <h1 class="text-center display-2 primary--text text--accent-3">Ingresa los datos que se te solicitan</h1>
+                      <!-- <div class="text-center mt-4">
+                        <v-btn class="mx-2" fab >
+                          <v-icon>fab fa-facebook</v-icon>
+                        </v-btn>
+                      </div> -->
+
+                        <div>
+                          <h4 class="text-center ">para recuperar acceso</h4>
+                          <v-form ref="form">
+                            
+                            <v-text-field
+                            label="Correo con el que te registraste"
+                            name="email"
+                            prepend-icon="email"
+                            type="text"
+                            color="teal accent-3"
+                            v-model="datosUsuario.emailPassword"
+                            :rules="emailRules">
+                            </v-text-field>
+
+                          </v-form>
+                        </div>
+
+
+                      </v-card-text>
+                      <div class="text-center mt-n5">
+                          <v-btn color="primary" @click="postRegistro"> Registrate!</v-btn>
+
+                      </div>
+
+                    </v-col>
+                  </v-row>
+
+
+                </v-window-item>
+
+
               </v-window>
 
             </v-card>
@@ -229,17 +288,22 @@ import { getAPI } from '../Api/axios-base'
           password: '',
           password_confirmation: '',
           first_name: '',
-          last_name: ''
+          last_name: '',
+          emailPassword: ''
         },
 
         nameRules: [
           v => !!v || 'Se requiere un nombre',
           v => (v && v.length <= 20) || 'Máximo 20 caracteres',
+          v => (/^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\']+[\s])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$/.test(v)) || 'Debe tener solo caracteres del alfabeto'
         ],
 
         usernameRules: [
           v => !!v || 'Se requiere un nombre de usuario',
-          v => (v && v.length <= 20) || 'Máximo 20 caracteres',
+          v => (v && v.length >= 4) || 'Mínimo 4 caracteres',
+          v => (v && v.length <= 20) || 'Máximo 16 caracteres',
+        
+          v => !(/\s/.test(v)) || 'No debe contener espacios'
         ],
 
         emailRules: [
@@ -252,8 +316,10 @@ import { getAPI } from '../Api/axios-base'
 
           v => (v && v.length >= 8) || 'La contraseña debe contener al menos 8 caracteres',
           v => /(?=.*[A-Z])/.test(v) || 'Debe tener al menos una letra mayuscula',
+          v => /(?=.*[a-z])/.test(v) || 'Debe tener al menos una letra minuscula',
           v => /(?=.*\d)/.test(v) || 'Debe tener al menos un número',
           v => /([!@$%])/.test(v) || 'Debe tener al menos un caracter especial [!@#$%]',
+          v => (v && v.length <= 20) || 'La contraseña no puede tener mas de 20 caracteres',
 
           v => v === this.datosUsuario.password || 'Las contraseñas no coinciden'
 
@@ -270,24 +336,26 @@ import { getAPI } from '../Api/axios-base'
     },
     methods: {
       loginUser() { // call loginUSer action
-        this.$store.dispatch('loginUser', {
-          username: this.username,
-          password: this.password
-        })
-          .then(() => {
-            this.wrongCred = false
-            this.$router.push({name: 'Mapa'})
+        if(this.$refs.formLogin.validate()) {
+          this.$store.dispatch('loginUser', {
+            username: this.username,
+            password: this.password
           })
-          .catch(err => {
-            Swal.fire({
-              icon: 'error',
-              title: 'ERROR...',
-              text: '¡Usuario / Contraseña incorrecto!',
-              footer: 'Intenta de nuevo'
+            .then(() => {
+              this.wrongCred = false
+              this.$router.push({name: 'Mapa'})
             })
-            console.log(err)
-            this.wrongCred = true // if the credentials were wrong set wrongCred to true
-          })
+            .catch(err => {
+              Swal.fire({
+                icon: 'error',
+                title: 'ERROR...',
+                text: '¡Usuario / Contraseña incorrecto!',
+                footer: 'Intenta de nuevo'
+              })
+              console.log(err)
+              this.wrongCred = true // if the credentials were wrong set wrongCred to true
+            })
+        }
       },
 
       postRegistro: async function() {

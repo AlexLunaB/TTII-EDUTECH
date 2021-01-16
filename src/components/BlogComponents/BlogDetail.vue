@@ -28,14 +28,16 @@
                 </v-container>
             </v-col >
 
-            <v-col style="background-color: #FFF3E6">
-                <v-row>
-                    <CardRecomendaciones v-for="post in Posts" :key="post.id" :post = post></CardRecomendaciones>
-                </v-row>
-                <v-row>
-                    <!-- <CommentsApp></CommentsApp> -->
+            <v-col style="background-color: #FFF3E6" >
+                
+                    <CommentsAppBlog :perfil = perfil :id = id :Post = Post> </CommentsAppBlog>
                     
-                </v-row>
+                
+                <br>
+                
+                    <CardRecomendaciones v-for="post in Posts" :key="post.id" :post = post></CardRecomendaciones>
+                    
+                
             </v-col>
         </v-row>
         
@@ -46,7 +48,7 @@
 <script>
 import { getAPI } from '../../Api/axios-base';
 import CardRecomendaciones from '../CardRecomendaciones'
-import CommentsApp from '../comments/CommentsApp'
+import CommentsAppBlog from '../comments/CommentsAppBlog'
 
 
 
@@ -56,8 +58,17 @@ export default {
         return {
             id:this.$route.params.id,
             Post:{},
-            Posts:{}
-           
+            Posts:{},
+
+            perfil: {
+                email: null,
+                nombre: null,
+                apellidos: null,
+                usuario: null,
+                foto: null,
+                municipio: null,
+                intereses: [],
+            },
         }
     },
 
@@ -65,7 +76,7 @@ export default {
     components: {
 
         CardRecomendaciones,
-        CommentsApp
+        CommentsAppBlog
        
     },
     methods: {
@@ -79,7 +90,7 @@ export default {
                 // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
                 //     self.Post = res.data
                 // });
-                console.log(res.data)
+                console.log('Articulo: ',res.data)
             } catch (error) {
                 console.log(error)
             }
@@ -94,10 +105,29 @@ export default {
                 // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
                 //     self.Post = res.data
                 // });
-                console.log(res.data)
+                console.log('Articulos', res.data)
             } catch (error) {
                 console.log(error)
             }
+        },
+
+        obtiene_datos_usuario: function () {
+            const self = this;
+            getAPI.get("Usuarios/View/profile/").then((response) => {
+
+            self.perfil.email = response.data.email;
+            self.perfil.nombre = response.data.first_name;
+            self.perfil.apellidos = response.data.last_name;
+            self.perfil.usuario = response.data.username;
+            self.perfil.foto = response.data.profile.foto;
+            self.perfil.semblanza = response.data.profile.semblanza;
+            self.perfil.intereses = response.data.profile.intereses;
+
+            // console.log(response.data)
+            });
+
+            
+
         },
  
     }, 
@@ -105,6 +135,7 @@ export default {
     mounted(){ 
         this.GetArticulo()
         this.GetArticulos()
+        this.obtiene_datos_usuario()
       
     }
 };
