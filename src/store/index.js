@@ -21,9 +21,9 @@ export default new Vuex.Store({
     accessToken: localStorage.getItem('access_token') || null, // makes sure the user is logged in even after
     // refreshing the page
     refreshToken: localStorage.getItem('refresh_token') || null,
-    permiso: localStorage.getItem('Usuario') || null,
+    // permiso: localStorage.getItem('Usuario') || null,
     APIData: '',// received data from the backend API is stored here.
-    user: {}
+    user: localStorage.getItem('Usuario') || null,
   },
   getters: {
     loggedIn(state) {
@@ -31,7 +31,7 @@ export default new Vuex.Store({
       return state.accessToken != null
     },
     getterPermiso(state) {
-      return JSON.parse(state.permiso)
+      return JSON.parse(state.user)
     }
   },
   mutations: {
@@ -55,7 +55,7 @@ export default new Vuex.Store({
     destroyToken(state) {
       state.accessToken = null
       state.refreshToken = null
-      state.permiso = null
+      state.user = null
     },
     ActualizaBuscador(state,search) {
       state.buscador = search
@@ -110,7 +110,6 @@ export default new Vuex.Store({
           localStorage.removeItem('access_token')
           localStorage.removeItem('refresh_token')
           localStorage.removeItem('Usuario')
-
           context.commit('destroyToken')
           router.push({name: 'Login'})
         } catch (error) {

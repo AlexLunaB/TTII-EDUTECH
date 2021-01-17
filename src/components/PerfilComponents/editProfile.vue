@@ -128,6 +128,7 @@
                               placeholder="Elige una imagen para tu perfil"
                               :rules="verificaTam"
                               counter-size-string="$vuetify.fileInput.counterSize"
+                              
                 ></v-file-input>
 
                 <div id="preview">
@@ -236,6 +237,8 @@
             Guardar Cambios
           </v-btn>
 
+          
+
           <v-btn
             text
             color="blue darken-1"
@@ -298,7 +301,8 @@
         },
 
         verificaTam: [
-          // files => !files || !files.some(file => file.size > 2e6) || 'Avatar size should be less than 2 MB!'
+          file => !file || file.size < 2e6 || 'Avatar size should be less than 2 MB!'
+          // files => !files || console.log(files)
         ],
 
       };
@@ -404,7 +408,11 @@
         }
 
 
-      }
+      },
+
+      // imagen() {
+      //   console.log(this.Img)
+      // }
     },
     computed: {
       editor() {

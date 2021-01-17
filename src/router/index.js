@@ -18,7 +18,7 @@ import RecursoDetail from '../components/Recursos/RecursoDetail'
 import editProfile from "../components/PerfilComponents/editProfile";
 import PermisoDenegado from '../components/PermisoDenegado'
 
-const permisoUsuario = store.getters.getterPermiso[0].permiso;
+
 
 Vue.use(VueRouter)
 const router = new VueRouter({
@@ -129,6 +129,9 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // alert(to.meta.rutaProtegida)
   // console.log(to.meta.rutaProtegida)
+
+  
+
   if(to.meta.rutaProtegida) {
     if(store.getters.loggedIn) {
       next()
@@ -140,6 +143,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if(to.meta.rutaProtegidaLE) {
+    const permisoUsuario = store.getters.getterPermiso[0].permiso;
     if((store.getters.loggedIn) && (permisoUsuario === 'ED')) {
       next()
     } 
