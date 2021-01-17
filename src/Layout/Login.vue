@@ -241,7 +241,7 @@
 
                       </v-card-text>
                       <div class="text-center mt-n5">
-                          <v-btn color="primary" @click="postRegistro"> Registrate!</v-btn>
+                          <v-btn color="primary"> Registrate!</v-btn>
 
                       </div>
 

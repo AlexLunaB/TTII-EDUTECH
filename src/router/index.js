@@ -16,6 +16,7 @@ import BlogDetail from "../components/BlogComponents/BlogDetail"
 import BuscadorLayout from "../components/Buscador/BuscadorLayout"
 import RecursoDetail from '../components/Recursos/RecursoDetail'
 import editProfile from "../components/PerfilComponents/editProfile";
+import PermisoDenegado from '../components/PermisoDenegado'
 
 const permisoUsuario = store.getters.getterPermiso[0].permiso;
 
@@ -78,7 +79,14 @@ const router = new VueRouter({
           path: '/Inicio/:id', 
           component: RecursoDetail , 
           name:"RecursoDetail", 
-          meta: {rutaProtegida: true},},
+          meta: {rutaProtegida: true},
+        },
+        { 
+          path: 'Permisos', 
+          component: PermisoDenegado , 
+          name:"PermisoDenegado", 
+          meta: {rutaProtegida: true},
+        },
         {
           path: "Buscador",
           name: "Buscador",
@@ -132,22 +140,24 @@ router.beforeEach((to, from, next) => {
   }
 
   if(to.meta.rutaProtegidaLE) {
-    if((store.getters.loggedIn) && (permisoUsuario === 'GE')) {
+    if((store.getters.loggedIn) && (permisoUsuario === 'ED')) {
       next()
-    } else {
-      next('/Login')
+    } 
+    else {
+      next('/Permisos')
     }
   } else {
     next();
   }
 
-  if(to.meta.rutaProtegidaLE) {
-    if((store.getters.loggedIn) && (permisoUsuario !== 'GE')) {
-      next('Inicio')
-    } 
-  } else {
-    next();
-  }
+  // if(to.meta.rutaProtegidaLE) {
+  //   if((store.getters.loggedIn) && (permisoUsuario !== 'ED')) {
+  //     next('Inicio')
+  //   } 
+  // } else {
+  //   next();
+  // }
+
 
   if(to.meta.rutaProtegidaLogin) {
     if(store.getters.loggedIn) {

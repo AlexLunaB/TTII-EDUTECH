@@ -34,7 +34,7 @@
           color="orange"
           dark
           router :to="{ name: 'AddPub'}"
-          v-if="permisoUsuario === 'GE'"
+          v-if="permisoUsuario === 'ED'"
         >
           Compartir
         </v-btn>

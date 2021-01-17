@@ -55,6 +55,7 @@ export default new Vuex.Store({
     destroyToken(state) {
       state.accessToken = null
       state.refreshToken = null
+      state.permiso = null
     },
     ActualizaBuscador(state,search) {
       state.buscador = search
@@ -108,6 +109,8 @@ export default new Vuex.Store({
         try {
           localStorage.removeItem('access_token')
           localStorage.removeItem('refresh_token')
+          localStorage.removeItem('Usuario')
+
           context.commit('destroyToken')
           router.push({name: 'Login'})
         } catch (error) {
