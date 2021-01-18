@@ -17,7 +17,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
+from rest_framework_swagger.views import get_swagger_view
 
+schema_view = get_swagger_view(title='Pastebin API')
+
+urlpatterns = [
+
+]
 # from ObservatorioTTApp import views
 
 urlpatterns = [
@@ -30,4 +37,7 @@ urlpatterns = [
     path('Usuarios/', include(('usuarios.urls', 'usuarios'), namespace='usuarios')),
     path('Analitica/', include(('Analitica.urls', 'Analitica'), namespace='Analitica')),
     path('Foro/', include(('foroDiscusion.urls', 'foroDiscusion'), namespace='foroDiscusion')),
+    path(r'^$', schema_view),
+
+
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

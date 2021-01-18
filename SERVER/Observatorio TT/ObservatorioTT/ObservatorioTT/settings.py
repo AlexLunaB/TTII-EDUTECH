@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 import datetime
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,8 +48,8 @@ INSTALLED_APPS = [
     'taggit_serializer',
     'widget_tweaks',
     'Analitica',
-    'django_filters'
-
+    'django_filters',
+  'rest_framework_swagger',
 
 ]
 
@@ -162,3 +162,36 @@ SIMPLE_JWT = {
 }
 
 
+
+
+# CELERY STUFF
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Mexico_City'
+REDIS_HOST = os.getenv('REDIS_HOST', '127.0.0.1')
+
+CHANNEL_LAYERS = {
+    'default': {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        'CONFIG': {
+            "hosts": [(os.environ.get('REDIS_LOCATION', 'localhost'), 6379)],
+            'capacity': 15000,
+            'expiry': 5,
+        }
+
+    },
+}
+
+# Correo electronico variables
+
+
+# EMAIL CONFIG
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'alexlb642@gmail.com'
+EMAIL_HOST_PASSWORD = 'marianateamo@'

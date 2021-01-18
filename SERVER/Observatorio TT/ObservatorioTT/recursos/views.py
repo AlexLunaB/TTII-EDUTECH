@@ -5,6 +5,7 @@ from django.db.models import Case, When
 from django.shortcuts import render
 
 # Create your views here.
+from numpy import load
 from rest_framework import mixins, viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
@@ -12,6 +13,7 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 from taggit_serializer.serializers import TaggitSerializer
 
+from ObservatorioTT import settings
 from ObservatorioTTApp.models import MexicoState
 from ObservatorioTTApp.recomendador import Myrecommend
 from recursos.Serializers.RecursoSerializer import RecursoSerializer, CategoriaSerializer, RecursoReadSerializer, \
@@ -72,22 +74,23 @@ class RecursoViewSet(mixins.ListModelMixin,
 
 
 
-  @action(detail=True,  methods=['get'])
-  def recommend(self,request,pk):
+  @action(detail=False,  methods=['get'])
+  def recommend(self,request):
+
 
 
     df = pd.DataFrame(list(Rating.objects.all().values()))
     nu = df.user_id.unique().shape[0]
-    current_user_id = request.user.id
-
+    current_user_id = int(request.user.id)
     # if new user not rated any movie
-    if current_user_id > nu:
+    if not Rating.objects.filter(user=request.user).exists():
       movie = Recurso.objects.get(id=30)
       q = Rating(user=request.user, recurso=movie, rating=0)
       q.save()
 
     print("Current user id: ", current_user_id)
-    prediction_matrix, Ymean = Myrecommend()
+    prediction_matrix=load(str(settings.BASE_DIR)+'/ma.npy')
+    Ymean=load(str(settings.BASE_DIR)+'/mb.npy')
     my_predictions = prediction_matrix[:, current_user_id - 1] + Ymean.flatten()
     pred_idxs_sorted = np.argsort(my_predictions)
     pred_idxs_sorted[:] = pred_idxs_sorted[::-1]
@@ -95,7 +98,7 @@ class RecursoViewSet(mixins.ListModelMixin,
     print(pred_idxs_sorted)
     preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(pred_idxs_sorted)])
     movie_list = list(Recurso.objects.filter(id__in=pred_idxs_sorted, ).order_by(preserved)[:10])
-    R=RecursoSerializer(many=True,data=movie_list)
+    R=RecursoReadSerializer(many=True,data=movie_list, context={"request":request})
     R.is_valid()
 
 
