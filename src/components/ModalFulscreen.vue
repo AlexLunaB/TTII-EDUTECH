@@ -18,7 +18,6 @@
       </template> -->
 
 
-
       <v-card
         :loading="loading"
         class="mx-auto my-12"
@@ -62,13 +61,18 @@
 
             </v-list> -->
 
-            <v-row>
-              <v-col cols="12" sm="12" md="4" v-for="recurso in recursos.recursos" :key="recurso.id">
-                <TarjetaRecurso  :recurso = recurso> </TarjetaRecurso>
-              </v-col>
 
-            </v-row>
+            <v-container fluid>
 
+              <v-row>
+                <v-col cols="12" sm="12" md="4" v-for="recurso in recursos.recursos" :key="recurso.id">
+
+
+                  <TarjetaRecurso :recurso=recurso></TarjetaRecurso>
+                </v-col>
+
+              </v-row>
+            </v-container>
 
 
           </v-col>
@@ -91,95 +95,90 @@
 
 <script>
 
-import {getAPI} from '../Api/axios-base'
-import Carousel from '../components/Carousel'
-import TarjetaRecurso from './TarjetaRecurso'
-import CardRecomendaciones from './CardRecomendaciones'
-import CommentsApp from './comments/CommentsApp'
+  import {getAPI} from '../Api/axios-base'
+  import Carousel from '../components/Carousel'
+  import TarjetaRecurso from './TarjetaRecurso'
+  import CardRecomendaciones from './CardRecomendaciones'
+  import CommentsApp from './comments/CommentsApp'
 
 
-export default {
+  export default {
 
 
-  mounted(){
-
-  },
-
-
-  watch:{
-    headModalProp: function(){
-      this.getRecursos()
-    }
-  },
-  data () {
-    return {
-      dialog: false,
-      loading: false,
-      selection: 1,
-      headModalProp: String,
-      contentModalProp: String,
-      recursos: []
-    }
-  },
-  props: {
-    busqueda:""
-
-  },
-  components: {
-    Carousel,
-    TarjetaRecurso,
-    CardRecomendaciones,
-    CommentsApp
-  },
-  methods: {
-    showModal: function() {
-      this.dialog = true;
-    },
-
-    setTextModal: function (headModal, contentModal) {
-      // let myHeadModal = this.headModalProp
-      // let myContentModal = this.contentModalProp
-
-      // let myHeadModal = headModal
-      // let myContentModal = contentModal
-
-      this.headModalProp =  headModal;
-      this.contentModalProp = contentModal;
-
-      // return headModal;
-
-
+    mounted() {
 
     },
-    reserve () {
-      this.loading = true
 
-      setTimeout(() => (this.loading = false), 2000)
+
+    watch: {
+      headModalProp: function () {
+        this.getRecursos()
+      }
     },
+    data() {
+      return {
+        dialog: false,
+        loading: false,
+        selection: 1,
+        headModalProp: String,
+        contentModalProp: String,
+        recursos: []
+      }
+    },
+    props: {
+      busqueda: ""
+
+    },
+    components: {
+      Carousel,
+      TarjetaRecurso,
+      CardRecomendaciones,
+      CommentsApp
+    },
+    methods: {
+      showModal: function () {
+        this.dialog = true;
+      },
+
+      setTextModal: function (headModal, contentModal) {
+        // let myHeadModal = this.headModalProp
+        // let myContentModal = this.contentModalProp
+
+        // let myHeadModal = headModal
+        // let myContentModal = contentModal
+
+        this.headModalProp = headModal;
+        this.contentModalProp = contentModal;
+
+        // return headModal;
 
 
-     getRecursos: function() {
-            getAPI.get("Recursos/api/Articulos/", {
-                params:{
-                "estado": this.headModalProp,
-                "search": this.busqueda
-                }
+      },
+      reserve() {
+        this.loading = true
+
+        setTimeout(() => (this.loading = false), 2000)
+      },
+
+
+      getRecursos: function () {
+        getAPI.get("Recursos/api/Articulos/", {
+            params: {
+              "estado": this.headModalProp,
+              "search": this.busqueda
             }
-            ).then(response => {
-                // console.log('AAA prro')
-                console.log(response.data)
-                this.recursos = response.data
-            })
-        },
+          }
+        ).then(response => {
+          // console.log('AAA prro')
+          console.log(response.data)
+          this.recursos = response.data
+        })
+      },
 
 
-
-
-
-  },
-}
+    },
+  }
 </script>
-
 
 
 <style>

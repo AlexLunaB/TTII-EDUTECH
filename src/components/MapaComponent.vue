@@ -1,6 +1,50 @@
 <template>
   <v-container class="contenedor" fluid>
 
+    <v-row>
+      <v-col cols="12">
+        <v-container fluid>
+
+          <v-card>
+            <v-card-title><h3>Tal vez te interese</h3></v-card-title>
+            <v-card-text>
+              <VueHorizontalList :items="recomendados" :options="options">
+                <template v-slot:nav-prev>
+                  <div>👈</div>
+                </template>
+
+                <template v-slot:nav-next>
+                  <div>👉</div>
+                </template>
+
+                <template v-slot:default="{ item }">
+
+                  <div>
+                    <div class="image-container">
+                      <div class="image-content">
+                        <img :src="item.recurso_img"  />
+
+                        <div class="image-text">
+                          <h2>{{ item.nombreRecurso }}</h2>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="subtitle">{{item.estado}}</div>
+
+                    <p>{{ item.descripcion }}</p>
+                  </div>
+
+                </template>
+              </VueHorizontalList>
+            </v-card-text>
+          </v-card>
+        </v-container>
+
+      </v-col>
+
+    </v-row>
+
 
     <v-row>
       <v-col cols="12" sm="12" md="6">
@@ -702,7 +746,8 @@
 
 
     <!-- <Modal ref="modal" headModal='texto desde props' contentModal='SADSDASDASDASD props'></Modal> -->
-    <ModalFullscreen ref="modal" headModal='texto desde props' :busqueda="search" contentModal='SADSDASDASDASD props'></ModalFullscreen>
+    <ModalFullscreen ref="modal" headModal='texto desde props' :busqueda="search"
+                     contentModal='SADSDASDASDASD props'></ModalFullscreen>
 
 
   </v-container>
@@ -714,6 +759,7 @@
 <script>
   import {getAPI} from "../Api/axios-base";
   import Vue from "vue";
+  import VueHorizontalList from "vue-horizontal-list";
 
 
   import Modal from "./Modal";
@@ -727,11 +773,87 @@
     components: {
       Modal,
       ModalFullscreen,
-      SvgPanZoom
+      SvgPanZoom,
+      VueHorizontalList
 
     },
     data: () => {
       return {
+        options: {
+          responsive: [
+            {end: 576, size: 1},
+            {start: 576, end: 768, size: 2},
+            {start: 768, end: 992, size: 3},
+            {size: 4},
+          ],
+          list: {
+            // 1200 because @media (min-width: 1200px) and therefore I want to switch to windowed mode
+            windowed: 1200,
+
+            // Because: #app {padding: 80px 24px;}
+            padding: 10,
+          },
+          position: {
+            start: 2,
+          },
+          autoplay: {play: true, repeat: true, speed: 2500},
+        },
+        recomendados: [
+          {
+            title: "Sed non ante non cras amet",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas non sagittis leo. Vestibulum sit amet metus nec neque dignissim dapibus.",
+            image: "https://picsum.photos/id/1015/600/600",
+          },
+          {
+            title: "Curabitur sit amet nunc",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id mollis erat. Aliquam erat volutpat. Nunc erat lacus, rhoncus nec.",
+            image: "https://picsum.photos/id/1019/600/600",
+          },
+          {
+            title: "Proin pharetra, ante metus",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac diam ac ex efficitur posuere. Pellentesque cursus pellentesque risus, non.",
+            image: "https://picsum.photos/id/1039/600/600",
+          },
+          {
+            title: "Cras pharetra non enim a",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuada varius nibh, a malesuada nisi feugiat eget. Aenean convallis semper.",
+            image: "https://picsum.photos/id/1042/600/600",
+          },
+          {
+            title: "Proin vulputate, augue eu accumsan",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fringilla tempor libero sit amet mollis. Praesent quis leo erat. Integer.",
+            image: "https://picsum.photos/id/1044/600/600",
+          },
+          {
+            title: "Maecenas feugiat magna sapien in",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet fringilla ante. Quisque at ipsum non lacus consequat dictum.",
+            image: "https://picsum.photos/id/1057/600/600",
+          },
+          {
+            title: "Donec commodo sed enim at",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu condimentum risus. Praesent dignissim, neque nec pharetra vestibulum, libero odio.",
+            image: "https://picsum.photos/id/1063/600/600",
+          },
+          {
+            title: "In bibendum urna et turpis",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vitae ante volutpat leo vulputate volutpat et sed ex. Vivamus eu.",
+            image: "https://picsum.photos/id/1076/600/600",
+          },
+          {
+            title: "Phasellus iaculis dignissim erat at",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mattis quam scelerisque, eleifend purus gravida, scelerisque orci. Ut et turpis.",
+            image: "https://picsum.photos/id/1083/600/600",
+          },
+        ],
 
         rangos: [],
 
@@ -765,6 +887,21 @@
       };
     },
     methods: {
+
+      GetPrediccion: function () {
+        var self= this
+        getAPI.get("/Recursos/api/Articulos/recommend/").then((res) => {
+          self.recomendados = res.data.recursos_list
+
+
+
+          for(var obj in self.recomendados){
+            self.recomendados[obj].recurso_img=self.recomendados[obj].recurso_img[0].archivo
+
+          }
+
+        })
+      },
       GetDetalle: function () {
         self = this
         self.rangos = []
@@ -964,6 +1101,7 @@
     mounted() {
 
       this.GetDetalle()
+      this.GetPrediccion()
 
 
       let color1 = "rgb(20,60,200)";
@@ -1025,4 +1163,68 @@
   }
 
 
+  p,
+  h3,
+  h2 {
+    margin-top: 4px;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .subtitle {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 8px;
+  }
+
+  .image-container {
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding-top: 13em;
+  }
+
+  .image-content {
+    height: 3em;
+    width: 3em;
+  }
+
+  .image-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 32px 24px;
+    display: flex;
+    align-items: flex-end;
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .image-text h2 {
+    margin: 0;
+    color: white;
+    text-align: center;
+  }
+
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+
 </style>
+
