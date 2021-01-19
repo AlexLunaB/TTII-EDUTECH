@@ -4,7 +4,7 @@
             <img :src="comment.usuario.profile.foto" alt="">
         </div>
         <div class="text">
-            <a class="username" href="#">@{{ comment.usuario.username }}</a> <span>{{ comment.comentario }}</span>
+            <a class="username" href="#">@{{ comment.usuario.username }}</a> <span>{{ comment.comentario }} - Comentado el asdasd</span>
         </div>
     </div>
 </template>

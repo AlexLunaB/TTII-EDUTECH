@@ -77,12 +77,12 @@
                 <v-text-field
                   v-model="articulo.descripcion"
                   label="Descripción del artículo*"
-                  :rules="nameRules"
+                  :rules="descripcionRules"
                 ></v-text-field>
 
-                <div id="preview">
+                <!-- <div id="preview">
                   <img v-if="url" :src="url"/>
-                </div>
+                </div> -->
               </v-list-item-content>
             </v-list-item>
 
@@ -105,8 +105,8 @@
                   small-chips
                   show-size
                   multiple
-                  :rules="nameRules"
-
+                  :rules="imgRules"
+                  accept="image/png, image/jpeg, image/bmp"
                 ></v-file-input>
               </v-list-item-content>
             </v-list-item>
@@ -122,7 +122,7 @@
 
                 <v-text-field
                   required
-                  :rules="nameRules"
+                  :rules="autorRules"
                   v-model="articulo.autores"
                   label="Ingresa los autores, separalos por coma"
                 ></v-text-field>
@@ -229,13 +229,21 @@
 
         <v-card-actions>
           <v-btn
-
             text
             blue
             @click="postArticulos"
           >
             Solicitar publicación
           </v-btn>
+
+          <v-btn
+            text
+            blue
+            @click="imagen"
+          >
+            Datos imagen
+          </v-btn>
+
         </v-card-actions>
 
       </v-form>
@@ -259,8 +267,28 @@
       return {
         nameRules: [
           v => !!v || 'Es Requerido',
-
+          v => v && v.length <= 100 || 'No debe ser mayor a 100 caracteres'
         ],
+
+        descripcionRules: [
+          v => !!v || 'Es Requerido',
+          v => v && v.length <= 200 || 'No debe ser mayor a 200 caracteres'
+        ],
+
+        imgRules: [
+          files => files && files.length > 0 || 'Debes adjuntar mínimo una imagen para vista previa',
+          files => !files || !files.some(file => file.size > 2e6) || 'Procura que tus fotografias pesen a lo mas 2 MB!',
+          files => !files || files.some(file => file.type === "image/png") || files.some(file => file.type === "image/jpeg") || files.some(file => file.type === "image/bmp") || 'Debes subir archivos de imagen',
+          // file => !file || file.size <= 2e6 || 'Tu imagen debe pesar a lo mas 2 MB!',
+          // file => !file || file.type === "image/png" || file.type === "image/jpeg" || file.type === "image/bmp" || 'Debes subir un archivo de tipo imagen'
+          
+        ],
+
+        autorRules: [
+          autor => !!autor || 'Es requerido',
+          autor => autor && autor.length <=100 || 'No debe ser mayor a 100 caracteres'
+        ],
+
                 editorConfig: {
           // The configuration of the rich-text editor.
         },
@@ -384,6 +412,11 @@
           self.tags = response.data;
 
         });
+      },
+
+      imagen() {
+        console.log(this.files)
+        // console.log(this.user.profile.telefono)
       },
 
 

@@ -20,7 +20,7 @@
     <v-card>
 
 
-      <v-form>
+      <v-form ref="form">
 
         <v-row>
 
@@ -51,6 +51,7 @@
                 <v-text-field
 
                   v-model="user.first_name"
+                  :rules="nameRules"
 
 
                   color="purple darken-2"
@@ -74,6 +75,10 @@
 
                 <v-text-field
                   v-model="user.last_name"
+                  :rules="nameRules"
+                  color="purple darken-2"
+
+                  required
 
 
                 ></v-text-field>
@@ -98,6 +103,7 @@
 
                   v-model="user.email"
                   prepend-icon="far fa-envelope"
+                  :rules="emailRules"
 
                   color="purple darken-2"
 
@@ -126,10 +132,19 @@
                               counter
                               prepend-icon="fas fa-camera"
                               placeholder="Elige una imagen para tu perfil"
-                              :rules="verificaTam"
+                              :rules="imgRules"
                               counter-size-string="$vuetify.fileInput.counterSize"
+                              accept="image/png, image/jpeg, image/bmp"
                               
                 ></v-file-input>
+
+                <v-btn
+                  depressed
+                  color="primary"
+                  @click="eliminaFoto"
+                >
+                  Eliminar foto
+                </v-btn>
 
                 <div id="preview">
                   <img v-if="user.profile.foto" :src="user.profile.foto"/>
@@ -151,7 +166,11 @@
                 <v-list-item-title>Semblanza</v-list-item-title>
 
 
-                <v-textarea v-model="user.profile.semblanza"></v-textarea>
+                <v-textarea 
+                v-model="user.profile.semblanza"
+                :rules="semblanzaRules"
+                placeholder="Escribe una breve descripción sobre ti (250 caracteres máximo">
+                </v-textarea>
               </v-list-item-content>
             </v-list-item>
 
@@ -218,6 +237,10 @@
 
 
                   color="purple darken-2"
+                  type="number"
+                  :rules="telRules"
+                  placeholder="Número telefonico de 10 dígitos"
+                  
 
                   required
                 ></v-text-field>
@@ -237,6 +260,14 @@
             Guardar Cambios
           </v-btn>
 
+
+          <v-btn
+            text
+            color="blue darken-1"
+            @click="imagen"
+          >
+            Datos imagen
+          </v-btn>
           
 
           <v-btn
@@ -300,10 +331,31 @@
           // Some Quill options...
         },
 
-        verificaTam: [
-          file => !file || file.size < 2e6 || 'Avatar size should be less than 2 MB!'
+        nameRules: [
+          v => !!v || 'Se requiere un nombre',
+          v => (v && v.length <= 20) || 'Máximo 20 caracteres',
+          v => (/^(([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])|([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\']+[\s]))+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$/.test(v)) || 'Debe tener solo caracteres del alfabeto'
+        ],
+
+        emailRules: [
+          v => !!v || 'Correo necesario',
+          v => /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'El correo debe ser valido',
+        ],
+
+        imgRules: [
+          file => !file || file.size <= 2e6 || 'Tu imagen debe pesar a lo mas 2 MB!',
+          file => !file || file.type === "image/png" || file.type === "image/jpeg" || file.type === "image/bmp" || 'Debes subir un archivo de tipo imagen'
           // files => !files || console.log(files)
         ],
+
+        semblanzaRules: [
+          v => v && v.length <= 250  || 'Maximo 250 caracteres'
+        ],
+
+        telRules: [
+          tel => tel.length === 0 || tel.length === 10 || 'Recuerda que ahora todos los números telefonicos son de 10 dígitos',
+          
+        ]
 
       };
     }, methods: {
@@ -379,40 +431,53 @@
       submit() {
 
         var self = this
+        if(this.$refs.form.validate()) {
 
+          /*for( let file in this.formdata.Img){
+                  formData.append("cave", file)
+              }*/
+          let formData = new FormData()
+          if (this.Img != null) {
 
-        /*for( let file in this.formdata.Img){
-                formData.append("cave", file)
-            }*/
-        let formData = new FormData()
-        if (this.Img != null) {
+            formData.append("foto", self.Img);
 
-          formData.append("foto", self.Img);
-
-          getAPI.patch("/Usuarios/View/foto/", formData)
-            .then((d) => {
-              getAPI.patch("/Usuarios/View/profile/",
-                {usuario: self.user}).then((d) => {
-                self.retorna()
+            getAPI.patch("/Usuarios/View/foto/", formData)
+              .then((d) => {
+                getAPI.patch("/Usuarios/View/profile/",
+                  {usuario: self.user}).then((d) => {
+                  self.retorna()
+                })
               })
-            })
+          }
+
+          else {
+
+            
+            getAPI.patch("/Usuarios/View/foto/", null)
+              .then((d) => {
+                getAPI.patch("/Usuarios/View/profile/",
+                  {usuario: self.user}).then((d) => {
+                  self.retorna()
+                })
+              })
+          }
         }
 
-        else {
 
-          getAPI.patch("/Usuarios/View/profile/",
-            {usuario: self.user,}).then((d) => {
-              self.retorna()
-
-          })
-        }
+        
 
 
       },
 
-      // imagen() {
-      //   console.log(this.Img)
-      // }
+      imagen() {
+        console.log(this.Img)
+        console.log(this.user.profile.telefono)
+      },
+
+      eliminaFoto() {
+        this.user.profile.foto = null
+        this.Img = null
+      }
     },
     computed: {
       editor() {

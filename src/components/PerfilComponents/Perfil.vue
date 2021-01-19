@@ -8,7 +8,9 @@
           <v-row class="pa-3">
             <v-col offset="1" cols="10" align="center">
               <v-avatar size="200">
-                <v-img class="card-img" :src="perfil.foto"></v-img>
+                <v-img v-if="perfil.foto !== null" class="card-img" :src="perfil.foto"></v-img>
+                <v-img v-else class="card-img" src="../../static/images/default_avatar.jpg"></v-img>
+
               </v-avatar>
 
               <!------------------ EDIT IMAGE BUTTON ------------------>
