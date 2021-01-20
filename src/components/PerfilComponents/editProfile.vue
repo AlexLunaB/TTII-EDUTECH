@@ -407,6 +407,7 @@
             timer: 2500
           }).then((e)=>{
              this.$router.push({name: 'Perfil'})
+             location.reload()
           })
 
       },

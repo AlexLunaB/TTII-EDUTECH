@@ -5,7 +5,7 @@
       <v-col cols="12">
         <v-container fluid>
 
-          <v-card>
+          <v-card :loading="loading">
             <v-card-title><h3>Tal vez te interese</h3></v-card-title>
             <v-card-text>
               <VueHorizontalList :items="recomendados" :options="options">
@@ -33,6 +33,21 @@
                     <div class="subtitle">{{item.estado}}</div>
 
                     <p>{{ item.descripcion }}</p>
+
+                    <div>
+
+                      <v-btn
+                      color="orange"
+                      text
+                      @click="showRecursoDetail(item.id)"
+                      
+                    >
+                      Explorar
+                    </v-btn>
+
+                    </div>
+
+                    
                   </div>
 
                 </template>
@@ -885,7 +900,9 @@
         cantBCS: 20,
 
 
-        totales: []
+        totales: [],
+
+        loading: false
 
 
       };
@@ -1071,8 +1088,17 @@
           })
 
         });
+      },
 
-      }
+      showRecursoDetail (idRecurso) {
+        this.loading = true
+
+        setTimeout( () => {
+
+          this.loading = false
+          this.$router.push({name: 'RecursoDetail', params: { id: idRecurso}})
+        }, 2000)
+      },
 
 
     },
