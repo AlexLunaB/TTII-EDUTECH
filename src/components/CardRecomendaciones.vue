@@ -2,6 +2,7 @@
   <v-card
     class="mx-auto"
     max-width="400"
+    :loading="loading"
   >
     <v-img
       class="white--text align-end"
@@ -12,29 +13,33 @@
     </v-img>
 
     <v-card-subtitle class="pb-0">
-      Number 10
+      {{post.descripcion}}
     </v-card-subtitle>
 
-    <v-card-text class="text--primary">
-      <div>Whitehaven Beach</div>
+    <v-chip
+        v-for="tag in post.tags"
+        class="ma-2"
+        color="green"
+        text-color="white"
+    >
+        {{tag}}
+    </v-chip>
 
-      <div>Whitsunday Island, Whitsunday Islands</div>
+    <v-card-text class="text--primary">
+      <div>Escrito por: {{post.administrador.username}}</div>
+      <div>Creado: {{post.created}}</div>
     </v-card-text>
 
     <v-card-actions>
-      <v-btn
-        color="orange"
-        text
-      >
-        Share
-      </v-btn>
 
       <v-btn
         color="orange"
         text
+        @click="showBlogDetail"
       >
-        Explore
+        Explorar
       </v-btn>
+
     </v-card-actions>
   </v-card>
 </template>
@@ -44,11 +49,27 @@
   export default {
     data() {
       return {
-      
+        loading: false
       }
     },
     props: {
       post: {}
+    },
+    methods: {
+      // showPost() {
+      //   console.log(this.post)
+      // }
+      showBlogDetail() {
+        this.loading = true
+          setTimeout( () => {
+
+              this.loading = false
+              this.$router.push({name: 'post', params: { id: this.post.id}})
+          }, 2000)
+      }
+    },
+    mounted() {
+      // this.showPost()
     }
   }
 </script>

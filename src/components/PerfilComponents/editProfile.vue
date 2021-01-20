@@ -138,13 +138,13 @@
                               
                 ></v-file-input>
 
-                <v-btn
+                <!-- <v-btn
                   depressed
                   color="primary"
                   @click="eliminaFoto"
                 >
                   Eliminar foto
-                </v-btn>
+                </v-btn> -->
 
                 <div id="preview">
                   <img v-if="user.profile.foto" :src="user.profile.foto"/>
@@ -472,12 +472,13 @@
       imagen() {
         console.log(this.Img)
         console.log(this.user.profile.telefono)
+        console.log(this.user.profile.foto)
       },
 
-      eliminaFoto() {
-        this.user.profile.foto = null
-        this.Img = null
-      }
+      // eliminaFoto() {
+      //   this.user.profile.foto = null
+      //   this.Img = null
+      // }
     },
     computed: {
       editor() {

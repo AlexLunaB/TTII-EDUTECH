@@ -98,7 +98,7 @@
         <v-row>
 
           <v-col cols="12" md="12" sm="12">
-            <v-card>
+            <v-card :loading="loadingRecursos">
 
               <v-card-title>Mis Recursos</v-card-title>
               
@@ -118,6 +118,11 @@
                     class="mx-4"
                   ></v-text-field>
                 </template>
+
+                <template v-slot:item.id="{item}">
+                  <v-btn color="primary" router @click="abrirRecurso(item.id)" >Abrir</v-btn>
+                </template>
+
                 <template v-slot:body.append>
                   <tr>
                     <td></td>
@@ -143,7 +148,7 @@
 
 
           <v-col cols="12" md="12" sm="12">
-            <v-card>
+            <v-card :loading="loadingArticulos">
 
               <v-card-title>Mis Blogs</v-card-title>
               
@@ -163,6 +168,11 @@
                     class="mx-4"
                   ></v-text-field>
                 </template>
+
+                <template v-slot:item.id="{item}">
+                  <v-btn color="primary" router @click="abrirArticulo(item.id)" >Abrir</v-btn>
+                </template>
+
                 <template v-slot:body.append>
                   <tr>
                     <td></td>
@@ -232,7 +242,10 @@
         recursosUsuario: [],
         blogsUsuario: [],
         
-        permisoUsuario: store.getters.getterPermiso[0].permiso
+        permisoUsuario: store.getters.getterPermiso[0].permiso,
+
+        loadingRecursos: false,
+        loadingArticulos: false,
       };
     },
 
@@ -273,6 +286,14 @@
             width: "20%"
           
           },
+          {
+            text: 'Ver',
+
+            value: 'id',
+            sortable: false,
+            width: "20%"
+          
+          },
           // 
         ]
       },
@@ -306,6 +327,14 @@
             text: 'Creado',
             value: 'created',
             sortable: false,
+          
+          },
+          {
+            text: 'Ver',
+
+            value: 'id',
+            sortable: false,
+            width: "20%"
           
           },
           // 
@@ -352,6 +381,7 @@
         self = this
         getAPI.get("Usuarios/View/Tags/").then((response) => {
 
+          console.log('Tags', response.data)
           self.tags = response.data;
 
         });
@@ -365,8 +395,8 @@
           // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
           //     self.Post = res.data
           // });
-          // console.log(res.data)
-          console.log(this.permisoUsuario)
+          console.log('RecursosUsuario', res.data)
+          console.log('Permiso', this.permisoUsuario)
         } catch (error) {
           console.log(error)
         }
@@ -380,7 +410,7 @@
           // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
           //     self.Post = res.data
           // });
-          console.log(res.data)
+          console.log('BlogUsuario', res.data)
         } catch (error) {
           console.log(error)
         }
@@ -398,6 +428,26 @@
           search != null &&
           typeof value === 'string' &&
           value.toString().toLocaleLowerCase().indexOf(search) !== -1
+      },
+
+      
+      abrirRecurso (recurso) {
+          this.loadingRecursos = true
+          setTimeout( () => {
+              this.loadingRecursos = false
+
+              // this.loading = false
+              this.$router.push({name: 'RecursoDetail', params: { id: recurso}})
+          }, 2000)
+      },
+
+      abrirArticulo (articulo) {
+          this.loadingArticulos = true
+          setTimeout( () => {
+
+              this.loadingArticulos = false
+              this.$router.push({name: 'post', params: { id: articulo}})
+          }, 2000)
       },
       
     },

@@ -22,7 +22,7 @@
                 required
                 @keyup.enter="submitComment"
             />
-            <button class="reply--button" @click.prevent="submitComment"><i class="fa fa-paper-plane"></i> Send</button>
+            <button class="reply--button" @click.prevent="submitComment"><i class="fa fa-paper-plane"></i>Enviar</button>
         </div>
     </div>
 </template>
