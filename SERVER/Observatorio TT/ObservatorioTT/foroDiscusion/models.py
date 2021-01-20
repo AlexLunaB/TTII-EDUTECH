@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 from taggit.managers import TaggableManager
 
+from ObservatorioTTApp.models import IntitucionEmpresa
 from recursos.models import TaggedWhatever
 from usuarios.models import Usuario
 
@@ -16,7 +17,8 @@ class ForoDiscusion(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     tags = TaggableManager(through=TaggedWhatever)
-
+    institucion= models.ForeignKey(IntitucionEmpresa,on_delete=models.CASCADE,null=True)
+    Archivo= models.FileField(upload_to="Archivo",null=True)
 
     class Meta:
         verbose_name = 'foroDiscusion'

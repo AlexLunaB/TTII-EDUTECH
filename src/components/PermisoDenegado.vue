@@ -1,18 +1,18 @@
-<template>
+,<template>
 <div style="background-color: #eeeeee">
-    
+
     <div class="mainbox">
         <h1 style="text-align: center; ">Tenemos un problema</h1>
-        
+
         <i class="far fas fa-ban"></i>
-        <div class="msg">No tienes permisos para acceder a este espacio.  
+        <div class="msg">No tienes permisos para acceder a este espacio.
             <p>Solicita permisos a un administrador.</p>
             <p>Vuelve al <router-link :to="{path: '/Inicio' }">Inicio</router-link> para seguir explorando</p>
         </div>
     </div>
 </div>
-    
-  
+
+
 </template>
 
 <script>

@@ -12,6 +12,9 @@ class RecursoFilter(FilterSet):
   municipio = django_filters.filters.BaseInFilter(
     field_name='municipio',
   )
+  institucion = django_filters.filters.BaseInFilter(
+    field_name='institucion',
+  )
 
   tags = django_filters.ModelMultipleChoiceFilter(
     field_name='tags__name',
@@ -21,5 +24,5 @@ class RecursoFilter(FilterSet):
 
   class Meta:
     model = Recurso
-    fields = ['estado','municipio',"tags"]
+    fields = ['estado','municipio',"tags","institucion"]
 

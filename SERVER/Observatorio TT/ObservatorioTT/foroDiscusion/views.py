@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -19,6 +19,9 @@ class PostViewSet(
   mixins.DestroyModelMixin,
   viewsets.GenericViewSet):
   permission_classes = [IsAuthenticated]
+
+  filter_backends = (filters.OrderingFilter, filters.SearchFilter)
+  search_fields = ['descripcion', 'temaDiscusion', "tags__name"]
 
   def get_serializer_class(self):
     """Return serializer based on action."""

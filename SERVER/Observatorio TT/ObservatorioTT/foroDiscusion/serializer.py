@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from taggit_serializer.serializers import TagListSerializerField
 
+from ObservatorioTTApp.serializer.EstadoSerializer import InstitucionSerializer
 from foroDiscusion.models import ForoDiscusion, ComentarioBlog
 from usuarios.serializers import UserSerializer, ProfileSerializer, UserModelSerializer
 
@@ -34,7 +35,7 @@ class PostReadSerializer(serializers.ModelSerializer):
 
   class Meta:
     model =   ForoDiscusion
-    fields = ["temaDiscusion","descripcion","administrador","Imagen","created","id","tags"]
+    fields = ["temaDiscusion","descripcion","administrador","Imagen","created","id","tags",]
 
 class ComentarioBlogSerializer(serializers.ModelSerializer):
     usuario = UserModelSerializer()
@@ -48,13 +49,15 @@ class PostDetailSerializer(serializers.ModelSerializer):
   tags = TagListSerializerField()
   comentarioblog_set = ComentarioBlogSerializer(many=True,read_only=True,label="Comentarios")
 
+  institucion= InstitucionSerializer()
+
 
 
   administrador=UserSerializer()
 
   class Meta:
     model =   ForoDiscusion
-    fields = ["temaDiscusion","html","descripcion","administrador","Imagen","created","id","tags"]
+    fields = ["temaDiscusion","html","descripcion","administrador","Imagen","created","id","tags","comentarioblog_set","institucion","Archivo"]
 
 
 

@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/macbookair/Downloads/TTII-EDUTECH-hector/Observatorio TT/ObservatorioTT/venv/bin/python3.7" "$0" "$@"
+'''exec' "/Users/macbookair/Desktop/SERVER/Observatorio TT/ObservatorioTT/env/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

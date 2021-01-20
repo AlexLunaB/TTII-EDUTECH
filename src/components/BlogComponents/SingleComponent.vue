@@ -43,7 +43,9 @@
             <!-- <span class="date"> Hace 5 minutos </span>
             <a href="#">Leer más</a> -->
             <br>
-            <span class="date">Creado: {{this.articulo.created}} </span>
+            <div class="date">Escrito po: {{this.articulo.administrador.username}} </div>
+            <div class="date">Creado: {{this.articulo.created}} </div>
+            
             <!-- <a href="#">Leer más</a> -->
           </v-card-text>
 

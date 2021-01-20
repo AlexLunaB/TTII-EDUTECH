@@ -5,9 +5,16 @@ from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from ObservatorioTTApp.models import MexicoState
-from ObservatorioTTApp.serializer.EstadoSerializer import EdoSerializer, MunicipioSerializer
+from ObservatorioTTApp.models import MexicoState, IntitucionEmpresa
+from ObservatorioTTApp.serializer.EstadoSerializer import EdoSerializer, MunicipioSerializer, InstitucionSerializer
 
+
+class InstitucionesViewSet(
+  mixins.ListModelMixin,
+  mixins.RetrieveModelMixin,
+  viewsets.GenericViewSet):
+  queryset = IntitucionEmpresa.objects.all()
+  serializer_class = InstitucionSerializer
 
 class EstadosMexicoViewSet(
                          mixins.ListModelMixin,

@@ -15,7 +15,7 @@ class MexicoState(models.Model):
 
 class MexicoMunicipio(models.Model):
   estado= models.ForeignKey(MexicoState, on_delete=models.CASCADE)
-  nombre= models.CharField(max_length=60)
+  nombre= models.CharField(max_length=200)
   def __str__(self):
     return self.nombre
 

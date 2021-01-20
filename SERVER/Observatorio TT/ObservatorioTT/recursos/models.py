@@ -5,7 +5,7 @@ from django.db import models
 from taggit.managers import TaggableManager
 from taggit.models import GenericTaggedItemBase, TagBase
 
-from ObservatorioTTApp.models import MexicoMunicipio,MexicoState
+from ObservatorioTTApp.models import MexicoMunicipio, MexicoState, IntitucionEmpresa
 from usuarios.models import Usuario
 import numpy as np
 
@@ -41,14 +41,15 @@ class TaggedWhatever(GenericTaggedItemBase):
 
 
 class Recurso(models.Model):
-    nombreRecurso = models.CharField(max_length = 50)
-
+    nombreRecurso = models.CharField(max_length = 1000)
+    institucion= models.ForeignKey(IntitucionEmpresa,on_delete=models.CASCADE,null=True)
+    autores=models.CharField(max_length=1000, null=True)
     Usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     estado= models.ForeignKey(MexicoState, on_delete=models.CASCADE)
     municipio= models.ForeignKey(MexicoMunicipio, on_delete=models.CASCADE)
     fechaCreacion = models.DateTimeField(auto_now_add=True)
     fechaModificacion = models.DateTimeField(auto_now=True)
-    descripcion = models.CharField(max_length = 250)
+    descripcion = models.CharField(max_length = 1000)
     html = models.TextField(null=True)
     tags = TaggableManager(through=TaggedWhatever)
 

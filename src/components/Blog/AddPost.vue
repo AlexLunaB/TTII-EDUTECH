@@ -99,6 +99,29 @@
 
 
         </v-row>
+
+        <v-row>
+        <v-col cols="12" md="6" sm="12">
+
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>¿Tienes Algún PDF o Word  que lo respalde?</v-list-item-title>
+
+
+                <v-file-input
+                              v-model="formdata.Archivo"
+                              filled
+                ></v-file-input>
+
+
+              </v-list-item-content>
+            </v-list-item>
+
+          </v-col>
+
+
+        </v-row>
         <v-row>
 
 
@@ -110,6 +133,32 @@
 
 
                 <v-textarea :rules="nameRules" v-model="formdata.Description"></v-textarea>
+              </v-list-item-content>
+            </v-list-item>
+
+
+          </v-col>
+        </v-row>
+
+        <v-row>
+
+
+          <v-col cols="12">
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>Institución de Procedencia</v-list-item-title>
+
+
+                <v-autocomplete
+                  v-model="formdata.instituto"
+                  :items="institutos"
+                  item-text="NombreInstitucion"
+                  return-object
+                  label="Institución o Empresa"
+                  :rules="selectRules"
+                ></v-autocomplete>
+
               </v-list-item-content>
             </v-list-item>
 
@@ -205,6 +254,8 @@
         id:"",
         search: "",
 
+        institutos:[],
+
         tags: [],
 
         url: "",
@@ -213,8 +264,9 @@
           Description: "",
           Img: null,
           File: null,
+          Archivo:null,
           tags: [],
-
+          instituto:[],
           content: "<h1>Coloca el texto</h1>"
 
 
@@ -261,6 +313,16 @@
 
         });
       },
+
+            get_institucion: function () {
+        self = this
+        getAPI.get("/api/Instituciones/").then((response) => {
+
+          self.institutos = response.data;
+
+        });
+      },
+
       addNewTag() {
         if (this.search != null || (this.search.trim()) != '') {
           this.tags.push({slug: this.search});
@@ -283,9 +345,11 @@
                 formData.append("cave", file)
             }*/
         formData.append("Imagen", this.formdata.Img);
+        formData.append("Archivo", this.formdata.Archivo);
         formData.append("html", this.formdata.content);
         formData.append("temaDiscusion", this.formdata.Nombre);
         formData.append("descripcion", this.formdata.Description);
+        formData.append("institucion", this.formdata.instituto.id);
         formData.append("tags", JSON.stringify(this.formdata.tags));
 
         let data = {temaDiscusion: self.formdata.Nombre}
@@ -316,6 +380,7 @@
     },
     mounted() {
       this.get_tags()
+      this.get_institucion()
       console.log('this is current quill instance object', this.editor)
     },
     watch: {

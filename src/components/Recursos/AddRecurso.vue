@@ -149,7 +149,7 @@
                   return-object
                   label="Estados"
                   @change="obtiene_municipios()"
-                  :rules="nameRules"
+                  :rules="selectRules"
                 ></v-autocomplete>
                 {{estado.id}}
               </v-list-item-content>
@@ -176,9 +176,34 @@
                   return-object
                   label="Municipios"
                   @change="obtiene_categorias()"
-                  :rules="nameRules"
+                  :rules="selectRules"
                 ></v-autocomplete>
                 {{municipio.id}}
+
+              </v-list-item-content>
+            </v-list-item>
+
+
+          </v-col>
+        </v-row>
+        <v-row>
+
+
+          <v-col cols="12">
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>Institución de Procedencia</v-list-item-title>
+
+
+                <v-autocomplete
+                  v-model="articulo.instituto"
+                  :items="institutos"
+                  item-text="NombreInstitucion"
+                  return-object
+                  label="Institución o Empresa"
+                  :rules="selectRules"
+                ></v-autocomplete>
 
               </v-list-item-content>
             </v-list-item>
@@ -256,18 +281,21 @@
 <script>
   import {getAPI} from "../../Api/axios-base";
   import Swal from 'sweetalert2'
-    import {quillEditor} from 'vue-quill-editor'
-
+  import {quillEditor} from 'vue-quill-editor'
 
 
   export default {
-    components:{quillEditor},
+    components: {quillEditor},
     name: "AddRecurso",
     data: function () {
       return {
         nameRules: [
           v => !!v || 'Es Requerido',
           v => v && v.length <= 100 || 'No debe ser mayor a 100 caracteres'
+        ],
+        selectRules: [
+          v => !!v || 'Es Requerido',
+
         ],
 
         descripcionRules: [
@@ -281,15 +309,15 @@
           files => !files || files.some(file => file.type === "image/png") || files.some(file => file.type === "image/jpeg") || files.some(file => file.type === "image/bmp") || 'Debes subir archivos de imagen',
           // file => !file || file.size <= 2e6 || 'Tu imagen debe pesar a lo mas 2 MB!',
           // file => !file || file.type === "image/png" || file.type === "image/jpeg" || file.type === "image/bmp" || 'Debes subir un archivo de tipo imagen'
-          
+
         ],
 
         autorRules: [
           autor => !!autor || 'Es requerido',
-          autor => autor && autor.length <=100 || 'No debe ser mayor a 100 caracteres'
+          autor => autor && autor.length <= 100 || 'No debe ser mayor a 100 caracteres'
         ],
 
-                editorConfig: {
+        editorConfig: {
           // The configuration of the rich-text editor.
         },
         editorOption: {
@@ -300,15 +328,17 @@
         estados: [],
         municipios: [],
         dialog: false,
+        institutos: [],
         articulo: {
           nombre: null,
           descripcion: null,
           estado: null,
           municipio: null,
           categoria: [],
+          instituto: null,
           usuario: 1,
-          html:"",
-          autores:''
+          html: "",
+          autores: ''
         },
         estado: {
           id: null
@@ -327,6 +357,7 @@
     mounted: function () {
       this.obtiene_estado();
       this.get_tags();
+      this.get_institucion();
     },
 
     methods: {
@@ -379,9 +410,9 @@
         formData.append("municipio", this.articulo.municipio.id);
         formData.append("tags", JSON.stringify(this.articulo.categoria));
         formData.append("autores", this.articulo.autores);
+        formData.append("institucion", this.articulo.instituto.id);
 
         console.log(JSON.stringify(this.articulo.categoria))
-        alert((this.articulo.categoria))
 
         await getAPI.post("Recursos/api/Articulos/",
           formData, {
@@ -410,6 +441,14 @@
         getAPI.get("/Recursos/api/Articulos/Tags/").then((response) => {
 
           self.tags = response.data;
+
+        });
+      },
+      get_institucion: function () {
+        self = this
+        getAPI.get("/api/Instituciones/").then((response) => {
+
+          self.institutos = response.data;
 
         });
       },

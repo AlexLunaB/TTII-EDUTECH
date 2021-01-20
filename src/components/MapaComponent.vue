@@ -155,13 +155,18 @@
        @mouseover="handleStateHover">
 
       <!-- quintana roo -->
+
+       <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+
+
       <path
         id="QR"
 
         class="estado"
         data-name_estado="Quintana Roo"
         data-id_estado="23"
-        :fill="this.color"
+
         d="M1168.658,498.584l1.519,4.777l-3.357,11.154l-15.423,20.41l-3.948,16.862l-0.011,8.716l-4.327,3.748
     l-2.85,0.23l-1.179,3.508l4.128,4.128l7.066-2.209l1.108,0.62l-1.01,2.879l-6.267,4.758l-2.209,4.888l1.499,2.229l6.038-3.538
     l0.358,1.438l-2.56,8.286l-8.456,32.325l-0.619,9.315l-0.062-0.011l0.212-9.176l-6.707-7.347l1.079-9.896l-2.14-3.668l-1.869,1.89
@@ -170,12 +175,11 @@
     L1168.658,498.584z"
       >
 
-        <span
-          data-text="Thanks for hovering! I'm a tooltip"
-          class="tooltip"
-        ></span>
-        <title>Quintana Roo</title>
       </path>
+
+                  </template>
+        <span>Tooltip</span>
+      </v-tooltip>
 
       <!-- fin quintana roo -->
 
