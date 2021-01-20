@@ -65,7 +65,9 @@
 
               this.loading = false
               this.$router.push({name: 'post', params: { id: this.post.id}})
+              location.reload()
           }, 2000)
+          
       }
     },
     mounted() {
