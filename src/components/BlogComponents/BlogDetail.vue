@@ -101,7 +101,7 @@ export default {
 
             try {
                 self= this
-                const res = await getAPI.get("/Foro/api/Post")
+                const res = await getAPI.get("/Foro/api/Post/"+this.id+"/Similares")
                 self.Posts = res.data
                 // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
                 //     self.Post = res.data

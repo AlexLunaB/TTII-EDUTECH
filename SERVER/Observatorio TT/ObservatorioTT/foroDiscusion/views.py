@@ -52,8 +52,8 @@ class PostViewSet(
 
   @action(detail=True, methods=["Get"])
   def Similares(self, request,pk):
-    recurso=self.get_object()
-    recomendacion=recurso.tags.similar_objects()[:5]
+    foro=self.get_object()
+    recomendacion=foro.tags.similar_objects()[:5]
     R = PostReadSerializer(recomendacion, many=True, context={"request": request})
     return Response(data=R.data)
 

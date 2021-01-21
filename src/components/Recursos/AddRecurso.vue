@@ -433,7 +433,8 @@
         formData.append("municipio", this.articulo.municipio.id);
         formData.append("tags", JSON.stringify(this.articulo.categoria));
         formData.append("autores", this.articulo.autores);
-        formData.append("Archivo", this.articulo.Archivo);
+        if (this.articulo.Archivo)
+          formData.append("Archivo", this.articulo.Archivo);
         formData.append("institucion", this.articulo.instituto.id);
 
         console.log(JSON.stringify(this.articulo.categoria))
