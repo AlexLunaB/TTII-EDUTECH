@@ -2,23 +2,22 @@
   <v-container class="contenedor" fluid>
 
     <div>
-      <v-col v-if="false" cols="3" class="cont" id="cont">
+      <v-col  v-show="follow" cols="3" class="cont" id="cont">
         <v-card
           color="#385F73"
           dark
         >
           <v-card-title class="headline">
-            Unlimited music now
+            {{estado}}
           </v-card-title>
 
-          <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever, online and offline.
-          </v-card-subtitle>
+          <v-card-text> <h2>{{cantidad}}</h2></v-card-text>
 
-          <v-card-actions>
-            <v-btn text>
-              Listen Now
-            </v-btn>
-          </v-card-actions>
+
+
+
+
+
         </v-card>
       </v-col>
     </div>
@@ -107,13 +106,7 @@
           </v-container>
 
           <v-card-actions>
-            <v-btn
-              outlined
-              rounded
-              text
-            >
-              Button
-            </v-btn>
+
           </v-card-actions>
         </v-card>
 
@@ -156,13 +149,7 @@
           </v-container>
 
           <v-card-actions>
-            <v-btn
-              outlined
-              rounded
-              text
-            >
-              Button
-            </v-btn>
+
           </v-card-actions>
         </v-card>
 
@@ -197,7 +184,7 @@
       >
 
     <g class="capa" id="dibujomapa" @click="handleStateClick"
-       @mouseover="handleStateHover">
+       @mouseover="handleStateHover" @mouseout="follow=false" >
 
       <!-- quintana roo -->
 
@@ -209,7 +196,7 @@
         id="QR"
 
         class="estado"
-        data-name_estado="Quintana Roo"
+        name_estado="Quintana Roo"
         data-id_estado="23"
 
         d="M1168.658,498.584l1.519,4.777l-3.357,11.154l-15.423,20.41l-3.948,16.862l-0.011,8.716l-4.327,3.748
@@ -233,7 +220,7 @@
         id="YUC"
 
         class="estado"
-        data-name_estado="Yucatán"
+        name_estado="Yucatán"
         data-id_estado="31"
         :fill="this.color"
         d="M1142.75,491.067l0.21,20.38l-9.796,15.753l-48.637,37.271l-34.574-21.77l-4.288-1.159l-10.476-3.568
@@ -248,7 +235,7 @@
       <path
         id="CMP"
         class="estado"
-        data-name_estado="Campeche"
+        name_estado="Campeche"
         data-id_estado="4"
         :fill="this.color"
         d="M1088.096,649.903l-0.031,0.43l-0.608,0.53l-70.617,4.228l-1.479-5.527l-14.573-2.019l-9.336-1.6
@@ -265,7 +252,7 @@
       <path
         id="CHS"
         class="estado"
-        data-name_estado="Chiapas"
+        name_estado="Chiapas"
         data-id_estado="5"
         :fill="this.color"
         d="M1041.146,716.021l0.601,12.925l-52.846,4.099l-18.842,35.703l6.316,8.936l-1.359,3.3l-0.93,11.795v6.637
@@ -282,7 +269,7 @@
       <path
         id="TAB"
         class="estado"
-        data-name_estado="Tabasco"
+        name_estado="Tabasco"
         data-id_estado="27"
         :fill="this.color"
         d="M1015.529,655.99l0.629,22.24l-13.923,2.019l-7.768-8.206h-3.078l-2.698-6.447l-3.398-2.549l-0.67-3.778
@@ -299,7 +286,7 @@
       <path
         id="VER"
         class="estado"
-        data-name_estado="Veracruz"
+        name_estado="Veracruz"
         data-id_estado="30"
         :fill="this.color"
         d="M907.479,678.45l2.021,3.009l-1.829,2.559l-6.717,7.566l-32.165,0.21l-14.434-1.669l-1.669-5.646
@@ -322,7 +309,7 @@
       <path
         id="OAX"
         class="estado"
-        data-name_estado="Oaxaca"
+        name_estado="Oaxaca"
         data-id_estado="20"
         :fill="this.color"
         d="M899.652,693.083l-0.359,0.43l-1.959,10.445l-4.768,6.938l-2.47,11.442l3.658,8.626l-1.17,3.179
@@ -341,7 +328,7 @@
       <path
         id="PUE"
         class="estado"
-        data-name_estado="Puebla"
+        name_estado="Puebla"
         data-id_estado="21"
         :fill="this.color"
         d="M779.799,641.577l-2.148,6.677l-9.355,6.647l-8.936-0.44l-7.258,6.188l-2.997-1.229l-5.35-10.705
@@ -361,7 +348,7 @@
       <path
         id="TMS"
         class="estado"
-        data-name_estado="Tamaulipas"
+        name_estado="Tamaulipas"
         data-id_estado="28"
         :fill="this.color"
         d="M753.57,325.694l-6.366,22.27l-6.258,12.304l-3.27,15.015l2.699-14.443l5.218-11.104l-3.599-2.619
@@ -382,7 +369,7 @@
       <path
         id="TLX"
         class="estado"
-        data-name_estado="Tlaxcala"
+        name_estado="Tlaxcala"
         data-id_estado="29"
         :fill="this.color"
         d="M741.606,604.444l1.14,1.26l-10.886,4.758l-4.197,0.659l-5.567,3.919l-5.128-3.759l-7.485-9.017
@@ -396,7 +383,7 @@
       <path
         id="GRO"
         class="estado"
-        data-name_estado="Guerrero"
+        name_estado="Guerrero"
         data-id_estado="13"
         :fill="this.color"
         d="M728.433,703.299l-2.249,14.333l-6.246,3.028l-1.659,6.157l0.55,2.219l-8.996,4.688l-10.245-8.956h-7.996
@@ -414,7 +401,7 @@
       <path
         id="HGO"
         class="estado"
-        data-name_estado="Hidalgo"
+        name_estado="Hidalgo"
         data-id_estado="14"
         :fill="this.color"
         d="M725.414,552.658l-0.79,5.338l-3.769,6.437l2.158,8.236l-4.538,7.776l1.66,9.496l-5.848,0.8l-1.51,2.139
@@ -431,7 +418,7 @@
       <path
         id="SLP"
         class="estado"
-        data-name_estado="San Luis Potosi"
+        name_estado="San Luis Potosi"
         data-id_estado="24"
         :fill="this.color"
         d="M702.954,476.414l6.646,7.047l-0.181,2.698l-5.747,7.517l2.608,7.197l-4.647,7.086l3.238,3.948l0.609,6.717
@@ -449,7 +436,7 @@
       <path
         id="NL"
         class="estado"
-        data-name_estado="Nuevo León"
+        name_estado="Nuevo León"
         data-id_estado="19"
         :fill="this.color"
         d="M698.996,336.709l4.658,8.686l-3.619,5.817l-12.584,10.477l-3.488-1.431l-4.408,1.039l-1.947,12.345
@@ -469,7 +456,7 @@
       <path
         id="MEX"
         class="estado"
-        data-name_estado="Estado de México"
+        name_estado="Estado de México"
         data-id_estado="11"
         :fill="this.color"
         d="M701.564,600.316l1.109,1.56l-0.431,19.431l-0.069,0.399l-7.707-2.509l-3.348-2.76l-1.479-12.283
@@ -486,7 +473,7 @@
       <path
         id="MOR"
         class="estado"
-        data-name_estado="Morelos"
+        name_estado="Morelos"
         data-id_estado="17"
         :fill="this.color"
         d="M701.875,623.176l-1.17,4.498l1.05,4.008l-1.938,3.238l1.42,6.678l-8.356,1.43l-4.538,4.338l-5.507-7.546
@@ -501,7 +488,7 @@
       <path
         id="CMX"
         class="estado"
-        data-name_estado="Ciudad De México"
+        name_estado="Ciudad De México"
         data-id_estado="9"
         :fill="this.color"
         d="M688.161,604.465l1.409,11.614h-4.607l-5.947-3.288l-2.328-3.688l3.166-12.485l5.669,2.559L688.161,604.465
@@ -515,7 +502,7 @@
       <path
         id="QRO"
         class="estado"
-        data-name_estado="Querétaro"
+        name_estado="Querétaro"
         data-id_estado="22"
         :fill="this.color"
         d="M683.613,522.673l0.908,4.349l-9.694,1.26l-1.81,8.104l-8.517,8.316v5.917l-1.279,1.63l-8.275,4.697v6.428
@@ -530,7 +517,7 @@
       <path
         id="GTO"
         class="estado"
-        data-name_estado="Guanajuato"
+        name_estado="Guanajuato"
         data-id_estado="12"
         :fill="this.color"
         d="M654.717,517.845l2.738,6.077l-1.789,3.049l-7.807,1.079l-1.869,3.278l-4.567,6.027l-11.994,1.31
@@ -547,7 +534,7 @@
       <path
         id="COA"
         class="estado"
-        data-name_estado="Coahuila"
+        name_estado="Coahuila"
         data-id_estado="7"
         :fill="this.color"
         d="M642.133,233.357l9.105,14.473l-7.037,5.518l-6.717-5.198l-6.946,5.267l-2.81,9.486l-11.935,6.737
@@ -566,7 +553,7 @@
       <path
         id="MCH"
         class="estado"
-        data-name_estado="Michoacán"
+        name_estado="Michoacán"
         data-id_estado="16"
         :fill="this.color"
         d="M642.542,581.505l2.021,2.379l-1.959,2.739l-0.87,14.732l-3.589,4.438l-13.153,20.92l-3.118,2.199
@@ -585,7 +572,7 @@
       <path
         id="ZAC"
         class="estado"
-        data-name_estado="Zacatecas"
+        name_estado="Zacatecas"
         data-id_estado="32"
         :fill="this.color"
         d="M612.566,385.716l-10.205,13.744l-5.588,8.386l-16.812,15.083l-15.053,11.604l-3.168,0.68l-4.97,7.347
@@ -606,7 +593,7 @@
       <path
         id="JAL"
         class="estado"
-        data-name_estado="Jalisco"
+        name_estado="Jalisco"
         data-id_estado="15"
         :fill="this.color"
         d="M586.349,500.013l-1.93,2.459l0.66,8.927l-2.649,3.737l1.71,6.636l-3.979,3.779l-6.147,4.168l-9.596,14.743
@@ -628,7 +615,7 @@
       <path
         id="AGS"
         class="estado"
-        data-name_estado="Aguascalientes"
+        name_estado="Aguascalientes"
         data-id_estado="1"
         :fill="this.color"
         d="M566.258,487.099l5.167,6.897l-12.304,13.943l-7.557-2.05l-5.817-1.8l-1.02-10.615l1.118-3.367
@@ -643,7 +630,7 @@
       <path
         id="CHI"
         class="estado"
-        data-name_estado="Chihuahua"
+        name_estado="Chihuahua"
         data-id_estado="6"
         :fill="this.color"
         d="M521.079,195.734l-25.409,46.289l9.606,50.597l-19.103-3.789l-13.794,17.662l-5.307-2.749l-16.595-4.658
@@ -663,7 +650,7 @@
       <path
         id="COL"
         class="estado"
-        data-name_estado="Colima"
+        name_estado="Colima"
         data-id_estado="8"
         :fill="this.color"
         d="M506.366,605.874l1.438,17.382l-4.018,1.399l-6.717,9.774l-4.229-5.378l-21.87-12.894l-5.587-2.799
@@ -677,7 +664,7 @@
       <path
         id="NAY"
         class="estado"
-        data-name_estado="Nayarit"
+        name_estado="Nayarit"
         data-id_estado="18"
         :fill="this.color"
         d="M489.094,520.703l-7.097,6.697l-2.479,0.488l-2.438,17.702l-10.325-7.905l-8.196-4.559l-14.492,5.207
@@ -694,7 +681,7 @@
       <path
         id="SIN"
         class="estado"
-        data-name_estado="Sinaloa"
+        name_estado="Sinaloa"
         data-id_estado="25"
         :fill="this.color"
         d="M423.494,434.913l10.354,11.415l-1.969,2.349l0.65,4.528l-4.918,5.138l4.026,6.706l-0.868,2.609l-3.6,1.509
@@ -712,7 +699,7 @@
       <path
         id="SON"
         class="estado"
-        data-name_estado="Sonora"
+        name_estado="Sonora"
         data-id_estado="26"
         :fill="this.color"
         d="M322.161,119.48l3.879,22.249l-2.359,27.208l-3.709,4.158l0.87,27.467l1.709,18.951l-1.599,1.6
@@ -732,7 +719,7 @@
       <path
         id="BCS"
         class="estado"
-        data-name_estado="Baja California Sur"
+        name_estado="Baja California Sur"
         data-id_estado="3"
         :fill="this.color"
         d="M269.706,414.703l8.956,11.354l-3.469,10.216l-8.906,5.928l-4.727,4.498l-2.41,0.51l-5.867-6.268
@@ -756,7 +743,7 @@
         id="BC"
         class="estado"
         active-class="active"
-        data-name_estado="Baja California"
+        name_estado="Baja California"
         data-id_estado="2"
         :fill="this.color"
         d="M165.284,218.434v1.649l-49.957-3.148l0.9-3.958l1.289-7.697l3.829-8.136l-10.926-14.494l-7.816-9.125
@@ -773,7 +760,7 @@
       <path
         id="DGO"
         class="estado"
-        data-name_estado="Durango"
+        name_estado="Durango"
         data-id_estado="10"
         :fill="this.color"
         d="M543.218,365.136l5.198,14.435l-0.99,8.096l-29.104,1.929l-21.08,15.753l-0.87,17.862l-8.826,9.256
@@ -814,6 +801,7 @@
   import Modal from "./Modal";
   import ModalFullscreen from "./ModalFulscreen"
   import SvgPanZoom from 'vue-svg-pan-zoom';
+  import {mapMutations} from "vuex";
 
   export default {
 
@@ -911,6 +899,9 @@
           valormin: 0,
           color: []
         },
+        follow:false,
+        estado:"",
+        cantidad:"",
         search: "",
         items: [],
         color: "black",
@@ -938,6 +929,7 @@
       };
     },
     methods: {
+      ...mapMutations(['SetLoading']),
 
       GetPrediccion: function () {
         var self = this
@@ -953,7 +945,10 @@
         })
       },
       GetDetalle: function () {
+
+
         self = this
+        self.SetLoading(true)
         self.rangos = []
         getAPI.get("/Recursos/api/Articulos/", {
           "params": {
@@ -962,6 +957,7 @@
         }).then((res) => {
           self.items = res.data.recursos
           self.totales = res.data.conteo
+          self.SetLoading(false)
 
 
           self.obtenNumeroMayor(self.totales).then(e => {
@@ -1011,6 +1007,7 @@
                 if (!this.containsObject(rango, this.rangos))
                   self.rangos.push(rango)
                 c[i].setAttribute("fill", color)
+                c[i].setAttribute("cantidad", self.totales[id].conteo)
               } else {
 
 
@@ -1022,7 +1019,7 @@
                 }
                 if (!this.containsObject(rango, this.rangos))
                   self.rangos.push(rango)
-
+                c[i].setAttribute("cantidad", 0)
 
                 c[i].setAttribute("fill", color)
               }
@@ -1067,6 +1064,11 @@
       handleStateHover: function (e) {
         if (e.target.tagName === 'path') {
 
+          this.follow=true
+
+
+          this.estado=e.target.attributes.name_estado.value
+          this.cantidad=e.target.attributes.cantidad.value
 
           var div = document.getElementById("cont")
 
