@@ -147,6 +147,15 @@
                 {{this.Post.descripcion}}
               </v-card-title>
 
+              <v-btn
+                color="orange"
+                text
+                :href="Post.Archivo"
+                v-if="this.Post.Archivo"
+              >
+                Descargar
+              </v-btn>
+
               <!-- <v-card-subtitle >
                 
               </v-card-subtitle> -->

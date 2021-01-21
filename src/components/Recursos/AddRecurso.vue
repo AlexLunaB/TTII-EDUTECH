@@ -313,7 +313,7 @@
       return {
         nameRules: [
           v => !!v || 'Es Requerido',
-          v => v && v.length <= 100 || 'No debe ser mayor a 100 caracteres'
+          v => v && v.length <= 500 || 'No debe ser mayor a 500 caracteres'
         ],
         selectRules: [
           v => !!v || 'Es Requerido',
@@ -322,7 +322,7 @@
 
         descripcionRules: [
           v => !!v || 'Es Requerido',
-          v => v && v.length <= 200 || 'No debe ser mayor a 200 caracteres'
+          v => v && v.length <= 1000 || 'No debe ser mayor a 1000 caracteres'
         ],
 
         imgRules: [
