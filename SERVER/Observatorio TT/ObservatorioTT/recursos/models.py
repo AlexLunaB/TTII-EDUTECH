@@ -52,6 +52,7 @@ class Recurso(models.Model):
     descripcion = models.CharField(max_length = 1000)
     html = models.TextField(null=True)
     tags = TaggableManager(through=TaggedWhatever)
+    Archivo = models.FileField(upload_to="Archivo", null=True)
 
 
     # created = models.DateTimeField(auto_now_add=True)

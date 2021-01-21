@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '../store'
 
-const APIUrl = 'http://hitecmx.ddns.net:8082/'
+const APIUrl = 'http://127.0.0.1:8000/'
 // Make Axios play nice with Django CSRF
 
 const axiosBase = axios.create({

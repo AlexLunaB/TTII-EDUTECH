@@ -1,19 +1,19 @@
 <template>
 <v-container fluid>
-    
+
     <v-card >
-        
+
         <v-row>
             <v-col cols="8" style="background-color: #F3F3F3" >
 
                 <v-container style="background-color: #FFFFFF" >
-                    
+
                     <h1 class="text-center display-2 black--text text--accent-2">{{this.Post.temaDiscusion}}</h1>
 
                     <h4>Creado el {{this.Post.created}} por {{this.Post.administrador.username}}</h4>
 
                     <v-img
-                    
+
                     max-height="400"
                     max-width="800"
                     :src="this.Post.Imagen"
@@ -24,23 +24,23 @@
 
                     <div v-html="this.Post.html"></div>
 
-                    
+
                 </v-container>
             </v-col >
 
             <v-col style="background-color: #FFF3E6" >
-                
+
                     <CommentsAppBlog :perfil = perfil :id = id :Post = Post> </CommentsAppBlog>
-                    
-                
+
+
                 <br>
-                
+
                     <CardRecomendaciones v-for="post in Posts" :key="post.id" :post = post></CardRecomendaciones>
-                    
-                
+
+
             </v-col>
         </v-row>
-        
+
     </v-card>
 </v-container>
 </template>
@@ -49,6 +49,7 @@
 import { getAPI } from '../../Api/axios-base';
 import CardRecomendaciones from '../CardRecomendaciones'
 import CommentsAppBlog from '../comments/CommentsAppBlog'
+import {mapMutations} from "vuex";
 
 
 
@@ -72,28 +73,28 @@ export default {
         }
     },
 
-    
+
     components: {
 
         CardRecomendaciones,
         CommentsAppBlog
-       
+
     },
     methods: {
-        
-        GetArticulo: async function () {
 
-            try {
+      ...mapMutations(['SetLoading']),
+
+
+        GetArticulo:  function () {
+
+
                 self= this
-                const res = await getAPI.get("/Foro/api/Post/"+this.id)
-                self.Post = res.data
-                // const res = await getAPI.get("/Foro/api/Post/"+this.id).then((res)=> {
-                //     self.Post = res.data
-                // });
-                console.log('Articulo: ',res.data)
-            } catch (error) {
-                console.log(error)
-            }
+                self.SetLoading(true)
+                 getAPI.get("/Foro/api/Post/"+this.id).then(e=>{
+                  self.SetLoading(false)
+                   self.Post = e.data
+                })
+
         },
 
         GetArticulos: async function () {
@@ -126,17 +127,17 @@ export default {
             // console.log(response.data)
             });
 
-            
+
 
         },
- 
-    }, 
 
-    mounted(){ 
+    },
+
+    mounted(){
         this.GetArticulo()
         this.GetArticulos()
         this.obtiene_datos_usuario()
-      
+
     }
 };
 </script>

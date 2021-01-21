@@ -16,6 +16,8 @@ export default new Vuex.Store({
 
     buscador:'',
 
+    isLoading:false,
+
 
 
     accessToken: localStorage.getItem('access_token') || null, // makes sure the user is logged in even after
@@ -42,6 +44,10 @@ export default new Vuex.Store({
       state.accessToken = access
       state.refreshToken = refresh
       state.user = user
+    },
+    SetLoading(state, boolean) {
+
+      state.isLoading = boolean
     },
     updateUserInfo(state,user) {
 

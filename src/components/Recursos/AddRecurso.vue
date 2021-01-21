@@ -186,6 +186,28 @@
 
           </v-col>
         </v-row>
+                <v-row>
+        <v-col cols="12" md="6" sm="12">
+
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>¿Tienes Algún PDF o Word (Solamente Tesis o Investigaciones)</v-list-item-title>
+
+
+                <v-file-input
+                              v-model="articulo.Archivo"
+                              filled
+                ></v-file-input>
+
+
+              </v-list-item-content>
+            </v-list-item>
+
+          </v-col>
+
+
+        </v-row>
         <v-row>
 
 
@@ -330,6 +352,7 @@
         dialog: false,
         institutos: [],
         articulo: {
+          Archivo:null,
           nombre: null,
           descripcion: null,
           estado: null,
@@ -410,6 +433,7 @@
         formData.append("municipio", this.articulo.municipio.id);
         formData.append("tags", JSON.stringify(this.articulo.categoria));
         formData.append("autores", this.articulo.autores);
+        formData.append("Archivo", this.articulo.Archivo);
         formData.append("institucion", this.articulo.instituto.id);
 
         console.log(JSON.stringify(this.articulo.categoria))

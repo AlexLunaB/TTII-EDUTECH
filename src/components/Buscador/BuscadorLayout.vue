@@ -176,7 +176,7 @@
 
 <script>
 
-  import {mapState} from 'vuex';
+  import {mapMutations, mapState} from 'vuex';
 
   import TarjetaRecurso from "../TarjetaRecurso"
   import SingleComponent from "../BlogComponents/SingleComponent"
@@ -220,6 +220,7 @@
 
     },
     methods: {
+      ...mapMutations(['SetLoading']),
       send: function () {
         const self = this
         console.log(this.busqueda)
@@ -232,6 +233,7 @@
       },
       Search: function () {
         const self = this
+        self.SetLoading(true)
         getAPI.get("/Recursos/api/Articulos/?", {
           params: {
             "search": this.$route.query.search,
@@ -239,19 +241,23 @@
           },
         }).then((response) => {
           self.recursos = response.data.recursos
+          self.SetLoading(false)
         });
         getAPI.get("/Foro/api/Post/?", {
+
           params: {
             "search": this.$route.query.search,
 
           },
         }).then((response) => {
+          self.SetLoading(false)
           self.blogs = response.data
         });
       },
       Filtrado: function () {
 
         var self = this
+        self.SetLoading(true)
         var idinstituto= null
         if (self.busqueda.institucion){
           idinstituto=self.busqueda.institucion.id
@@ -272,6 +278,7 @@
           }
         }).then((response) => {
           self.recursos = response.data.recursos
+          self.SetLoading(false)
 
         });
       },

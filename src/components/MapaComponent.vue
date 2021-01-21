@@ -1,6 +1,28 @@
 <template>
   <v-container class="contenedor" fluid>
 
+    <div>
+      <v-col cols="3" class="cont" id="cont">
+        <v-card
+          color="#385F73"
+          dark
+        >
+          <v-card-title class="headline">
+            Unlimited music now
+          </v-card-title>
+
+          <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever, online and offline.
+          </v-card-subtitle>
+
+          <v-card-actions>
+            <v-btn text>
+              Listen Now
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </div>
+
     <v-row>
       <v-col cols="12">
         <v-container fluid>
@@ -22,7 +44,7 @@
                   <div>
                     <div class="image-container">
                       <div class="image-content">
-                        <img :src="item.recurso_img"  />
+                        <img :src="item.recurso_img"/>
 
                         <div class="image-text">
                           <h2>{{ item.nombreRecurso }}</h2>
@@ -37,17 +59,17 @@
                     <div>
 
                       <v-btn
-                      color="orange"
-                      text
-                      @click="showRecursoDetail(item.id)"
-                      
-                    >
-                      Explorar
-                    </v-btn>
+                        color="orange"
+                        text
+                        @click="showRecursoDetail(item.id)"
+
+                      >
+                        Explorar
+                      </v-btn>
 
                     </div>
 
-                    
+
                   </div>
 
                 </template>
@@ -120,7 +142,11 @@
                 <v-icon left>
                   mdi-label
                 </v-icon>
-                {{r.valormax}}-{{r.valormin}}
+                <div v-if="r.valormax == r.valormin">{{r.valormax}}</div>
+                <div v-else>
+                  {{r.valormin}}--{{r.valormax}}
+                </div>
+
               </v-chip>
             </template>
           </v-container>
@@ -193,7 +219,7 @@
       </path>
 
                   </template>
-        <span>Tooltip</span>
+         <span>Tooltip</span>
       </v-tooltip>
 
       <!-- fin quintana roo -->
@@ -910,14 +936,13 @@
     methods: {
 
       GetPrediccion: function () {
-        var self= this
+        var self = this
         getAPI.get("/Recursos/api/Articulos/recommend/").then((res) => {
           self.recomendados = res.data.recursos_list
 
 
-
-          for(var obj in self.recomendados){
-            self.recomendados[obj].recurso_img=self.recomendados[obj].recurso_img[0].archivo
+          for (var obj in self.recomendados) {
+            self.recomendados[obj].recurso_img = self.recomendados[obj].recurso_img[0].archivo
 
           }
 
@@ -1038,6 +1063,17 @@
       handleStateHover: function (e) {
         if (e.target.tagName === 'path') {
 
+
+          var div = document.getElementById("cont")
+
+          var disx = e.pageX - div.offsetLeft;
+
+          var disy = e.pageY - div.offsetTop;
+
+          div.style.left = e.pageX + "px"
+          div.style.top = e.pageY + "px"
+
+
         }
       },
 
@@ -1090,13 +1126,13 @@
         });
       },
 
-      showRecursoDetail (idRecurso) {
+      showRecursoDetail(idRecurso) {
         this.loading = true
 
-        setTimeout( () => {
+        setTimeout(() => {
 
           this.loading = false
-          this.$router.push({name: 'RecursoDetail', params: { id: idRecurso}})
+          this.$router.push({name: 'RecursoDetail', params: {id: idRecurso}})
         }, 2000)
       },
 
@@ -1253,6 +1289,15 @@
     bottom: 0;
     left: 0;
     right: 0;
+  }
+
+  .cont {
+    position: absolute;
+    z-index: 1000;
+    top: 120px;
+    left: 330px;
+    overflow: hidden;
+    pointer-events: none;
   }
 
 
