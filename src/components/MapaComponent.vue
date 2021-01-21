@@ -2,7 +2,7 @@
   <v-container class="contenedor" fluid>
 
     <div>
-      <v-col cols="3" class="cont" id="cont">
+      <v-col v-if="false" cols="3" class="cont" id="cont">
         <v-card
           color="#385F73"
           dark
