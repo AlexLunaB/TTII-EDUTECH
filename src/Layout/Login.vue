@@ -52,9 +52,9 @@
 
                         <!-- <h3 class="text-center mt-3"> ¿Olvidaste tu contraseña?</h3> -->
                         <!-- <h3 class="text-center mt-3" > ¿Olvidaste tu contraseña?</h3> -->
-                        <div class="text-center mt-3">
+                        <!-- <div class="text-center mt-3">
                           <v-btn rounded color="warning accent-3" @click="step+=2" dark>¿Olvidaste tu contraseña?</v-btn>
-                        </div>
+                        </div> -->
 
                       </v-card-text>
                       <div class="text-center mt-3">
@@ -383,7 +383,7 @@ import { getAPI } from '../Api/axios-base'
               Swal.fire({
                 icon: 'success',
                 title: '¡Registro exitoso!',
-                text: 'Tu usuario ha sido creado en Eductech',
+                text: 'Tu usuario ha sido creado en Edutech',
                 footer: 'Regresa al Login para iniciar sesión'
               })
 

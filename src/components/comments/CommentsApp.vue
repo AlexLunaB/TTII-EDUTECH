@@ -97,7 +97,7 @@ export default {
               icon: 'success',
               title: '¡Registro exitoso!',
               text: 'Comentario publicado con exito',
-              footer: 'Regresa al Login para iniciar sesión'
+              footer: 'Espera mientras actualizamos la información'
           })
 
           setTimeout(function()
