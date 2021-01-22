@@ -221,6 +221,7 @@
   import {quillEditor} from 'vue-quill-editor'
   import {getAPI} from '../../Api/axios-base'
   import Swal from "sweetalert2";
+  import {mapMutations} from "vuex";
 
 
   export default {
@@ -266,6 +267,8 @@
 
       };
     }, methods: {
+      ...mapMutations(['SetLoading']),
+
       onEditorBlur(quill) {
         console.log('editor blur!', quill)
       },
@@ -331,11 +334,15 @@
 
         let data = {temaDiscusion: self.formdata.Nombre}
         console.log(data)
+
+        self.SetLoading(true)
+
         getAPI.post("/Foro/api/Post/", formData, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         }).then((data) => {
+          self.SetLoading(false)
           self.id=data.data.id
            Swal.fire({
             position: 'top-end',

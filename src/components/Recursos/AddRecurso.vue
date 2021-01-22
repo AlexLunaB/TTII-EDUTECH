@@ -283,13 +283,13 @@
             Solicitar publicación
           </v-btn>
 
-          <v-btn
+          <!-- <v-btn
             text
             blue
             @click="imagen"
           >
             Datos imagen
-          </v-btn>
+          </v-btn> -->
 
         </v-card-actions>
 
@@ -304,7 +304,7 @@
   import {getAPI} from "../../Api/axios-base";
   import Swal from 'sweetalert2'
   import {quillEditor} from 'vue-quill-editor'
-
+  import {mapMutations} from "vuex";
 
   export default {
     components: {quillEditor},
@@ -384,6 +384,9 @@
     },
 
     methods: {
+
+      ...mapMutations(['SetLoading']),
+
       obtiene_estado: function () {
         const self = this
         getAPI.get("api/Estados").then((response) => {
@@ -439,6 +442,8 @@
 
         console.log(JSON.stringify(this.articulo.categoria))
 
+
+        self.SetLoading(true)
         await getAPI.post("Recursos/api/Articulos/",
           formData, {
             headers: {
@@ -446,6 +451,8 @@
             }
           }
         ).then((res) => {
+
+          self.SetLoading(false)
 
           Swal.fire({
             position: 'top-end',

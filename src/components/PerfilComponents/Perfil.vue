@@ -199,6 +199,25 @@
         </v-row>
       </v-col>
 
+      <v-col cols="12" md="6" sm="12" v-else>
+        <v-row>
+          <v-card>
+            <v-card-title> No se pueden mostrar tus recursos.</v-card-title>
+            <h3>
+              No cuentas con permisos para añadir material. 
+              Para mostrar este apartado, comunicate con un administrador para solicitar permisos.
+            </h3>
+            <v-img
+              src="../../../static/images/alto.png"
+              height="250px"
+              width="300px"
+              style="margin-left: auto; margin-right: auto"
+            ></v-img>
+          </v-card>
+        </v-row>
+        
+      </v-col>
+
 
     </v-row>
 
@@ -209,6 +228,7 @@
 <script>
   import {getAPI} from "../../Api/axios-base";
   import store from '../../store'
+  import {mapMutations} from "vuex";
 
   export default {
     data() {
@@ -349,6 +369,8 @@
     },
 
     methods: {
+      ...mapMutations(['SetLoading']),
+
       obtiene_clasificacion: function () {
         const self = this;
         //categorias de los tipos de recursos
@@ -362,6 +384,7 @@
       },
       obtiene_datos_usuario: function () {
         const self = this;
+        self.SetLoading(true)
         getAPI.get("Usuarios/View/profile/").then((response) => {
 
           self.perfil.email = response.data.email;
@@ -372,6 +395,8 @@
           self.perfil.semblanza = response.data.profile.semblanza;
           self.perfil.intereses = response.data.profile.intereses;
           self.perfil.telefono = response.data.profile.telefono;
+
+          self.SetLoading(false)
 
         });
 

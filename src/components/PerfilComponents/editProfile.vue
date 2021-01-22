@@ -294,7 +294,7 @@
   import {quillEditor} from 'vue-quill-editor'
   import {getAPI} from '../../Api/axios-base'
   import Swal from "sweetalert2";
-
+  import {mapMutations} from "vuex";
 
   export default {
     name: 'AddPost',
@@ -359,6 +359,8 @@
 
       };
     }, methods: {
+
+      ...mapMutations(['SetLoading']),
 
       obtiene_estado: function () {
         const self = this
@@ -442,25 +444,27 @@
 
             formData.append("foto", self.Img);
 
+            self.SetLoading(true)
+
             getAPI.patch("/Usuarios/View/foto/", formData)
               .then((d) => {
                 getAPI.patch("/Usuarios/View/profile/",
                   {usuario: self.user}).then((d) => {
+                    self.SetLoading(false)
                   self.retorna()
                 })
               })
           }
 
           else {
-
             
-            getAPI.patch("/Usuarios/View/foto/", null)
-              .then((d) => {
-                getAPI.patch("/Usuarios/View/profile/",
-                  {usuario: self.user}).then((d) => {
-                  self.retorna()
-                })
-              })
+            self.SetLoading(true)
+            getAPI.patch("/Usuarios/View/profile/",
+              {usuario: self.user}).then((d) => {
+                self.SetLoading(false)
+                self.retorna()
+            })
+              
           }
         }
 

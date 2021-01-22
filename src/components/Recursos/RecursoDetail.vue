@@ -182,8 +182,10 @@
                 <div v-show="show">
                   <v-divider></v-divider>
 
-                  <v-card-text v-html="this.Post.html">
-                    
+                  <v-card-text >
+                    <div v-html="this.Post.html" style="overflow:scroll;">
+
+                    </div>
                   </v-card-text>
                 </div>
               </v-expand-transition>
@@ -203,6 +205,7 @@
 import { getAPI } from '../../Api/axios-base';
 import CommentsApp from '../comments/CommentsApp'
 import Swal from 'sweetalert2'
+import {mapMutations} from "vuex";
 
 
 
@@ -235,10 +238,14 @@ export default {
        
     },
     methods: {
+
+        ...mapMutations(['SetLoading']),
         
         GetArticulo: function () {
             self= this
+            self.SetLoading(true)
             getAPI.get("Recursos/api/Articulos/"+this.id).then((res)=> {
+                  self.SetLoading(false)
                   self.Post = res.data
                   console.log('RecursoDetail',res.data)
             });

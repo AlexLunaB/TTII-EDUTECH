@@ -73,6 +73,7 @@ import SingleComponent from './BlogComponents/SingleComponent';
 import RecursoArticulo from './Recursos/RecursoArticulo';
 import { getAPI } from '../Api/axios-base';
 import store from '../store'
+import {mapMutations} from "vuex";
 
 export default {
     name: "Blog",
@@ -90,6 +91,8 @@ export default {
         RecursoArticulo
     },
     methods: {
+        ...mapMutations(['SetLoading']),
+
         handleStateClick: function () {
 
             this.$refs.addResource.showAddResource();
@@ -98,9 +101,11 @@ export default {
 
         GetArticulos: function () {
           self= this
-                getAPI.get("/Foro/api/Post").then((res)=> {
-                  self.Post = res.data
-                  console.log(res.data)
+          self.SetLoading(true)
+          getAPI.get("/Foro/api/Post").then((res)=> {
+            self.SetLoading(false)
+            self.Post = res.data
+            console.log(res.data)
       });
 
             
