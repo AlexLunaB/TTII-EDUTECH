@@ -173,16 +173,22 @@
                             <v-checkbox 
                             v-model="firstcheckbox" 
                             :rules="[v => !!v || 'Debes estar de acuerdo para continuar']"
-                            label="Acepto los términos y condiciones" 
+                            label="Acepto la política de privacidad" 
                             @click="abreTerminosCondiciones"
                             required>
                             </v-checkbox>
-                            
-                            
 
                             
+                            <div>
+                              <ModalTerminosCondiciones></ModalTerminosCondiciones>
+                            </div>
+
+                            <br>
+                              
                           </v-form>
                         </div>
+
+                        
 
 
                       </v-card-text>
@@ -266,6 +272,7 @@
 <script>
 import Swal from 'sweetalert2'
 import { getAPI } from '../Api/axios-base'
+import ModalTerminosCondiciones from '../components/ModalTerminosCondiciones'
   export default {
     name: 'login',
 
@@ -333,6 +340,9 @@ import { getAPI } from '../Api/axios-base'
         dialog: false,
         
       }
+    },
+    components: {
+      ModalTerminosCondiciones
     },
     methods: {
       loginUser() { // call loginUSer action
