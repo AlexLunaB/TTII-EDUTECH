@@ -1,10 +1,12 @@
+import jwt
 from django.contrib.auth import password_validation
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from taggit_serializer.serializers import TagListSerializerField
 
+from ObservatorioTT import settings
 from usuarios.models import Usuario, Profile
-
+from recursos.tasks import send_confirmation_email
 
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
@@ -104,5 +106,35 @@ class UserSignUpSerializer(serializers.Serializer):
       """Handle user and profile creation."""
       data.pop('password_confirmation')
       user = Usuario.objects.create_user(**data)
+      user.is_active=False
+      user.save()
       Profile.objects.create(usuario=user)
+      send_confirmation_email.delay(user_pk=user.pk)
       return user
+
+
+class AccountVerificationSerializer(serializers.Serializer):
+  """Account verification serializer."""
+
+  token = serializers.CharField()
+
+  def validate_token(self, data):
+    """Verify token is valid."""
+    try:
+      payload = jwt.decode(data, settings.SECRET_KEY, algorithms=['HS256'])
+    except jwt.ExpiredSignatureError:
+      raise serializers.ValidationError('Verification link has expired.')
+    except jwt.PyJWTError:
+      raise serializers.ValidationError('Invalid token')
+    if payload['type'] != 'email_confirmation':
+      raise serializers.ValidationError('Invalid token')
+
+    self.context['payload'] = payload
+    return data
+
+  def save(self):
+    """Update user's verified status."""
+    payload = self.context['payload']
+    user = Usuario.objects.get(username=payload['user'])
+    user.is_active = True
+    user.save()

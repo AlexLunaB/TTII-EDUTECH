@@ -5,18 +5,21 @@ import string
 from datetime import timedelta
 import random
 
+import jwt
 import redis
 import six
 from asgiref.sync import async_to_sync
 from celery import shared_task, app
 from celery.task import periodic_task, task
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template import loader, Context
+from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.encoding import force_bytes
 from django.utils.html import strip_tags
 from django.utils.http import urlsafe_base64_encode
+from jwt import PyJWT
 from numpy import savetxt, save
 
 from ObservatorioTT import settings
@@ -24,6 +27,7 @@ from ObservatorioTT import settings
 from time import sleep
 
 from ObservatorioTTApp.recomendador import Myrecommend
+from usuarios.models import Usuario
 
 
 @shared_task
@@ -78,5 +82,31 @@ def GeneraMatriz():
     save(str(settings.BASE_DIR)+'/mb', mb)
 
 
+def gen_verification_token(user):
+  """Create JWT token that the user can use to verify its account."""
+  exp_date = timezone.now() + timedelta(days=3)
+  payload = {
+    'user': user.username,
+    'exp': int(exp_date.timestamp()),
+    'type': 'email_confirmation'
+  }
 
+  token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+  return token.decode()
+
+
+@task(name='send_confirmation_email', max_retries=3)
+def send_confirmation_email(user_pk):
+    """Send account verification link to given user."""
+    user = Usuario.objects.get(pk=user_pk)
+    verification_token = gen_verification_token(user)
+    subject = 'Bienvenido @{}! Verifica tu cuenta para empezar a utilizar tu cuenta en el Observatorio'.format(user.username)
+    from_email = 'alexlb642@gmail.com'
+    content = render_to_string(
+        'emails/users/account_verification.html',
+        {'token': verification_token, 'user': user}
+    )
+    msg = EmailMultiAlternatives(subject, content, settings.EMAIL_HOST_USER, [user.email])
+    msg.attach_alternative(content, "text/html")
+    msg.send()
 

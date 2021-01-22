@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'Analitica',
     'django_filters',
-  'rest_framework_swagger',
+
+
 
 ]
 

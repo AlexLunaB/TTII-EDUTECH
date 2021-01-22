@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from recursos.Serializers.RecursoSerializer import TagSerializer
 from usuarios.models import Usuario, Profile
 from usuarios.serializers import UserSerializer, ProfileSerializer, ProfileModelSerializer, UserModelSerializer, \
-  UserSignUpSerializer
+  UserSignUpSerializer, AccountVerificationSerializer
 
 """Users views."""
 
@@ -73,6 +73,15 @@ class UserViewSet(
       data = UserModelSerializer(user).data
       return Response(data, status=status.HTTP_201_CREATED)
 
+    @action(detail=False, methods=['get'])
+    def verify(self, request):
+      """Account verification."""
+      print(self.request.query_params)
+      serializer = AccountVerificationSerializer(data=request.query_params)
+      serializer.is_valid(raise_exception=True)
+      serializer.save()
+      data = {'Mensaje': 'Felicidades, Ya puedes acceder al sistema'}
+      return Response(data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['put', 'patch','get'])
     def profile(self, request, *args, **kwargs):
