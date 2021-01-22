@@ -85,6 +85,36 @@
 
     </v-row>
 
+    <v-row>
+      <v-col cols="12" sm="12" md="12">
+        <v-card
+          class="mx-auto"
+          outlined
+        >
+          <v-card-title>Funcionamiento del mapa</v-card-title>
+
+          <v-card-text>
+
+            <v-container>
+            
+              <h4>
+                El mapa que ves a continuación es interactivo. Si haces clic en algún estado, accederás a sus recursos. Puedes utilizar el buscador de abajo para hacer búsquedas en todo el mapa, si se encuentran coincidencias, se pintarán los estados en donde se encuentran. 
+                
+                Debajo de lado derecho, encontraras un código de colores que indica la cantidad recursos que corresponden a cada color, esto significa que los estados con más recursos tendrán un tono más oscuro, mientras que los más claros serán lo que menos recursos tengan.
+              </h4>
+
+            </v-container>
+
+          </v-card-text>
+          
+
+          <v-card-actions>
+
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+
 
     <v-row>
       <v-col cols="12" sm="12" md="6">
@@ -154,12 +184,10 @@
         </v-card>
 
 
-        <v-card></v-card>
-
-
       </v-col>
 
     </v-row>
+    
 
     <SvgPanZoom
       style="width: 100%; height: 800px; border:0px solid black; background-color:white;"

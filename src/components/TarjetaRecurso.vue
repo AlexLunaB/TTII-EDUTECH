@@ -43,7 +43,7 @@
                         ></v-rating>
 
                         <div class="grey--text ml-4" >
-                            {{recurso.calificacion}} (413)
+                            {{recurso.calificacion}} 
 
                         </div>
                     </v-col>
