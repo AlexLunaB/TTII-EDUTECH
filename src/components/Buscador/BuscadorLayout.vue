@@ -17,9 +17,7 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn type="primary">
-                  Ver más
-                </v-btn>
+
               </v-card-actions>
             </v-card>
           </v-col>
