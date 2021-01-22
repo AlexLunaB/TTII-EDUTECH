@@ -394,7 +394,7 @@ import ModalTerminosCondiciones from '../components/ModalTerminosCondiciones'
                 icon: 'success',
                 title: '¡Registro exitoso!',
                 text: 'Tu usuario ha sido creado en Edutech',
-                footer: 'Regresa al Login para iniciar sesión'
+                footer: 'Para activar tu cuenta, ingresa al link que se te mando a tu correo'
               })
 
               this.step--;
