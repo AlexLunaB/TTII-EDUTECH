@@ -1,6 +1,6 @@
 <template>
 
-<v-col  cols="4" md="4" sm="12">
+
   <v-container fluid class="mb-0">
 
 
@@ -45,7 +45,7 @@
             <br>
             <div class="date">Escrito po: {{this.articulo.administrador.username}} </div>
             <div class="date">Creado: {{this.articulo.created}} </div>
-            
+
             <!-- <a href="#">Leer más</a> -->
           </v-card-text>
 
@@ -63,7 +63,7 @@
         </v-card>
 
   </v-container>
-</v-col>
+
 </template>
 
 <script>
